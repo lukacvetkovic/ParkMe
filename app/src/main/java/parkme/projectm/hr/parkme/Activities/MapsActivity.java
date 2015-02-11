@@ -103,19 +103,6 @@ public class MapsActivity extends FragmentActivity implements GooglePlayServices
         mMap.setOnInfoWindowClickListener(this);
         mMap.getUiSettings().setZoomControlsEnabled(true);
 
-        /*Location mLastLocation = LocationServices.FusedLocationApi.getLastLocation();
-
-        Location location = mMap.getMyLocation();
-        LatLng myLocation = null;
-
-
-        if (location != null) {
-            myLocation = new LatLng(location.getLatitude(),
-                    location.getLongitude());
-            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(myLocation, 15));
-        }*/
-
-
     }
 
     @Override
