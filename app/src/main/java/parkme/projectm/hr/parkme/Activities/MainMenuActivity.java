@@ -25,7 +25,7 @@ public class MainMenuActivity extends Activity{
             @Override
             public void onClick(View v) {
                 Class ourClass = null;
-                ourClass = MapsActivity.class;
+                ourClass = Test.class;
                 Intent ourIntent = new Intent(MainMenuActivity.this, ourClass);
                 startActivity(ourIntent);
             }
