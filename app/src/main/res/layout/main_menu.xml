@@ -6,11 +6,22 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Show MAP"
+        android:text="@string/PlatkiParking"
         android:layout_gravity="center"
-        android:id="@+id/bShow"
+        android:id="@+id/bPay"
+        android:layout_above="@+id/bPark"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="195dp" />
+        android:layout_marginBottom="80dp" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/Parkiraj"
+        android:layout_gravity="center"
+        android:id="@+id/bPark"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="208dp" />
 
 
 

@@ -1,9 +1,8 @@
 package parkme.projectm.hr.parkme.Activities;
 
-import android.content.IntentSender;
 import android.location.Location;
-import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
@@ -11,20 +10,21 @@ import android.widget.TextView;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesClient;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.drive.Drive;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import parkme.projectm.hr.parkme.R;
 
-public class MapsActivity extends FragmentActivity implements GooglePlayServicesClient.ConnectionCallbacks,
+/**
+ * Created by Cveki on 8.3.2015..
+ */
+public class ParkingMenuActivity extends FragmentActivity implements GooglePlayServicesClient.ConnectionCallbacks,
         GooglePlayServicesClient.OnConnectionFailedListener, GoogleMap.OnInfoWindowClickListener, View.OnClickListener, GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener{
 
@@ -78,7 +78,7 @@ public class MapsActivity extends FragmentActivity implements GooglePlayServices
      * installed) and the map has not already been instantiated.. This will ensure that we only ever
      * call {@link #setUpMap()} once when {@link #mMap} is not null.
      * <p/>
-     * If it isn't installed {@link SupportMapFragment} (and
+     * If it isn't installed {@link com.google.android.gms.maps.SupportMapFragment} (and
      * {@link com.google.android.gms.maps.MapView MapView}) will show a prompt for the user to
      * install/update the Google Play services APK on their device.
      * <p/>
@@ -174,4 +174,3 @@ public class MapsActivity extends FragmentActivity implements GooglePlayServices
         super.onStop();
     }
 }
-
