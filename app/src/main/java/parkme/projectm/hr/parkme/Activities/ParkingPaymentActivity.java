@@ -1,6 +1,10 @@
 package parkme.projectm.hr.parkme.Activities;
 
 import android.app.Activity;
+import android.content.Context;
+import android.location.Geocoder;
+import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -9,8 +13,11 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.google.android.gms.maps.model.LatLng;
+
 import org.json.JSONException;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -18,6 +25,8 @@ import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
 import parkme.projectm.hr.parkme.Helpers.Constants;
+import parkme.projectm.hr.parkme.Helpers.GPSTracker;
+import parkme.projectm.hr.parkme.Helpers.GeoPointHelper;
 import parkme.projectm.hr.parkme.Helpers.GetRestService;
 import parkme.projectm.hr.parkme.Helpers.JavaJsonHelper;
 import parkme.projectm.hr.parkme.Models.City;
@@ -25,6 +34,8 @@ import parkme.projectm.hr.parkme.Models.ParkingZone;
 import parkme.projectm.hr.parkme.R;
 
 public class ParkingPaymentActivity extends Activity {
+
+    GPSTracker gpsTracker;
 
     GetRestService getRestService;
     String response;
@@ -44,6 +55,8 @@ public class ParkingPaymentActivity extends Activity {
     ArrayAdapter<String> adapterCity;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_parking_payment);
         citySpinner = (Spinner) findViewById(R.id.spinnerCity);
@@ -51,6 +64,11 @@ public class ParkingPaymentActivity extends Activity {
         mapIdCity = new HashMap<>();
         getRestService = new GetRestService(Constants.dohvatiSveGradove + ".json");
         parkingZoneList = new ArrayList<>();
+
+        gpsTracker= new GPSTracker(this);
+
+        selectedCity=null;
+
 
 
         try {
@@ -86,6 +104,19 @@ public class ParkingPaymentActivity extends Activity {
         adapterCity.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 // Apply the adapter to the spinner
         citySpinner.setAdapter(adapterCity);
+
+
+        try {
+            Location mylocation=gpsTracker.getLocation();
+            Log.d("MOJA lokacija->>>>",String.valueOf(mylocation.getLatitude())+" "+String.valueOf(mylocation.getLongitude()));
+            selectedCity= GeoPointHelper.adresaIzLatLng(new LatLng(mylocation.getLatitude(), mylocation.getLongitude()), this).getLocality();
+            //citySpinner.setSelection(mapIdCity.get(selectedCity));
+            Log.d("MOJ GRAD--->",selectedCity);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
 
         citySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -126,6 +157,8 @@ public class ParkingPaymentActivity extends Activity {
                 adapterZone.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
                 zoneSpinner.setAdapter(adapterZone);
+
+
 
             }
 
