@@ -3,6 +3,8 @@ package parkme.projectm.hr.parkme.Activities;
 import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -24,13 +26,14 @@ public class ParkingPaymentActivity extends Activity {
     String response;
     List<City> cityList;
     Spinner citySpinner;
-    String[]cityNames;
+    String[] cityNames;
+    String selectedCity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_parking_payment);
-        citySpinner=(Spinner)findViewById(R.id.spinnerCity);
+        citySpinner = (Spinner) findViewById(R.id.spinnerCity);
         getRestService = new GetRestService(Constants.dohvatiSveGradove);
 
 
@@ -53,12 +56,11 @@ public class ParkingPaymentActivity extends Activity {
             finish();
         }
 
-        cityNames=new String[cityList.size()];
+        cityNames = new String[cityList.size()];
 
-        for(int i=0, z=cityList.size();i<z;++i){
-            cityNames[i]=cityList.get(i).getName();
+        for (int i = 0, z = cityList.size(); i < z; ++i) {
+            cityNames[i] = cityList.get(i).getName();
         }
-
 
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, cityNames);
@@ -67,7 +69,20 @@ public class ParkingPaymentActivity extends Activity {
 // Apply the adapter to the spinner
         citySpinner.setAdapter(adapter);
 
+        citySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                selectedCity = cityNames[position];
+                Log.d("IZABRAN------>", selectedCity);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
 
 
     }
+
 }
