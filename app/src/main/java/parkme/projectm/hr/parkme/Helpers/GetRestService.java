@@ -2,83 +2,55 @@ package parkme.projectm.hr.parkme.Helpers;
 
 import android.os.AsyncTask;
 
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.protocol.BasicHttpContext;
-import org.apache.http.protocol.HttpContext;
-import org.json.JSONObject;
+import com.squareup.okhttp.OkHttpClient;
+import com.squareup.okhttp.Request;
+import com.squareup.okhttp.Response;
 
 import java.io.IOException;
-import java.io.InputStream;
-
 
 public class GetRestService extends AsyncTask<Void, Void, String> {
 
-
-    public String data = null;
-    public JSONObject json;
-    public String adresaSKojeUziamam;
-
-    public String getAdresaSKojeUziamam() {
-        return adresaSKojeUziamam;
-    }
-
-    public void setAdresaSKojeUziamam(String adresaSKojeUziamam) {
-        this.adresaSKojeUziamam = adresaSKojeUziamam;
-    }
+    String url;
+    OkHttpClient client;
 
 
-    protected String getASCIIContentFromEntity(HttpEntity entity) throws IllegalStateException, IOException {
-        InputStream in = entity.getContent();
-        StringBuffer out = new StringBuffer();
-        int n = 1;
-        while (n > 0) {
-            byte[] b = new byte[4096];
-            n = in.read(b);
-            if (n > 0) out.append(new String(b, 0, n));
-        }
-        return out.toString();
+    public GetRestService(String url) {
+        this.url = url;
+
+        this.client = new OkHttpClient();
     }
 
     @Override
     protected String doInBackground(Void... params) {
-        HttpClient httpClient = new DefaultHttpClient();
-        HttpContext localContext = new BasicHttpContext();
-        HttpGet httpGet = new HttpGet(adresaSKojeUziamam);
-        httpGet.addHeader("accept", "application/json");
-        String text = null;
+
+        Request request = new Request.Builder()
+                .url(url)
+                .build();
+
+
+        Response response = null;
         try {
-            HttpResponse response = httpClient.execute(httpGet, localContext);
-            HttpEntity entity = response.getEntity();
-            text = getASCIIContentFromEntity(entity);
-        } catch (Exception e) {
-            return e.getLocalizedMessage();
+            response = client.newCall(request).execute();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-        return text;
-    }
-
-    protected void onPostExecute(String results) {
-        if (results != null) {
-            data = results;
-
+        if (response != null) {
+            try {
+                return response.body().string();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
-
-
-
+        return null;
     }
 
-
-    public String getData() {
-        return data;
+    public String getUrl() {
+        return url;
     }
 
-
-    public void dohvati(String URL) {
-        adresaSKojeUziamam=URL;
-        execute();
+    public void setUrl(String url) {
+        this.url = url;
     }
+
 }
 

@@ -47,6 +47,10 @@
             android:label="@string/title_activity_maps"></activity>
 
         <activity
+            android:name=".Activities.ParkingPaymentActivity"
+            android:label="@string/title_activity_maps"></activity>
+
+        <activity
             android:name=".Activities.PaymentMenuActivity"
             android:label="@string/title_activity_maps"></activity>
     </application>

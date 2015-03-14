@@ -1,16 +1,38 @@
 package parkme.projectm.hr.parkme.Helpers;
 
+import com.google.gson.Gson;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+import parkme.projectm.hr.parkme.Models.City;
 
 
 /**
  * Created by Cveki on 9.11.2014..
  */
-public class JavaJsonHelper {}
+public class JavaJsonHelper {
+
+    public static List<City> fromStringToCityList (String citiesJson) throws JSONException {
+
+       Gson gson = new Gson();
+
+        List<City> cityList= new ArrayList<>();
+
+        JSONArray jsonCities = new JSONObject(citiesJson).getJSONArray("content");
+        for (int i = 0; i < jsonCities.length(); i++) {
+           cityList.add(gson.fromJson(String.valueOf(jsonCities.getJSONObject(i)),City.class));
+
+        }
+
+        return cityList;
+    }
+
+}
 
     /*{
         "brojKarata":"String content",

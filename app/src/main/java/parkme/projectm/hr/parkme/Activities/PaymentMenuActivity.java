@@ -1,6 +1,7 @@
 package parkme.projectm.hr.parkme.Activities;
 
 import android.app.ActionBar;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -14,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import parkme.projectm.hr.parkme.R;
@@ -98,16 +100,22 @@ public class PaymentMenuActivity extends FragmentActivity {
 
         @Override
         public Fragment getItem(int i) {
-            Fragment fragment = new DemoObjectFragment();
-            Bundle args = new Bundle();
-            args.putInt(DemoObjectFragment.ARG_OBJECT, i + 1); // Our object is just an integer :-P
-            fragment.setArguments(args);
-            return fragment;
+            if(i==1){
+                Fragment fragment = new ParkingPayFragment();
+                return fragment;
+            }
+            else {
+                Fragment fragment = new DemoObjectFragment();
+                Bundle args = new Bundle();
+                args.putInt(DemoObjectFragment.ARG_OBJECT, i + 1); // Our object is just an integer :-P
+                fragment.setArguments(args);
+                return fragment;
+            }
         }
 
         @Override
         public int getCount() {
-            // For this contrived example, we have a 100-object collection.
+            // For this contrived example, we have a 3-object collection. (Izbor auta,plati parking, povijest placanja)
             return 3;
         }
 
@@ -143,4 +151,35 @@ public class PaymentMenuActivity extends FragmentActivity {
             return rootView;
         }
     }
+
+    /**
+     * Class where is current car selected, list of favorite parking payment and button for new payment
+     */
+    public static class ParkingPayFragment extends Fragment {
+
+        Button parkingPayButton;
+
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                                 Bundle savedInstanceState) {
+            View rootView = inflater.inflate(R.layout.fragment_parking_pay, container, false);
+
+            parkingPayButton=(Button)rootView.findViewById(R.id.btnPayParking);
+
+            final Context context = getActivity();
+
+            parkingPayButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent i = new Intent(context, ParkingPaymentActivity.class);
+                    startActivity(i);
+
+                }
+            });
+
+            return rootView;
+        }
+    }
+
+
 }
