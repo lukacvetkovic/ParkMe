@@ -7,8 +7,9 @@ import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
 
 import java.io.IOException;
+import java.util.concurrent.ExecutionException;
 
-public class GetRestService extends AsyncTask<Void, Void, String> {
+public class GetRestService {
 
     String url;
     OkHttpClient client;
@@ -20,28 +21,10 @@ public class GetRestService extends AsyncTask<Void, Void, String> {
         this.client = new OkHttpClient();
     }
 
-    @Override
-    protected String doInBackground(Void... params) {
+    public String execute() throws ExecutionException, InterruptedException {
+        GetWorker getWorker= new GetWorker();
+        return getWorker.execute().get();
 
-        Request request = new Request.Builder()
-                .url(url)
-                .build();
-
-
-        Response response = null;
-        try {
-            response = client.newCall(request).execute();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        if (response != null) {
-            try {
-                return response.body().string();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        return null;
     }
 
     public String getUrl() {
@@ -51,6 +34,35 @@ public class GetRestService extends AsyncTask<Void, Void, String> {
     public void setUrl(String url) {
         this.url = url;
     }
+
+    private class GetWorker extends AsyncTask<Void, Void, String> {
+
+        @Override
+        protected String doInBackground(Void... params) {
+
+            Request request = new Request.Builder()
+                    .url(url)
+                    .build();
+
+
+            Response response = null;
+            try {
+                response = client.newCall(request).execute();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            if (response != null) {
+                try {
+                    return response.body().string();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            return null;
+        }
+    }
+
+
 
 }
 
