@@ -3,9 +3,16 @@ package parkme.projectm.hr.parkme.Activities;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
+import java.sql.SQLException;
+import java.util.List;
+
+import parkme.projectm.hr.parkme.Database.OrmliteDb.DatabaseManager;
+import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.City;
+import parkme.projectm.hr.parkme.Database.OrmliteDb.OrmLiteDatabaseHelper;
 import parkme.projectm.hr.parkme.R;
 
 /**
@@ -21,13 +28,14 @@ public class MainMenuActivity extends Activity{
      *
      */
     Button parking;
-
+    int i;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_menu);
-
+        DatabaseManager.init(getApplicationContext());
+        i = 1;
 
         payment=(Button) findViewById(R.id.bPay);
         //Goes to PaymentMenuActivity
@@ -45,10 +53,26 @@ public class MainMenuActivity extends Activity{
         parking.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                OrmLiteDatabaseHelper helper = DatabaseManager.getHelper();
+
+                Log.d(String.valueOf(i), "i");
+                try {
+                    helper.getCityDao().createOrUpdate(new City(i, "Zagreb" + i));
+                    i++;
+                    List<City>cities = helper.getCityDao().queryForAll();
+                    for(City city:cities){
+                        Log.d("grad: ", String.valueOf(city.getId()));
+                    }
+                } catch (Exception e) {
+                    Log.d(e.getMessage(), "Error message");
+                    e.printStackTrace();
+                }
+                /*
                 Class ourClass = null;
                 ourClass =ParkingMenuActivity.class;
                 Intent ourIntent = new Intent(MainMenuActivity.this, ourClass);
-                startActivity(ourIntent);
+                startActivity(ourIntent)
+                */;
             }
         });
 
