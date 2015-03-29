@@ -21,7 +21,7 @@ public interface SMSParkingApi {
     //Get list of options for parking zone
     public List<Option>getAllOptionsFromParkingZone(int IdParkingZone);
     //Get price for parking zone
-    public float getCPrice(Date date,int idParkingZone,int idOption);
+    public float getPrice(Date date,int idParkingZone,int idOption);
     //Get maxduration for parkingzone--> TODO do not know if Time class is OK!
     public Time maxDuration(Date date,int IdParkingZone);
 
