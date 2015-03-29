@@ -12,4 +12,6 @@
     <string name="ParkinZona">Parking zona</string>
     <string name="Cijena">Cijena</string>
     <string name="OdabranoTrajanje">Odabrano trajanje</string>
+    <string name="Registracija">Registarska oznaka</string>
+    <string name="MaxTrajanje">Maksimalno trajanje</string>
 </resources>

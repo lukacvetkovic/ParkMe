@@ -51,6 +51,16 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:text="@string/Registracija"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/tvCarPlate"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:text="@string/OdabranoTrajanje"/>
 
     <TextView
@@ -61,7 +71,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Maksimalno trajanje"/>
+        android:text="@string/MaxTrajanje"/>
 
     <TextView
         android:layout_width="match_parent"

@@ -41,6 +41,8 @@ import parkme.projectm.hr.parkme.R;
 
 import static android.widget.Toast.makeText;
 
+
+
 public class ParkingPaymentActivity extends Activity {
 
     GPSTracker gpsTracker;
@@ -315,9 +317,6 @@ public class ParkingPaymentActivity extends Activity {
         btnPay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Radi
-                //SMSHelper.sendSMS("0913020800","BOK, ti si najpametniji, covjece =)");
-
 
                 String city=citySpinner.getSelectedItem().toString();
                 Log.d("Grad->",city);
