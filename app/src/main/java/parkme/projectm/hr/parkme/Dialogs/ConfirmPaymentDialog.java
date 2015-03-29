@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import java.util.Date;
 
+import parkme.projectm.hr.parkme.Database.OrmliteDb.DatabaseManager;
 import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.ParkingZone;
 import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.PaymentMode;
 import parkme.projectm.hr.parkme.Helpers.SMSHelper;
@@ -41,6 +42,8 @@ public class ConfirmPaymentDialog extends DialogFragment {
     int parkingZoneId;
     int parkingMethodId;
 
+    DatabaseManager databaseManager;
+
 
 
 
@@ -52,6 +55,9 @@ public class ConfirmPaymentDialog extends DialogFragment {
         final View inflator = linf.inflate(R.layout.dialog_confirm_payment, null);
 
         builder.setView(inflator);
+
+        DatabaseManager.init(builder.getContext());
+        databaseManager= DatabaseManager.getInstance();
 
         tvTime=(TextView)inflator.findViewById(R.id.tvTime);
         tvCity=(TextView)inflator.findViewById(R.id.tvCity);

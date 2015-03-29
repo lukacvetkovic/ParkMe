@@ -27,6 +27,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
+import parkme.projectm.hr.parkme.Database.OrmliteDb.DatabaseManager;
 import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.City;
 import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.ParkingZone;
 import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.PaymentMode;
@@ -63,7 +64,7 @@ public class ParkingPaymentActivity extends Activity {
     String[] zoneNames;
     Map<String, Integer> mapIdZone;
 
-    String[] options;
+    String[] paymentModes;
     Map<String, Integer> mapIdOption;
 
     String selectedZone;
@@ -76,6 +77,8 @@ public class ParkingPaymentActivity extends Activity {
     ArrayAdapter<String> adapterZone;
     ArrayAdapter<String> adapterCity;
     ArrayAdapter<String> adapterOption;
+
+    DatabaseManager databaseManager;
 
     /**
      * On create method, starts with layout
@@ -93,6 +96,9 @@ public class ParkingPaymentActivity extends Activity {
         btnPay=(Button)findViewById(R.id.btnPayParking);
         favs=(CheckBox)findViewById(R.id.cbFavorites);
 
+        DatabaseManager.init(this);
+        databaseManager=DatabaseManager.getInstance();
+
         mapIdCity = new HashMap<>();
         getRestService = new GetRestService(Constants.dohvatiSveGradove + ".json");
         parkingZoneList = new ArrayList<>();
@@ -104,27 +110,7 @@ public class ParkingPaymentActivity extends Activity {
 
         selectedCity = null;
 
-        //Get all cities
-        try {
-            response = getRestService.execute();
-        } catch (InterruptedException | ExecutionException e) {
-            e.printStackTrace();
-        }
-
-        //If there was not error
-        if (response != null) {
-            try {
-                cityList = JavaJsonHelper.fromStringToCityList(response);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-            //If there was error
-        } else {
-            Log.d("NIJE USPJELO", "!!!!!!!");
-            Toast toast = makeText(this, "Neuspjelo dohvačanje podataka", Toast.LENGTH_LONG);
-            toast.show();
-            finish();
-        }
+        cityList=databaseManager.getAllCities();
 
         cityNames = new String[cityList.size()];
 
@@ -138,7 +124,7 @@ public class ParkingPaymentActivity extends Activity {
         adapterCity = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, cityNames);
         //Init adapterZone
         adapterZone = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item);
-        //Init adapterOption
+        //Init adapterPaymentMode
         adapterOption= new ArrayAdapter<>(this, android.R.layout.simple_spinner_item);
         // Specify the layout to use when the list of choices appears
         adapterCity.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -207,29 +193,7 @@ public class ParkingPaymentActivity extends Activity {
                 selectedCity = cityNames[position];
                 Log.d("IZABRAN------>", selectedCity);
 
-                //Get parkingZone for city
-                getRestService.setUrl(Constants.dohvatiParkingZonuZaGrad + mapIdCity.get(selectedCity) + ".json");
-
-                Log.d("REST------>", "PRIJE");
-                try {
-                    response = getRestService.execute();
-                    Log.d("RESP------>", response);
-                } catch (InterruptedException | ExecutionException e) {
-                    e.printStackTrace();
-                }
-                Log.d("REST------>", "NAKON");
-
-
-                //If resault is OK
-                if (response != null) {
-                    try {
-                        parkingZoneList = JavaJsonHelper.fromStringToZoneList(response);
-                        Log.d("ParkingZoneList....->", parkingZoneList.toString());
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                        finish();
-                    }
-                }
+                parkingZoneList=databaseManager.getAllParkingZonesFromCity(mapIdCity.get(selectedCity));
 
                 zoneNames = new String[parkingZoneList.size()];
                 mapIdZone = new HashMap<String, Integer>();
@@ -247,6 +211,7 @@ public class ParkingPaymentActivity extends Activity {
 
                 zoneSpinner.setAdapter(adapterZone);
 
+
                 zoneSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
                     @Override
@@ -256,45 +221,29 @@ public class ParkingPaymentActivity extends Activity {
                         selectedZone = zoneNames[position];
                         Log.d("IZABRAN------>", selectedZone);
 
-                        //Get parkingZone for city
-                        getRestService.setUrl(Constants.dohvatiOpcijePrekoZone + mapIdZone.get(selectedZone) + ".json");
+                       paymentModeList=databaseManager.getAllPaymentModesFromParkingZone(mapIdZone.get(selectedZone));
 
-                        Log.d("REST------>", "PRIJE");
-                        try {
-                            response = getRestService.execute();
-                            Log.d("RESP------>", response);
-                        } catch (InterruptedException | ExecutionException e) {
-                            e.printStackTrace();
-                        }
-                        Log.d("REST------>", "NAKON");
-
-
-                        //If resault is OK
-                        if (response != null) {
-                            try {
-                                paymentModeList = JavaJsonHelper.fromStringToOptionList(response);
-                                Log.d("ParkingZoneList....->", paymentModeList.toString());
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                                finish();
-                            }
-                        }
-
-                        options = new String[paymentModeList.size()];
+                        paymentModes = new String[paymentModeList.size()];
                         mapIdOption = new HashMap<String, Integer>();
 
                         //add zonenames to map and arrray
                         for (int i = 0, z = paymentModeList.size(); i < z; ++i) {
-                            options[i] = paymentModeList.get(i).getDuration().toString();
-                            mapIdOption.put(options[i], paymentModeList.get(i).getId());
+                            paymentModes[i] = paymentModeList.get(i).getDuration().toString();
+                            mapIdOption.put(paymentModes[i], paymentModeList.get(i).getId());
                         }
+
+                        paymentModeSpinner.setEnabled(true);
 
                         //Add adapter
                         adapterOption.clear();
-                        adapterOption.addAll(options);
+                        adapterOption.addAll(paymentModes);
                         adapterOption.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
                         paymentModeSpinner.setAdapter(adapterOption);
+
+                        if(paymentModeList.size()==1){
+                            paymentModeSpinner.setEnabled(false);
+                        }
 
                     }
 
@@ -317,6 +266,8 @@ public class ParkingPaymentActivity extends Activity {
         btnPay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                int parkingZoneId=mapIdZone.get(zoneSpinner.getSelectedItem().toString());
+                int paymentModeId=mapIdOption.get(paymentModeSpinner.getSelectedItem().toString());
 
                 String city=citySpinner.getSelectedItem().toString();
                 Log.d("Grad->",city);
@@ -324,7 +275,8 @@ public class ParkingPaymentActivity extends Activity {
                 String zone=zoneSpinner.getSelectedItem().toString();
                 Log.d("Zona->",zone);
 
-                float price= 71.15f;//TODO treba koristit API
+                Date date= new Date();
+                float price= databaseManager.getPrice(date,paymentModeId);
                 Log.d("Cijena->",String.valueOf(price));
 
                 String duration=paymentModeSpinner.getSelectedItem().toString();
@@ -333,9 +285,6 @@ public class ParkingPaymentActivity extends Activity {
                 String maxDuration=new Date().toLocaleString();
                 Log.d("Maksimalno trajanje->",maxDuration);
 
-
-                int parkingZoneId=mapIdZone.get(zoneSpinner.getSelectedItem().toString());
-                int parkingMethodId=mapIdOption.get(paymentModeSpinner.getSelectedItem().toString());
 
                 DialogFragment pay= new ConfirmPaymentDialog();
                 // Supply num input as an argument.
@@ -347,7 +296,7 @@ public class ParkingPaymentActivity extends Activity {
                 args.putString("duration", duration);
                 args.putString("maxDuration", maxDuration);
                 args.putInt("parkingZoneId",parkingZoneId);
-                args.putInt("parkingMethodId",parkingMethodId);
+                args.putInt("parkingMethodId",paymentModeId);
 
                 pay.setArguments(args);
                 pay.show(getFragmentManager(),"Plačanje");
