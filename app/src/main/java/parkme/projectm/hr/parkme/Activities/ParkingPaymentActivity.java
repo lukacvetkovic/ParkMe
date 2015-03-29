@@ -177,7 +177,7 @@ public class ParkingPaymentActivity extends Activity {
                     String cityName = null;
                     PostCode postCode = JavaJsonHelper.fromJsonToIdPostCode(response);
                     for (Map.Entry<String, Integer> entry : mapIdCity.entrySet()) {
-                        if (postCode.getId_city() == (entry.getValue())) {
+                        if (postCode.getIdCity() == (entry.getValue())) {
                             cityName = entry.getKey();
                         }
                     }
@@ -284,7 +284,7 @@ public class ParkingPaymentActivity extends Activity {
 
                         //add zonenames to map and arrray
                         for (int i = 0, z = paymentModeList.size(); i < z; ++i) {
-                            options[i] = paymentModeList.get(i).getDuration();
+                            options[i] = paymentModeList.get(i).getDuration().toString();
                             mapIdOption.put(options[i], paymentModeList.get(i).getId());
                         }
 

@@ -1,5 +1,5 @@
 #
-# generated on 2015/03/29 02:06:46
+# generated on 2015/03/29 03:54:59
 #
 # --table-start--
 dataClass=parkme.projectm.hr.parkme.Database.OrmliteDb.Models.City
@@ -30,7 +30,7 @@ fieldName=name
 fieldName=phone_number
 # --field-end--
 # --field-start--
-fieldName=idCity
+fieldName=id_city
 # --field-end--
 # --table-fields-end--
 # --table-end--
@@ -44,7 +44,7 @@ fieldName=id
 id=true
 # --field-end--
 # --field-start--
-fieldName=durationa
+fieldName=duration
 # --field-end--
 # --field-start--
 fieldName=price
@@ -56,14 +56,14 @@ fieldName=sms_prefix
 fieldName=sms_sufix
 # --field-end--
 # --field-start--
-fieldName=idZone
+fieldName=id_zone
 # --field-end--
 # --table-fields-end--
 # --table-end--
 #################################
 # --table-start--
 dataClass=parkme.projectm.hr.parkme.Database.OrmliteDb.Models.PostCode
-tableName=city
+tableName=post_code
 # --table-fields-start--
 # --field-start--
 fieldName=id
@@ -74,6 +74,75 @@ fieldName=idCity
 # --field-end--
 # --field-start--
 fieldName=postCode
+# --field-end--
+# --table-fields-end--
+# --table-end--
+#################################
+# --table-start--
+dataClass=parkme.projectm.hr.parkme.Database.OrmliteDb.Models.ZoneCalendar
+tableName=zone_calendar
+# --table-fields-start--
+# --field-start--
+fieldName=id
+id=true
+# --field-end--
+# --field-start--
+fieldName=idZone
+# --field-end--
+# --field-start--
+fieldName=dateFrom
+# --field-end--
+# --field-start--
+fieldName=dateTo
+# --field-end--
+# --table-fields-end--
+# --table-end--
+#################################
+# --table-start--
+dataClass=parkme.projectm.hr.parkme.Database.OrmliteDb.Models.ZoneWorkTime
+tableName=zone_work_time
+# --table-fields-start--
+# --field-start--
+fieldName=id
+id=true
+# --field-end--
+# --field-start--
+fieldName=idCalendar
+# --field-end--
+# --field-start--
+fieldName=day
+# --field-end--
+# --field-start--
+fieldName=timeFrom
+# --field-end--
+# --field-start--
+fieldName=timeTo
+# --field-end--
+# --table-fields-end--
+# --table-end--
+#################################
+# --table-start--
+dataClass=parkme.projectm.hr.parkme.Database.OrmliteDb.Models.ZonePrice
+tableName=zone_price
+# --table-fields-start--
+# --field-start--
+fieldName=id
+id=true
+# --field-end--
+# --field-start--
+fieldName=idPaymentMode
+# --field-end--
+# --field-start--
+fieldName=idZoneWorkTime
+# --field-end--
+# --field-start--
+fieldName=priceTrimmed
+# --field-end--
+# --field-start--
+fieldName=priceDecimal
+# --field-end--
+# --field-start--
+fieldName=currency
 # --field-end--
 # --table-fields-end--
 # --table-end--
