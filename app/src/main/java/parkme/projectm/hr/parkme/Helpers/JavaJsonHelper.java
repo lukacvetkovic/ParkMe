@@ -10,33 +10,55 @@ import java.util.ArrayList;
 import java.util.List;
 
 import parkme.projectm.hr.parkme.Models.City;
+import parkme.projectm.hr.parkme.Models.Option;
 import parkme.projectm.hr.parkme.Models.ParkingZone;
-
+import parkme.projectm.hr.parkme.Models.PostCode;
 
 
 public class JavaJsonHelper {
 
-    public static List<City> fromStringToCityList (String citiesJson) throws JSONException {
+    public static List<City> fromStringToCityList(String citiesJson) throws JSONException {
 
-       Gson gson = new Gson();
+        Gson gson = new Gson();
 
-        List<City> cityList= new ArrayList<>();
+        List<City> cityList = new ArrayList<>();
 
         JSONArray jsonCities = new JSONObject(citiesJson).getJSONArray("content");
         for (int i = 0; i < jsonCities.length(); i++) {
-           cityList.add(gson.fromJson(String.valueOf(jsonCities.getJSONObject(i)),City.class));
+            cityList.add(gson.fromJson(String.valueOf(jsonCities.getJSONObject(i)), City.class));
 
         }
 
         return cityList;
     }
 
-    public static List<ParkingZone> fromStringToZoneList(String zonesJson)throws JSONException{
+    public static List<ParkingZone> fromStringToZoneList(String zonesJson) throws JSONException {
         Gson gson = new Gson();
-        List<ParkingZone> zoneList= new ArrayList<>();
+        List<ParkingZone> zoneList = new ArrayList<>();
         JSONArray jsonZones = new JSONObject(zonesJson).getJSONArray("content");
         for (int i = 0; i < jsonZones.length(); i++) {
             zoneList.add(gson.fromJson(String.valueOf(jsonZones.getJSONObject(i)), ParkingZone.class));
+
+        }
+
+        return zoneList;
+    }
+
+    public static PostCode fromJsonToIdPostCode(String postCodeJson) throws JSONException {
+        Gson gson = new Gson();
+
+        JSONArray jsonZones = new JSONObject(postCodeJson).getJSONArray("content");
+
+        return gson.fromJson(String.valueOf(jsonZones.getJSONObject(0)), PostCode.class);
+
+    }
+
+    public static List<Option> fromStringToOptionList(String optionJson) throws JSONException {
+        Gson gson = new Gson();
+        List<Option> zoneList = new ArrayList<>();
+        JSONArray jsonZones = new JSONObject(optionJson).getJSONArray("content");
+        for (int i = 0; i < jsonZones.length(); i++) {
+            zoneList.add(gson.fromJson(String.valueOf(jsonZones.getJSONObject(i)), Option.class));
 
         }
 

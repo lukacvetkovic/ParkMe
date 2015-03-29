@@ -1,4 +1,4 @@
-package parkme.projectm.hr.parkme.Helpers;
+package parkme.projectm.hr.parkme.Helpers.LocationHelper;
 
 import android.app.AlertDialog;
 import android.app.Service;

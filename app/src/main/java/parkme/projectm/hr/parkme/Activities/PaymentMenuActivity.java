@@ -41,7 +41,7 @@ public class PaymentMenuActivity extends FragmentActivity {
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.payment_menu);
+        setContentView(R.layout.activity_payment_menu);
 
         // Create an adapter that when requested, will return a fragment representing an object in
         // the collection.
