@@ -6,4 +6,5 @@
     <string name="PlatiParking">Plati</string>
     <string name="OdabirGrada">Odabir grada</string>
     <string name="Plati">Plati</string>
+    <string name="title_activity_main">Parky</string>
 </resources>

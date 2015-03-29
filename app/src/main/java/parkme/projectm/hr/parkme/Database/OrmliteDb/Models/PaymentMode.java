@@ -14,7 +14,7 @@ public class PaymentMode {
     @DatabaseField(id = true)
     private int id;
     @DatabaseField
-    private String durationa;
+    private String duration;
     @DatabaseField
     private double price;
     @DatabaseField
@@ -27,9 +27,9 @@ public class PaymentMode {
     public PaymentMode(){
 
     }
-    public PaymentMode(int id, String durationa, double price, String sms_prefix, String sms_sufix, int id_zone) {
+    public PaymentMode(int id, String duration, double price, String sms_prefix, String sms_sufix, int id_zone) {
         this.id = id;
-        this.durationa = durationa;
+        this.duration = duration;
         this.price = price;
         this.sms_prefix = sms_prefix;
         this.sms_sufix = sms_sufix;
@@ -44,12 +44,12 @@ public class PaymentMode {
         this.id = id;
     }
 
-    public String getDurationa() {
-        return durationa;
+    public String getDuration() {
+        return duration;
     }
 
-    public void setDurationa(String durationa) {
-        this.durationa = durationa;
+    public void setDuration(String durationa) {
+        this.duration = durationa;
     }
 
     public double getPrice() {

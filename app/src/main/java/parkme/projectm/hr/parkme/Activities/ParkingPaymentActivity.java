@@ -13,7 +13,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONException;
@@ -28,16 +27,16 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
+import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.City;
+import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.ParkingZone;
+import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.PaymentMode;
+import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.PostCode;
 import parkme.projectm.hr.parkme.Dialogs.ConfirmPaymentDialog;
 import parkme.projectm.hr.parkme.Helpers.Constants;
 import parkme.projectm.hr.parkme.Helpers.GetRestService;
 import parkme.projectm.hr.parkme.Helpers.JavaJsonHelper;
 import parkme.projectm.hr.parkme.Helpers.LocationHelper.FallbackLocationTracker;
 import parkme.projectm.hr.parkme.Helpers.LocationHelper.GPSTracker;
-import parkme.projectm.hr.parkme.Models.City;
-import parkme.projectm.hr.parkme.Models.Option;
-import parkme.projectm.hr.parkme.Models.ParkingZone;
-import parkme.projectm.hr.parkme.Models.PostCode;
 import parkme.projectm.hr.parkme.R;
 
 import static android.widget.Toast.makeText;
@@ -50,10 +49,10 @@ public class ParkingPaymentActivity extends Activity {
     String response;
     List<City> cityList;
     List<ParkingZone> parkingZoneList;
-    List<Option> optionList;
+    List<PaymentMode> paymentModeList;
     Spinner citySpinner;
     Spinner zoneSpinner;
-    Spinner optionSpinner;
+    Spinner paymentModeSpinner;
 
 
     String[] cityNames;
@@ -88,7 +87,7 @@ public class ParkingPaymentActivity extends Activity {
         setContentView(R.layout.activity_parking_payment);
         citySpinner = (Spinner) findViewById(R.id.spinnerCity);
         zoneSpinner = (Spinner) findViewById(R.id.spinnerZone);
-        optionSpinner=(Spinner) findViewById(R.id.spinnerOption);
+        paymentModeSpinner =(Spinner) findViewById(R.id.spinnerOption);
         btnPay=(Button)findViewById(R.id.btnPayParking);
         favs=(CheckBox)findViewById(R.id.cbFavorites);
 
@@ -272,21 +271,21 @@ public class ParkingPaymentActivity extends Activity {
                         //If resault is OK
                         if (response != null) {
                             try {
-                                optionList = JavaJsonHelper.fromStringToOptionList(response);
-                                Log.d("ParkingZoneList....->", optionList.toString());
+                                paymentModeList = JavaJsonHelper.fromStringToOptionList(response);
+                                Log.d("ParkingZoneList....->", paymentModeList.toString());
                             } catch (JSONException e) {
                                 e.printStackTrace();
                                 finish();
                             }
                         }
 
-                        options = new String[optionList.size()];
+                        options = new String[paymentModeList.size()];
                         mapIdOption = new HashMap<String, Integer>();
 
                         //add zonenames to map and arrray
-                        for (int i = 0, z = optionList.size(); i < z; ++i) {
-                            options[i] = optionList.get(i).getDuration();
-                            mapIdOption.put(options[i], optionList.get(i).getId());
+                        for (int i = 0, z = paymentModeList.size(); i < z; ++i) {
+                            options[i] = paymentModeList.get(i).getDuration();
+                            mapIdOption.put(options[i], paymentModeList.get(i).getId());
                         }
 
                         //Add adapter
@@ -294,7 +293,7 @@ public class ParkingPaymentActivity extends Activity {
                         adapterOption.addAll(options);
                         adapterOption.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
-                        optionSpinner.setAdapter(adapterOption);
+                        paymentModeSpinner.setAdapter(adapterOption);
 
                     }
 

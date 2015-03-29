@@ -9,10 +9,10 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-import parkme.projectm.hr.parkme.Models.City;
-import parkme.projectm.hr.parkme.Models.Option;
-import parkme.projectm.hr.parkme.Models.ParkingZone;
-import parkme.projectm.hr.parkme.Models.PostCode;
+import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.City;
+import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.ParkingZone;
+import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.PaymentMode;
+import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.PostCode;
 
 
 public class JavaJsonHelper {
@@ -53,16 +53,16 @@ public class JavaJsonHelper {
 
     }
 
-    public static List<Option> fromStringToOptionList(String optionJson) throws JSONException {
+    public static List<PaymentMode> fromStringToOptionList(String paymentModeJson) throws JSONException {
         Gson gson = new Gson();
-        List<Option> zoneList = new ArrayList<>();
-        JSONArray jsonZones = new JSONObject(optionJson).getJSONArray("content");
+        List<PaymentMode> paymentModeListList = new ArrayList<>();
+        JSONArray jsonZones = new JSONObject(paymentModeJson).getJSONArray("content");
         for (int i = 0; i < jsonZones.length(); i++) {
-            zoneList.add(gson.fromJson(String.valueOf(jsonZones.getJSONObject(i)), Option.class));
+            paymentModeListList.add(gson.fromJson(String.valueOf(jsonZones.getJSONObject(i)), PaymentMode.class));
 
         }
 
-        return zoneList;
+        return paymentModeListList;
     }
 
 }
