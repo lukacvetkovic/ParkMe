@@ -247,6 +247,7 @@ public class ParkingPaymentActivity extends Activity {
 
                 zoneSpinner.setAdapter(adapterZone);
 
+
                 zoneSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
                     @Override
@@ -295,6 +296,10 @@ public class ParkingPaymentActivity extends Activity {
                         adapterOption.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
                         paymentModeSpinner.setAdapter(adapterOption);
+
+                        if(paymentModeList.size()==1){
+                            paymentModeSpinner.setFocusable(false);
+                        }
 
                     }
 
