@@ -1,7 +1,5 @@
 package parkme.projectm.hr.parkme.Database;
 
-import android.text.format.Time;
-
 import java.sql.Date;
 import java.util.List;
 
@@ -11,19 +9,47 @@ import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.PaymentMode;
 
 /**
  * Created by Cveki on 29.3.2015..
+ *
+ * API for database functionality in sms payment.
  */
 public interface SMSParkingApi {
 
-    //Get all city list
+    /**
+     * Gets all cities.
+     * @return List of all cities in table city.
+     */
     public List<City> getAllCities();
-    //Get parking zone list for a city
-    public List<ParkingZone>getAllParkingZonesFromCity(int IdCity);
-    //Get list of options for parking zone
-    public List<PaymentMode>getAllPaymentModesFromParkingZone(int IdParkingZone);
-    //Get price for parking zone
-    public float getPrice(Date date,int idParkingZone,int idOption);
-    //Get maxduration for parkingzone--> TODO do not know if Time class is OK!
-    public Time maxDuration(Date date,int IdParkingZone);
+
+    /**
+     * Return zones of a single city.
+     * @param idCity City to which zones belong to.
+     * @return Zones of selected city.
+     */
+    public List<ParkingZone>getAllParkingZonesFromCity(int idCity);
+
+    /**
+     * Returns payment modes for single zone.
+     * Payment mode example: Park for 1h, for a maximum of 3h.
+     * @param idParkingZone Zone to which payment mode belongs to.
+     * @return List of payment modes for zone.
+     */
+    public List<PaymentMode>getAllPaymentModesFromParkingZone(int idParkingZone);
+
+    /**
+     * Calculates price for payment mode.
+     * @param date Date and time.
+     * @param idPaymentMode Payment mode id.
+     * @return Price for selected payment mode at single moment.
+     */
+    public float getPrice(Date date, int idPaymentMode);
+
+    /**
+     * Returns max parking duration for selected date in zone.
+     * @param date Date and time.
+     * @param idParkingZone Parking zone id.
+     * @return Max parking duration for selected date in zone.
+     */
+    public Date getMaxDuration(Date date, int idParkingZone);
 
 
 }

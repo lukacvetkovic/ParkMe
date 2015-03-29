@@ -7,7 +7,19 @@ package parkme.projectm.hr.parkme.Database.OrmliteDb;
 
 import android.content.Context;
 
-public class DatabaseManager {
+import java.sql.Date;
+import java.sql.SQLException;
+import java.util.List;
+
+import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.City;
+import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.ParkingZone;
+import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.PaymentMode;
+import parkme.projectm.hr.parkme.Database.SMSParkingApi;
+
+/**
+ * Interface to database using OrmLite.
+ */
+public class DatabaseManager implements SMSParkingApi{
 
     static private DatabaseManager instance;
     private static OrmLiteDatabaseHelper helper;
@@ -31,4 +43,36 @@ public class DatabaseManager {
     }
 
 
+    @Override
+    public List<City> getAllCities() {
+        return helper.getRuntimeCityDao().queryForAll();
+    }
+
+    @Override
+    public List<ParkingZone> getAllParkingZonesFromCity(int idCity) {
+        try {
+            return helper.getRuntimeParkingZoneDao().queryBuilder().where().eq("id_city", new Integer(idCity)).query();
+        } catch (SQLException e) {
+            return null;
+        }
+    }
+
+    @Override
+    public List<PaymentMode> getAllPaymentModesFromParkingZone(int idParkingZone) {
+        try {
+            return helper.getRuntimePaymentModeDao().queryBuilder().where().eq("id_zone", new Integer(idParkingZone)).query();
+        } catch (SQLException e) {
+            return null;
+        }
+    }
+
+    @Override
+    public float getPrice(Date date, int idParkingZone, int idPaymentMode) {
+        return 0;
+    }
+
+    @Override
+    public Date getMaxDuration(Date date, int idParkingZone) {
+        return null;
+    }
 }
