@@ -1,0 +1,86 @@
+#
+# generated on 2015/03/29 04:08:46
+#
+# --table-start--
+dataClass=parkme.projectm.hr.parkme.Database.OrmliteDb.Models.City
+tableName=city
+# --table-fields-start--
+# --field-start--
+fieldName=id
+id=true
+# --field-end--
+# --field-start--
+fieldName=name
+# --field-end--
+# --table-fields-end--
+# --table-end--
+#################################
+# --table-start--
+dataClass=parkme.projectm.hr.parkme.Database.OrmliteDb.Models.Marker
+tableName=marker
+# --table-fields-start--
+# --field-start--
+fieldName=id
+id=true
+# --field-end--
+# --field-start--
+fieldName=lat
+# --field-end--
+# --field-start--
+fieldName=lng
+# --field-end--
+# --field-start--
+fieldName=id_zone
+# --field-end--
+# --table-fields-end--
+# --table-end--
+#################################
+# --table-start--
+dataClass=parkme.projectm.hr.parkme.Database.OrmliteDb.Models.ParkingZone
+tableName=parking_zone
+# --table-fields-start--
+# --field-start--
+fieldName=id
+id=true
+# --field-end--
+# --field-start--
+fieldName=name
+# --field-end--
+# --field-start--
+fieldName=phone_number
+# --field-end--
+# --field-start--
+fieldName=id_city
+# --field-end--
+# --table-fields-end--
+# --table-end--
+#################################
+# --table-start--
+dataClass=parkme.projectm.hr.parkme.Database.OrmliteDb.Models.PaymentMode
+tableName=payment_mode
+# --table-fields-start--
+# --field-start--
+fieldName=id
+id=true
+# --field-end--
+# --field-start--
+fieldName=duration
+# --field-end--
+# --field-start--
+fieldName=price
+# --field-end--
+# --field-start--
+fieldName=max_duration
+# --field-end--
+# --field-start--
+fieldName=sms_prefix
+# --field-end--
+# --field-start--
+fieldName=sms_sufix
+# --field-end--
+# --field-start--
+fieldName=id_zone
+# --field-end--
+# --table-fields-end--
+# --table-end--
+#################################
