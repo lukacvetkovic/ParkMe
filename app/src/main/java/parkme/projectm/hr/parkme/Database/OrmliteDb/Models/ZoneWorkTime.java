@@ -13,13 +13,13 @@ public class ZoneWorkTime {
     @DatabaseField(id = true, generatedId = false)
     private int id;
     @DatabaseField
-    private int idCalendar;
+    private int id_calendar;
     @DatabaseField
-    private Date day;
+    private Date day_name;
     @DatabaseField
-    private Date timeFrom;
+    private Date time_from;
     @DatabaseField
-    private Date timeTo;
+    private Date time_to;
 
     public ZoneWorkTime() {
 
@@ -27,10 +27,10 @@ public class ZoneWorkTime {
 
     public ZoneWorkTime(int id, int idCalendar, Date day, Date timeFrom, Date timeTo) {
         this.id = id;
-        this.idCalendar = idCalendar;
-        this.day = day;
-        this.timeFrom = timeFrom;
-        this.timeTo = timeTo;
+        this.id_calendar = idCalendar;
+        this.day_name = day;
+        this.time_from = timeFrom;
+        this.time_to = timeTo;
     }
 
     public int getId() {
@@ -41,35 +41,35 @@ public class ZoneWorkTime {
         this.id = id;
     }
 
-    public int getIdCalendar() {
-        return idCalendar;
+    public int getId_calendar() {
+        return id_calendar;
     }
 
-    public void setIdCalendar(int idCalendar) {
-        this.idCalendar = idCalendar;
+    public void setId_calendar(int id_calendar) {
+        this.id_calendar = id_calendar;
     }
 
     public Date getDay() {
-        return day;
+        return day_name;
     }
 
     public void setDay(Date day) {
-        this.day = day;
+        this.day_name = day;
     }
 
-    public Date getTimeFrom() {
-        return timeFrom;
+    public Date getTime_from() {
+        return time_from;
     }
 
-    public void setTimeFrom(Date timeFrom) {
-        this.timeFrom = timeFrom;
+    public void setTime_from(Date time_from) {
+        this.time_from = time_from;
     }
 
     public Date getTimeTo() {
-        return timeTo;
+        return time_to;
     }
 
     public void setTimeTo(Date timeTo) {
-        this.timeTo = timeTo;
+        this.time_to = timeTo;
     }
 }

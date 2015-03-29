@@ -4,7 +4,11 @@ package parkme.projectm.hr.parkme.Database.OrmliteDb.Models;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 /**
  * Model of payment mode.
@@ -16,9 +20,7 @@ public class PaymentMode {
     @DatabaseField(id = true)
     private int id;
     @DatabaseField
-    private Date duration;
-    @DatabaseField
-    private double price;
+    private String duration;
     @DatabaseField
     private String sms_prefix;
     @DatabaseField
@@ -29,14 +31,15 @@ public class PaymentMode {
     public PaymentMode(){
 
     }
-    public PaymentMode(int id, Date duration, double price, String sms_prefix, String sms_sufix, int id_zone) {
+
+    public PaymentMode(int id, String duration, String sms_prefix, String sms_sufix, int id_zone) {
         this.id = id;
         this.duration = duration;
-        this.price = price;
         this.sms_prefix = sms_prefix;
         this.sms_sufix = sms_sufix;
         this.id_zone = id_zone;
     }
+
 
     public int getId() {
         return id;
@@ -46,20 +49,12 @@ public class PaymentMode {
         this.id = id;
     }
 
-    public Date getDuration() {
+    public String getDuration() {
         return duration;
     }
 
-    public void setDuration(Date duration) {
+    public void setDuration(String duration) {
         this.duration = duration;
-    }
-
-    public double getPrice() {
-        return price;
-    }
-
-    public void setPrice(double price) {
-        this.price = price;
     }
 
     public String getSms_prefix() {

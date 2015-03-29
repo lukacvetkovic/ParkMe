@@ -13,9 +13,9 @@ public class PostCode {
     @DatabaseField(id = true, generatedId = false)
     private int id;
     @DatabaseField
-    private int idCity;
+    private int id_city;
     @DatabaseField
-    private String postCode;
+    private String post_code;
 
 
     public PostCode(){
@@ -24,8 +24,8 @@ public class PostCode {
 
     public PostCode(int id, int idCity, String postCode) {
         this.id = id;
-        this.idCity = idCity;
-        this.postCode = postCode;
+        this.id_city = idCity;
+        this.post_code = postCode;
     }
 
     public int getId() {
@@ -36,19 +36,19 @@ public class PostCode {
         this.id = id;
     }
 
-    public int getIdCity() {
-        return idCity;
+    public int getId_city() {
+        return id_city;
     }
 
-    public void setIdCity(int idCity) {
-        this.idCity = idCity;
+    public void setId_city(int idCity) {
+        this.id_city = id_city;
     }
 
     public String getPostCode() {
-        return postCode;
+        return post_code;
     }
 
     public void setPostCode(String postCode) {
-        this.postCode = postCode;
+        this.post_code = postCode;
     }
 }

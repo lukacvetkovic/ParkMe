@@ -70,7 +70,7 @@ fieldName=id
 id=true
 # --field-end--
 # --field-start--
-fieldName=idCity
+fieldName=id_city
 # --field-end--
 # --field-start--
 fieldName=postCode
@@ -87,13 +87,13 @@ fieldName=id
 id=true
 # --field-end--
 # --field-start--
-fieldName=idZone
+fieldName=id_zone
 # --field-end--
 # --field-start--
-fieldName=dateFrom
+fieldName=date_from
 # --field-end--
 # --field-start--
-fieldName=dateTo
+fieldName=date_to
 # --field-end--
 # --table-fields-end--
 # --table-end--
@@ -107,13 +107,13 @@ fieldName=id
 id=true
 # --field-end--
 # --field-start--
-fieldName=idCalendar
+fieldName=id_calendar
 # --field-end--
 # --field-start--
 fieldName=day
 # --field-end--
 # --field-start--
-fieldName=timeFrom
+fieldName=time_from
 # --field-end--
 # --field-start--
 fieldName=timeTo
@@ -136,7 +136,7 @@ fieldName=idPaymentMode
 fieldName=idZoneWorkTime
 # --field-end--
 # --field-start--
-fieldName=priceTrimmed
+fieldName=price_trimmed
 # --field-end--
 # --field-start--
 fieldName=priceDecimal
