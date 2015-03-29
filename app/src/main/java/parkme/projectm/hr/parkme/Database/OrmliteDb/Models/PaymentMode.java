@@ -1,23 +1,22 @@
 package parkme.projectm.hr.parkme.Database.OrmliteDb.Models;
 
-import android.text.format.Time;
 
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
 /**
- * Created by Cveki on 11.2.2015..
+ * Model of payment mode.
+ *
+ * Created by Adriano Bacac on 29.03.15..
  */
 @DatabaseTable(tableName = "payment_mode")
 public class PaymentMode {
     @DatabaseField(id = true)
     private int id;
     @DatabaseField
-    private Time duration;
+    private String durationa;
     @DatabaseField
     private double price;
-    @DatabaseField
-    private Time max_duration;
     @DatabaseField
     private String sms_prefix;
     @DatabaseField
@@ -25,11 +24,13 @@ public class PaymentMode {
     @DatabaseField
     private int id_zone;
 
-    public PaymentMode(int id, Time duration, double price, Time max_duration, String sms_prefix, String sms_sufix, int id_zone) {
+    public PaymentMode(){
+
+    }
+    public PaymentMode(int id, String durationa, double price, String sms_prefix, String sms_sufix, int id_zone) {
         this.id = id;
-        this.duration = duration;
+        this.durationa = durationa;
         this.price = price;
-        this.max_duration = max_duration;
         this.sms_prefix = sms_prefix;
         this.sms_sufix = sms_sufix;
         this.id_zone = id_zone;
@@ -43,12 +44,12 @@ public class PaymentMode {
         this.id = id;
     }
 
-    public Time getDuration() {
-        return duration;
+    public String getDurationa() {
+        return durationa;
     }
 
-    public void setDuration(Time duration) {
-        this.duration = duration;
+    public void setDurationa(String durationa) {
+        this.durationa = durationa;
     }
 
     public double getPrice() {
@@ -57,14 +58,6 @@ public class PaymentMode {
 
     public void setPrice(double price) {
         this.price = price;
-    }
-
-    public Time getMax_duration() {
-        return max_duration;
-    }
-
-    public void setMax_duration(Time max_duration) {
-        this.max_duration = max_duration;
     }
 
     public String getSms_prefix() {

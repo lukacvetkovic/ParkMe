@@ -4,7 +4,9 @@ import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
 /**
- * Created by Cveki on 11.2.2015..
+ * Model of parking zone.
+ *
+ * Created by Adriano Bacac on 29.03.15..
  */
 @DatabaseTable(tableName = "parking_zone")
 public class ParkingZone {
@@ -16,6 +18,10 @@ public class ParkingZone {
     private String phone_number;
     @DatabaseField
     private int id_city;
+
+    public ParkingZone(){
+
+    }
 
     public ParkingZone(int id, String name, String phone_number, int id_city) {
         this.id = id;

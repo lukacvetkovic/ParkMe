@@ -3,18 +3,21 @@ package parkme.projectm.hr.parkme.Database.OrmliteDb.Models;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
-import java.util.List;
-
 /**
- * Created by Cveki on 11.2.2015..
+ * Model of city.
+ *
+ * Created by Adriano Bacac on 29.03.15..
  */
 @DatabaseTable(tableName = "city")
 public class City {
-    @DatabaseField(id = true)
+    @DatabaseField(id = true, generatedId = false)
     private int id;
     @DatabaseField
     private String name;
 
+    public City(){
+
+    }
     public City(int id, String name) {
         this.id = id;
         this.name = name;
