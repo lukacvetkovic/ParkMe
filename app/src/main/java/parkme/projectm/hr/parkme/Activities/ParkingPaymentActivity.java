@@ -327,11 +327,37 @@ public class ParkingPaymentActivity extends Activity {
                 //Radi
                 //SMSHelper.sendSMS("0913020800","BOK, ti si najpametniji, covjece =)");
 
-                Date now= new Date();
 
-                Log.d("VRIJEME", now.toString());
+
+                String city=citySpinner.getSelectedItem().toString();
+                Log.d("Grad->",city);
+
+                String zone=zoneSpinner.getSelectedItem().toString();
+                Log.d("Zona->",zone);
+
+                float price= 71.15f;//TODO treba koristit API
+                Log.d("Cijena->",String.valueOf(price));
+
+                String duration=paymentModeSpinner.getSelectedItem().toString();
+                Log.d("Trajanje->",duration);
+
+                String maxDuration=new Date().toLocaleString();
+                Log.d("Maksimalno trajanje->",maxDuration);
+
+
+                int parkingZoneId=mapIdZone.get(zoneSpinner.getSelectedItem().toString());
 
                 DialogFragment pay= new ConfirmPaymentDialog();
+                // Supply num input as an argument.
+                Bundle args = new Bundle();
+
+                args.putString("city", city);
+                args.putString("zone", zone);
+                args.putFloat("price", price);
+                args.putString("duration", duration);
+                args.putString("maxDuration", maxDuration);
+
+                pay.setArguments(args);
                 pay.show(getFragmentManager(),"Plačanje");
 
             }

@@ -7,4 +7,9 @@
     <string name="OdabirGrada">Odabir grada</string>
     <string name="Plati">Plati</string>
     <string name="title_activity_main">Parky</string>
+    <string name="Vrijeme">Vrijeme</string>
+    <string name="Grad">Grad</string>
+    <string name="ParkinZona">Parking zona</string>
+    <string name="Cijena">Cijena</string>
+    <string name="OdabranoTrajanje">Odabrano trajanje</string>
 </resources>
