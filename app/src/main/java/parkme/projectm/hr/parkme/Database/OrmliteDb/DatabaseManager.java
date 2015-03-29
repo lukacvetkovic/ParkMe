@@ -67,7 +67,7 @@ public class DatabaseManager implements SMSParkingApi{
     }
 
     @Override
-    public float getPrice(Date date, int idParkingZone, int idPaymentMode) {
+    public float getPrice(Date date, int idPaymentMode) {
         return 0;
     }
 
