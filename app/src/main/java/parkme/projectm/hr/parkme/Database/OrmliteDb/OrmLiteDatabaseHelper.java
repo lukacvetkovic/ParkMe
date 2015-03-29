@@ -17,6 +17,9 @@ import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.City;
 import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.ParkingZone;
 import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.PaymentMode;
 import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.PostCode;
+import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.ZoneCalendar;
+import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.ZonePrice;
+import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.ZoneWorkTime;
 import parkme.projectm.hr.parkme.R;
 /**
  * Database helper class used to manage the creation and upgrading of your database.
@@ -46,6 +49,9 @@ public class OrmLiteDatabaseHelper extends OrmLiteSqliteOpenHelper {
             TableUtils.createTable(connectionSource, ParkingZone.class);
             TableUtils.createTable(connectionSource, PaymentMode.class);
             TableUtils.createTable(connectionSource, PostCode.class);
+            TableUtils.createTable(connectionSource, ZoneCalendar.class);
+            TableUtils.createTable(connectionSource, ZonePrice.class);
+            TableUtils.createTable(connectionSource, ZoneWorkTime.class);
         } catch (SQLException e) {
             Log.e(OrmLiteDatabaseHelper.class.getName(), "Can't create database", e);
             throw new RuntimeException(e);
@@ -64,6 +70,9 @@ public class OrmLiteDatabaseHelper extends OrmLiteSqliteOpenHelper {
             TableUtils.dropTable(connectionSource, ParkingZone.class, true);
             TableUtils.dropTable(connectionSource, PaymentMode.class, true);
             TableUtils.dropTable(connectionSource, PostCode.class, true);
+            TableUtils.dropTable(connectionSource, ZoneCalendar.class, true);
+            TableUtils.dropTable(connectionSource, ZonePrice.class, true);
+            TableUtils.dropTable(connectionSource, ZoneWorkTime.class, true);
             // after we drop the old databases, we create the new ones
             onCreate(db, connectionSource);
         } catch (SQLException e) {
@@ -84,6 +93,18 @@ public class OrmLiteDatabaseHelper extends OrmLiteSqliteOpenHelper {
     // the DAO object we use to access the payment_mode table
     private Dao<PaymentMode, Integer> paymentModeDao = null;
     private RuntimeExceptionDao<PaymentMode, Integer> paymentModeRuntimeDao = null;
+
+    // the DAO object we use to access the zone_calendar table
+    private Dao<ZoneCalendar, Integer> zoneCalendarDao = null;
+    private RuntimeExceptionDao<ZoneCalendar, Integer> zoneCalendarRuntimeDao = null;
+
+    // the DAO object we use to access the zone_price table
+    private Dao<ZonePrice, Integer> zonePriceDao = null;
+    private RuntimeExceptionDao<ZonePrice, Integer> zonePriceRuntimeDao = null;
+
+    // the DAO object we use to access the zone_work_time table
+    private Dao<ZoneWorkTime, Integer> zoneWorkTimeDao = null;
+    private RuntimeExceptionDao<ZoneWorkTime, Integer> zoneWorkTimeRuntimeDao = null;
 
 
     /**
@@ -152,6 +173,73 @@ public class OrmLiteDatabaseHelper extends OrmLiteSqliteOpenHelper {
         }
         return paymentModeRuntimeDao;
     }
+    /**
+     * Returns the Database Access Object (DAO) for our ZoneCalendar class. It will create it or just give the cached
+     * value.
+     */
+    public Dao<ZoneCalendar, Integer> getZoneCalendarDao() throws SQLException {
+        if (zoneCalendarDao == null) {
+            zoneCalendarDao = getDao(ZoneCalendar.class);
+        }
+        return zoneCalendarDao;
+    }
+
+    /**
+     * Returns the RuntimeExceptionDao (Database Access Object) version of a Dao for our ZoneCalendar class. It will
+     * create it or just give the cached value. RuntimeExceptionDao only through RuntimeExceptions.
+     */
+    public RuntimeExceptionDao<ZoneCalendar, Integer> getRuntimeZoneCalendarDao() {
+        if (zoneCalendarRuntimeDao == null) {
+            zoneCalendarRuntimeDao = getRuntimeExceptionDao(ZoneCalendar.class);
+        }
+        return zoneCalendarRuntimeDao;
+    }
+
+    /**
+     * Returns the Database Access Object (DAO) for our ZoneWorkTime class. It will create it or just give the cached
+     * value.
+     */
+    public Dao<ZoneWorkTime, Integer> getZoneWorkTimeDao() throws SQLException {
+        if (zoneWorkTimeDao == null) {
+            zoneWorkTimeDao = getDao(ZoneWorkTime.class);
+        }
+        return zoneWorkTimeDao;
+    }
+
+    /**
+     * Returns the RuntimeExceptionDao (Database Access Object) version of a Dao for our ZoneWorkTime class. It will
+     * create it or just give the cached value. RuntimeExceptionDao only through RuntimeExceptions.
+     */
+    public RuntimeExceptionDao<ZoneWorkTime, Integer> getRuntimeZoneWorkTimeDao() {
+        if (zoneWorkTimeRuntimeDao == null) {
+            zoneWorkTimeRuntimeDao = getRuntimeExceptionDao(ZoneWorkTime.class);
+        }
+        return zoneWorkTimeRuntimeDao;
+    }
+
+    /**
+     * Returns the Database Access Object (DAO) for our ZonePrice class. It will create it or just give the cached
+     * value.
+     */
+    public Dao<ZonePrice, Integer> getZonePriceDao() throws SQLException {
+        if (zonePriceDao == null) {
+            zonePriceDao = getDao(ZonePrice.class);
+        }
+        return zonePriceDao;
+    }
+
+    /**
+     * Returns the RuntimeExceptionDao (Database Access Object) version of a Dao for our ZonePrice class. It will
+     * create it or just give the cached value. RuntimeExceptionDao only through RuntimeExceptions.
+     */
+    public RuntimeExceptionDao<ZonePrice, Integer> getRuntimeZonePriceDao() {
+        if (zonePriceRuntimeDao == null) {
+            zonePriceRuntimeDao = getRuntimeExceptionDao(ZonePrice.class);
+        }
+        return zonePriceRuntimeDao;
+    }
+
+
     /**
      * Close the database connections and clear any cached DAOs.
      */

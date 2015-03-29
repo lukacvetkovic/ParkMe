@@ -4,6 +4,8 @@ package parkme.projectm.hr.parkme.Database.OrmliteDb.Models;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
+import java.util.Date;
+
 /**
  * Model of payment mode.
  *
@@ -14,7 +16,7 @@ public class PaymentMode {
     @DatabaseField(id = true)
     private int id;
     @DatabaseField
-    private String duration;
+    private Date duration;
     @DatabaseField
     private double price;
     @DatabaseField
@@ -27,7 +29,7 @@ public class PaymentMode {
     public PaymentMode(){
 
     }
-    public PaymentMode(int id, String duration, double price, String sms_prefix, String sms_sufix, int id_zone) {
+    public PaymentMode(int id, Date duration, double price, String sms_prefix, String sms_sufix, int id_zone) {
         this.id = id;
         this.duration = duration;
         this.price = price;
@@ -44,12 +46,12 @@ public class PaymentMode {
         this.id = id;
     }
 
-    public String getDuration() {
+    public Date getDuration() {
         return duration;
     }
 
-    public void setDuration(String durationa) {
-        this.duration = durationa;
+    public void setDuration(Date duration) {
+        this.duration = duration;
     }
 
     public double getPrice() {

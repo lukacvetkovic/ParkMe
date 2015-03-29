@@ -7,6 +7,9 @@ import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.City;
 import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.ParkingZone;
 import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.PaymentMode;
 import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.PostCode;
+import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.ZoneCalendar;
+import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.ZonePrice;
+import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.ZoneWorkTime;
 
 /**
  * Created by Adriano Bacac on 29.03.15..
@@ -16,7 +19,10 @@ public class DatabaseConfigUtil extends OrmLiteConfigUtil {
             City.class,
             ParkingZone.class,
             PaymentMode.class,
-            PostCode.class
+            PostCode.class,
+            ZoneCalendar.class,
+            ZoneWorkTime.class,
+            ZonePrice.class
     };
     public static void main(String[] args) throws Exception {
         writeConfigFile("ormlite_config", classes);
