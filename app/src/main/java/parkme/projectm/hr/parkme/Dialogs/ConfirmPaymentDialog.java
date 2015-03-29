@@ -95,7 +95,7 @@ public class ConfirmPaymentDialog extends DialogFragment {
 
                 PaymentMode paymentMode = new PaymentMode(1,"1","","",1); /*TODO uzmi iz baze po ID-u*/
 
-                String message = paymentMode.getSms_prefix()+" "+carPlate+" "+paymentMode.getSms_sufix();
+                String message = paymentMode.getSmsPrefix()+" "+carPlate+" "+paymentMode.getSmsSufix();
 
                 //SMSHelper.sendSMS(parkingZoneNumber, "BOK, ti si najpametniji, covjece =)");
                 parkingZoneNumber="MOCKANI BROJ";

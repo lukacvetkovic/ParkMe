@@ -53,26 +53,11 @@ public class MainMenuActivity extends Activity{
         parking.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                OrmLiteDatabaseHelper helper = DatabaseManager.getHelper();
-
-                Log.d(String.valueOf(i), "i");
-                try {
-                    helper.getCityDao().createOrUpdate(new City(i, "Zagreb" + i));
-                    i++;
-                    List<City>cities = helper.getCityDao().queryForAll();
-                    for(City city:cities){
-                        Log.d("grad: ", String.valueOf(city.getId()));
-                    }
-                } catch (Exception e) {
-                    Log.d(e.getMessage(), "Error message");
-                    e.printStackTrace();
-                }
-                /*
                 Class ourClass = null;
                 ourClass =ParkingMenuActivity.class;
                 Intent ourIntent = new Intent(MainMenuActivity.this, ourClass);
-                startActivity(ourIntent)
-                */;
+                startActivity(ourIntent);
+
             }
         });
 
