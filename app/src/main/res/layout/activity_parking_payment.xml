@@ -33,6 +33,28 @@
                 android:id="@+id/spinnerZone"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content" />
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:text="Odabir opcije" />
+
+            <Spinner
+                android:id="@+id/spinnerOption"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content" />
+
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/cbFavorites"
+                android:text="Dodaj u favorite"/>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/btnPayParking"
+                android:text="@string/Plati"/>
         </LinearLayout>
 
 

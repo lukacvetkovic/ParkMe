@@ -69,8 +69,6 @@ public class ParkingPaymentActivity extends Activity {
     String selectedCity;
     String selectedOption;
 
-
-    TextView tvOption;
     Button btnPay;
     CheckBox favs;
 
@@ -91,7 +89,6 @@ public class ParkingPaymentActivity extends Activity {
         citySpinner = (Spinner) findViewById(R.id.spinnerCity);
         zoneSpinner = (Spinner) findViewById(R.id.spinnerZone);
         optionSpinner=(Spinner) findViewById(R.id.spinnerOption);
-        tvOption=(TextView)findViewById(R.id.tvOption);
         btnPay=(Button)findViewById(R.id.btnPayParking);
         favs=(CheckBox)findViewById(R.id.cbFavorites);
 
