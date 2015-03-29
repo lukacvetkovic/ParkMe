@@ -316,17 +316,8 @@ public class ParkingPaymentActivity extends Activity {
         btnPay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /*Context context = getApplicationContext();
-                CharSequence text = "Placanje";
-                int duration = Toast.LENGTH_LONG;
-
-
-                Toast toast = Toast.makeText(context, text, duration);
-                toast.show();*/
-
                 //Radi
                 //SMSHelper.sendSMS("0913020800","BOK, ti si najpametniji, covjece =)");
-
 
 
                 String city=citySpinner.getSelectedItem().toString();
@@ -346,6 +337,7 @@ public class ParkingPaymentActivity extends Activity {
 
 
                 int parkingZoneId=mapIdZone.get(zoneSpinner.getSelectedItem().toString());
+                int parkingMethodId=mapIdOption.get(paymentModeSpinner.getSelectedItem().toString());
 
                 DialogFragment pay= new ConfirmPaymentDialog();
                 // Supply num input as an argument.
@@ -356,6 +348,8 @@ public class ParkingPaymentActivity extends Activity {
                 args.putFloat("price", price);
                 args.putString("duration", duration);
                 args.putString("maxDuration", maxDuration);
+                args.putInt("parkingZoneId",parkingZoneId);
+                args.putInt("parkingMethodId",parkingMethodId);
 
                 pay.setArguments(args);
                 pay.show(getFragmentManager(),"Plačanje");

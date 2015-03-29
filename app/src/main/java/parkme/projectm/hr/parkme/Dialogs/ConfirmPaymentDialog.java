@@ -8,8 +8,9 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.widget.TextView;
 
-import org.apache.http.client.params.ClientPNames;
+import java.util.Date;
 
+import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.ParkingZone;
 import parkme.projectm.hr.parkme.R;
 
 /**
@@ -31,6 +32,8 @@ public class ConfirmPaymentDialog extends DialogFragment {
     String maxDuarton;
     String carPlate;
     String parkingZoneNumber;
+    int parkingZoneId;
+    int parkingMethodId;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -42,6 +45,26 @@ public class ConfirmPaymentDialog extends DialogFragment {
         tvDuration=(TextView)getView().findViewById(R.id.tvDuration);
         tvMaxDuration=(TextView)getView().findViewById(R.id.tvMaxDuration);
 
+
+        city=getArguments().getString("city");
+        parkingZone=getArguments().getString("zone");
+        price=getArguments().getFloat("price");
+        duration=getArguments().getString("duration");
+        maxDuarton=getArguments().getString("maxDuration");
+        parkingZoneId=getArguments().getInt("parkingZoneId");
+        parkingMethodId=getArguments().getInt("parkingMethodId");
+
+        Date date = new Date();
+        tvTime.setText(date.getHours()+":"+date.getMinutes());
+        tvCity.setText(city);
+        tvParkingZone.setText(parkingZone);
+        tvPrice.setText(String.valueOf(price));
+        tvDuration.setText(duration);
+        tvMaxDuration.setText(maxDuarton);
+
+        carPlate=/*TODO dohvti iz share prefs*/"ZG636FH";
+
+        /*ParkingZone parkingZone=TODO iz aplija dohvati po id-u*/
 
     }
 
