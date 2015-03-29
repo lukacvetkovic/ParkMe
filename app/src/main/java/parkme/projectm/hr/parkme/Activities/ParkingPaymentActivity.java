@@ -153,7 +153,7 @@ public class ParkingPaymentActivity extends Activity {
         //If location not null set spinner to city
         if (mylocation != null) {
             Geocoder gcd = new Geocoder(this, Locale.getDefault());
-            List<Address> addresses = null;
+            List<Address> addresses = new ArrayList<>();
             try {
                 addresses = gcd.getFromLocation(mylocation.getLatitude(), mylocation.getLongitude(), 1);
             } catch (IOException e) {
@@ -177,7 +177,7 @@ public class ParkingPaymentActivity extends Activity {
                     String cityName = null;
                     PostCode postCode = JavaJsonHelper.fromJsonToIdPostCode(response);
                     for (Map.Entry<String, Integer> entry : mapIdCity.entrySet()) {
-                        if (postCode.getIdCity() == (entry.getValue())) {
+                        if (postCode.getId_city() == (entry.getValue())) {
                             cityName = entry.getKey();
                         }
                     }
@@ -191,7 +191,6 @@ public class ParkingPaymentActivity extends Activity {
                 Log.d("NIJE USPJELO", "!!!!!!!");
                 Toast toast = makeText(this, "Neuspjelo dohvačanje podataka", Toast.LENGTH_LONG);
                 toast.show();
-                finish();
             }
 
         }

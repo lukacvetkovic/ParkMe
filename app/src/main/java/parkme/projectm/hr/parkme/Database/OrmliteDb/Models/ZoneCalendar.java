@@ -13,11 +13,11 @@ public class ZoneCalendar {
     @DatabaseField(id = true, generatedId = false)
     private int id;
     @DatabaseField
-    private int idZone;
+    private int id_zone;
     @DatabaseField
-    private Date dateFrom;
+    private Date date_from;
     @DatabaseField
-    private Date dateTo;
+    private Date date_to;
 
     public ZoneCalendar(){
 
@@ -25,33 +25,33 @@ public class ZoneCalendar {
 
     public ZoneCalendar(int id, int idZone, Date dateFrom, Date dateTo) {
         this.id = id;
-        this.idZone = idZone;
-        this.dateFrom = dateFrom;
-        this.dateTo = dateTo;
+        this.id_zone = idZone;
+        this.date_from = dateFrom;
+        this.date_to = dateTo;
     }
 
     public int getIdZone() {
-        return idZone;
+        return id_zone;
     }
 
     public void setIdZone(int idZone) {
-        this.idZone = idZone;
+        this.id_zone = idZone;
     }
 
     public Date getDateFrom() {
-        return dateFrom;
+        return date_from;
     }
 
     public void setDateFrom(Date dateFrom) {
-        this.dateFrom = dateFrom;
+        this.date_from = dateFrom;
     }
 
     public Date getDateTo() {
-        return dateTo;
+        return date_to;
     }
 
     public void setDateTo(Date dateTo) {
-        this.dateTo = dateTo;
+        this.date_to = dateTo;
     }
 
     public int getId() {
