@@ -1,4 +1,4 @@
-package parkme.projectm.hr.parkme.Database.DbModels;
+package parkme.projectm.hr.parkme.Database.SqlHardCore.DbModels;
 
 import java.util.Date;
 

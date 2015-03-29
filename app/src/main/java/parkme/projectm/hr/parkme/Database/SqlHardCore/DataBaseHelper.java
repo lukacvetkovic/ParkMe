@@ -1,17 +1,16 @@
-package parkme.projectm.hr.parkme.Database;
+package parkme.projectm.hr.parkme.Database.SqlHardCore;
 
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-import parkme.projectm.hr.parkme.Database.DbModels.ZonePrice;
+import parkme.projectm.hr.parkme.Database.SqlHardCore.DbModels.ZonePrice;
 
 
 public class DataBaseHelper extends SQLiteOpenHelper{

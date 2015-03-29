@@ -1,4 +1,4 @@
-package parkme.projectm.hr.parkme.Database.OrmliteDb.Models;
+package parkme.projectm.hr.parkme.Database;
 
 /**
  * Created by Adriano Bacac on 29.03.15..
