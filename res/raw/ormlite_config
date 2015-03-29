@@ -1,5 +1,5 @@
 #
-# generated on 2015/03/29 03:54:59
+# generated on 2015/03/29 04:29:28
 #
 # --table-start--
 dataClass=parkme.projectm.hr.parkme.Database.OrmliteDb.Models.City
@@ -47,9 +47,6 @@ id=true
 fieldName=duration
 # --field-end--
 # --field-start--
-fieldName=price
-# --field-end--
-# --field-start--
 fieldName=sms_prefix
 # --field-end--
 # --field-start--
@@ -73,7 +70,7 @@ id=true
 fieldName=id_city
 # --field-end--
 # --field-start--
-fieldName=postCode
+fieldName=post_code
 # --field-end--
 # --table-fields-end--
 # --table-end--
@@ -110,13 +107,13 @@ id=true
 fieldName=id_calendar
 # --field-end--
 # --field-start--
-fieldName=day
+fieldName=day_name
 # --field-end--
 # --field-start--
 fieldName=time_from
 # --field-end--
 # --field-start--
-fieldName=timeTo
+fieldName=time_to
 # --field-end--
 # --table-fields-end--
 # --table-end--
@@ -130,16 +127,16 @@ fieldName=id
 id=true
 # --field-end--
 # --field-start--
-fieldName=idPaymentMode
+fieldName=id_payment_mode
 # --field-end--
 # --field-start--
-fieldName=idZoneWorkTime
+fieldName=id_zone_work_time
 # --field-end--
 # --field-start--
 fieldName=price_trimmed
 # --field-end--
 # --field-start--
-fieldName=priceDecimal
+fieldName=price_decimal
 # --field-end--
 # --field-start--
 fieldName=currency

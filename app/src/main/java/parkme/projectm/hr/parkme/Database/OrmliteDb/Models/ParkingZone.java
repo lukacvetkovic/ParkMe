@@ -54,11 +54,11 @@ public class ParkingZone {
         this.phone_number = phone_number;
     }
 
-    public int getId_city() {
+    public int getIdCity() {
         return id_city;
     }
 
-    public void setId_city(int id_city) {
-        this.id_city = id_city;
+    public void setIdCity(int idCity) {
+        this.id_city = idCity;
     }
 }

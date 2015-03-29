@@ -1,6 +1,6 @@
 package parkme.projectm.hr.parkme.Database;
 
-import java.sql.Date;
+import java.util.Date;
 import java.util.List;
 
 import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.City;

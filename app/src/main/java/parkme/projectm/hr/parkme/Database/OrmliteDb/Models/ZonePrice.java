@@ -70,11 +70,11 @@ public class ZonePrice {
         this.id_zone_work_time = idZoneWorkTime;
     }
 
-    public int getPrice_trimmed() {
+    public int getPriceTrimmed() {
         return price_trimmed;
     }
 
-    public void setPrice_trimmed(int price_trimmed) {
+    public void setPriceTrimmed(int priceTrimmed) {
         this.price_trimmed = price_trimmed;
     }
 
@@ -88,6 +88,10 @@ public class ZonePrice {
 
     public float getPriceFloat(){
         return price_trimmed + ((float) price_decimal) / String.valueOf(price_decimal).length();
+    }
+    public void setPriceFloat(float price){
+        this.price_trimmed = (int) price;
+        this.price_decimal = ((int)(price * 100))%100;
     }
 
     public String getCurrency() {

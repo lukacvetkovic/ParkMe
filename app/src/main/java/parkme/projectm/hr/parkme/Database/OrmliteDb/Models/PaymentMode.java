@@ -57,27 +57,27 @@ public class PaymentMode {
         this.duration = duration;
     }
 
-    public String getSms_prefix() {
+    public String getSmsPrefix() {
         return sms_prefix;
     }
 
-    public void setSms_prefix(String sms_prefix) {
-        this.sms_prefix = sms_prefix;
+    public void setSmsPrefix(String smsPrefix) {
+        this.sms_prefix = smsPrefix;
     }
 
-    public String getSms_sufix() {
+    public String getSmsSufix() {
         return sms_sufix;
     }
 
-    public void setSms_sufix(String sms_sufix) {
-        this.sms_sufix = sms_sufix;
+    public void setSmsSufix(String smsSufix) {
+        this.sms_sufix = smsSufix;
     }
 
-    public int getId_zone() {
+    public int getIdZone() {
         return id_zone;
     }
 
-    public void setId_zone(int id_zone) {
-        this.id_zone = id_zone;
+    public void setIdZone(int idZone) {
+        this.id_zone = idZone;
     }
 }

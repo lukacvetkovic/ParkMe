@@ -3,6 +3,7 @@ package parkme.projectm.hr.parkme.Database.OrmliteDb.Models;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -10,6 +11,8 @@ import java.util.Date;
  */
 @DatabaseTable(tableName = "zone_work_time")
 public class ZoneWorkTime {
+
+
     @DatabaseField(id = true, generatedId = false)
     private int id;
     @DatabaseField
@@ -17,20 +20,22 @@ public class ZoneWorkTime {
     @DatabaseField
     private Date day_name;
     @DatabaseField
-    private Date time_from;
+    private String time_from;
     @DatabaseField
-    private Date time_to;
+    private String time_to;
 
     public ZoneWorkTime() {
 
     }
 
-    public ZoneWorkTime(int id, int idCalendar, Date day, Date timeFrom, Date timeTo) {
+    public ZoneWorkTime(int id, int idCalendar, Date day, String timeFrom, String timeTo) {
         this.id = id;
         this.id_calendar = idCalendar;
         this.day_name = day;
         this.time_from = timeFrom;
         this.time_to = timeTo;
+
+
     }
 
     public int getId() {
@@ -57,19 +62,19 @@ public class ZoneWorkTime {
         this.day_name = day;
     }
 
-    public Date getTime_from() {
+    public String getTimeFrom() {
         return time_from;
     }
 
-    public void setTime_from(Date time_from) {
-        this.time_from = time_from;
+    public void setTimeFrom(String timeFrom) {
+        this.time_from = timeFrom;
     }
 
-    public Date getTimeTo() {
+    public String getTimeTo() {
         return time_to;
     }
 
-    public void setTimeTo(Date timeTo) {
+    public void setTimeTo(String timeTo) {
         this.time_to = timeTo;
     }
 }
