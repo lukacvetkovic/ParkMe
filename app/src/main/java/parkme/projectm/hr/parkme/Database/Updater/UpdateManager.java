@@ -18,10 +18,15 @@ public class UpdateManager {
         this.source = source;
     }
 
-    public void update(){
-        for(Tables table :Tables.values()){
-            updater.updateTable(table, source.getNewTableRows(table, new Date()));
-        }
+    public void updateAll(Date lastUpdate){
+        updater.updateCity(source.getNewCityRows(lastUpdate));
+        updater.updateParkingZone(source.getNewParkingZoneRows(lastUpdate));
+        updater.updatePostcode(source.getNewPostcodeRows(lastUpdate));
+        updater.updatePaymentMode(source.getNewPaymentModeRows(lastUpdate));
+        //updater.updateZoneCalendar(source.getNewZoneCalendarRows(lastUpdate));
+        //updater.updateZoneWorkTime(source.getNewZoneWorkTimeRows(lastUpdate));
+        updater.updateZonePrice(source.getNewZonePriceRows(lastUpdate));
+
     }
 
     public void setUpdater(Updater updater) {

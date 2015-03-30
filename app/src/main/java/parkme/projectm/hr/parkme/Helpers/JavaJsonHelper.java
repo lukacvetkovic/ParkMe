@@ -17,6 +17,18 @@ import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.PostCode;
 
 public class JavaJsonHelper {
 
+    public static <T> List<T> fromStringToList(String citiesJson, Class<T> dotClass) throws JSONException {
+
+        Gson gson = new Gson();
+        List<T> cityList = new ArrayList<>();
+
+        JSONArray jsonCities = new JSONObject(citiesJson).getJSONArray("content");
+        for (int i = 0; i < jsonCities.length(); i++) {
+            cityList.add(gson.fromJson(String.valueOf(jsonCities.getJSONObject(i)), dotClass));
+        }
+        return cityList;
+    }
+
     public static List<City> fromStringToCityList(String citiesJson) throws JSONException {
 
         Gson gson = new Gson();
@@ -28,7 +40,6 @@ public class JavaJsonHelper {
             cityList.add(gson.fromJson(String.valueOf(jsonCities.getJSONObject(i)), City.class));
 
         }
-
         return cityList;
     }
 
@@ -40,8 +51,18 @@ public class JavaJsonHelper {
             zoneList.add(gson.fromJson(String.valueOf(jsonZones.getJSONObject(i)), ParkingZone.class));
 
         }
-
         return zoneList;
+    }
+
+    public static List<PaymentMode> fromStringToOptionList(String paymentModeJson) throws JSONException {
+        Gson gson = new Gson();
+        List<PaymentMode> paymentModeListList = new ArrayList<>();
+        JSONArray jsonZones = new JSONObject(paymentModeJson).getJSONArray("content");
+        for (int i = 0; i < jsonZones.length(); i++) {
+            paymentModeListList.add(gson.fromJson(String.valueOf(jsonZones.getJSONObject(i)), PaymentMode.class));
+
+        }
+        return paymentModeListList;
     }
 
     public static PostCode fromJsonToIdPostCode(String postCodeJson) throws JSONException {
@@ -53,16 +74,5 @@ public class JavaJsonHelper {
 
     }
 
-    public static List<PaymentMode> fromStringToOptionList(String paymentModeJson) throws JSONException {
-        Gson gson = new Gson();
-        List<PaymentMode> paymentModeListList = new ArrayList<>();
-        JSONArray jsonZones = new JSONObject(paymentModeJson).getJSONArray("content");
-        for (int i = 0; i < jsonZones.length(); i++) {
-            paymentModeListList.add(gson.fromJson(String.valueOf(jsonZones.getJSONObject(i)), PaymentMode.class));
-
-        }
-
-        return paymentModeListList;
-    }
 
 }

@@ -18,22 +18,28 @@ import java.util.Map;
 import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.City;
 import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.ParkingZone;
 import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.PaymentMode;
+import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.PostCode;
 import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.ZoneCalendar;
 import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.ZonePrice;
 import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.ZoneWorkTime;
 import parkme.projectm.hr.parkme.Database.SMSParkingApi;
+import parkme.projectm.hr.parkme.Database.Updater.Updater;
 
 /**
  * Interface to database using OrmLite.
  */
-public class DatabaseManager implements SMSParkingApi{
+public class DatabaseManager implements SMSParkingApi, Updater{
 
     static private DatabaseManager instance;
     private  OrmLiteDatabaseHelper helper;
-    private  SimpleDateFormat dateFormater;
     private Map<Integer, Integer> dayTransform;
-    private SimpleDateFormat timeFormatter;
+    public static SimpleDateFormat timeFormatter;
+    public static SimpleDateFormat dateFormatter;
 
+    static {
+        dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
+        timeFormatter = new SimpleDateFormat("H:m:s");
+    }
 
     static public void init(Context ctx) {
         if (null==instance) {
@@ -47,8 +53,6 @@ public class DatabaseManager implements SMSParkingApi{
 
     private DatabaseManager(Context ctx) {
         helper = new OrmLiteDatabaseHelper(ctx);
-        dateFormater = new SimpleDateFormat("yyyy-MM-dd");
-        timeFormatter = new SimpleDateFormat("H:m:s");
 
         dayTransform = new HashMap<>();
         dayTransform.put(Calendar.MONDAY, 0);
@@ -69,7 +73,7 @@ public class DatabaseManager implements SMSParkingApi{
     public List<ParkingZone> getAllParkingZonesFromCity(int idCity) {
         try {
             return helper.getRuntimeParkingZoneDao().queryBuilder()
-                    .where().eq("id_city", new Integer(idCity)).query();
+                    .where().eq("id_city", idCity).query();
         } catch (SQLException e) {
             return null;
         }
@@ -79,7 +83,7 @@ public class DatabaseManager implements SMSParkingApi{
     public List<PaymentMode> getAllPaymentModesFromParkingZone(int idParkingZone) {
         try {
             return helper.getRuntimePaymentModeDao().queryBuilder()
-                    .where().eq("id_zone", new Integer(idParkingZone)).query();
+                    .where().eq("id_zone", idParkingZone).query();
         } catch (SQLException e) {
             return null;
         }
@@ -97,7 +101,7 @@ public class DatabaseManager implements SMSParkingApi{
         List<ZoneCalendar> dateIntervals;
         dateIntervals = helper.getRuntimeZoneCalendarDao().queryBuilder()
                 .where()
-                .eq("id_zone", new Integer(idZone))
+                .eq("id_zone", idZone)
                 .and()
                 .gt("date_from", date)
                 .and()
@@ -132,7 +136,7 @@ public class DatabaseManager implements SMSParkingApi{
 
         return helper.getRuntimeZoneWorkTimeDao().queryBuilder()
                 .where()
-                .eq("id_zone", new Integer(idCalendar))
+                .eq("id_zone", idCalendar)
                 .and()
                 .gt("time_from", timeFormatter.format(date))
                 .and()
@@ -145,9 +149,9 @@ public class DatabaseManager implements SMSParkingApi{
         try {
             ZonePrice price= helper.getRuntimeZonePriceDao().queryBuilder()
                     .where()
-                    .eq("id_zone_work_time", new Integer(idZoneWorkTime))
+                    .eq("id_zone_work_time", idZoneWorkTime)
                     .and()
-                    .eq("id_payment_mode", new Integer(idPaymentMode))
+                    .eq("id_payment_mode", idPaymentMode)
                     .queryForFirst();
             return price.getPriceFloat();
         } catch (SQLException e) {
@@ -180,5 +184,54 @@ public class DatabaseManager implements SMSParkingApi{
     @Override
     public Date getMaxDuration(Date date, int idParkingZone) {
         return null;
+    }
+
+    @Override
+    public void updateCity(List<City> cities) {
+        for (City city: cities) {
+            helper.getRuntimeCityDao().createOrUpdate(city);
+        }
+    }
+
+    @Override
+    public void updateParkingZone(List<ParkingZone> parkingZones) {
+        for (ParkingZone parkingZone: parkingZones) {
+            helper.getRuntimeParkingZoneDao().createOrUpdate(parkingZone);
+        }
+    }
+
+    @Override
+    public void updatePostcode(List<PostCode> postcodes) {
+        for (PostCode postcode: postcodes) {
+            helper.getRuntimePostcodeDao().createOrUpdate(postcode);
+        }
+    }
+
+    @Override
+    public void updatePaymentMode(List<PaymentMode> paymentModes) {
+        for (PaymentMode paymentMode: paymentModes) {
+            helper.getRuntimePaymentModeDao().createOrUpdate(paymentMode);
+        }
+    }
+
+    @Override
+    public void updateZoneCalendar(List<ZoneCalendar> zoneCalendars) {
+        for (ZoneCalendar zoneCalendar: zoneCalendars) {
+            helper.getRuntimeZoneCalendarDao().createOrUpdate(zoneCalendar);
+        }
+    }
+
+    @Override
+    public void updateZoneWorkTime(List<ZoneWorkTime> zoneWorkTimes) {
+        for (ZoneWorkTime zoneWorkTime: zoneWorkTimes) {
+            helper.getRuntimeZoneWorkTimeDao().createOrUpdate(zoneWorkTime);
+        }
+    }
+
+    @Override
+    public void updateZonePrice(List<ZonePrice> zonePrices) {
+        for (ZonePrice zonePrice: zonePrices) {
+            helper.getRuntimeZonePriceDao().createOrUpdate(zonePrice);
+        }
     }
 }

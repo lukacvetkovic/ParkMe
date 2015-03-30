@@ -8,11 +8,16 @@ import android.view.View;
 import android.widget.Button;
 
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import parkme.projectm.hr.parkme.Database.OrmliteDb.DatabaseManager;
 import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.City;
 import parkme.projectm.hr.parkme.Database.OrmliteDb.OrmLiteDatabaseHelper;
+import parkme.projectm.hr.parkme.Database.Updater.UpdateManager;
+import parkme.projectm.hr.parkme.Database.Updater.UrlUpdateSource;
+import parkme.projectm.hr.parkme.Helpers.GetRestService;
 import parkme.projectm.hr.parkme.R;
 
 /**
@@ -42,6 +47,18 @@ public class MainMenuActivity extends Activity{
         payment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //EXTRA "update" svega sa neta
+                DatabaseManager.init(getApplicationContext());
+                UpdateManager um = new UpdateManager(
+                        DatabaseManager.getInstance(),
+                        new UrlUpdateSource(new GetRestService(""))
+                );
+                try {
+                    um.updateAll(DatabaseManager.dateFormatter.parse("2010-01-01"));
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                //!EXTRA
                 Class ourClass = null;
                 ourClass = PaymentMenuActivity.class;
                 Intent ourIntent = new Intent(MainMenuActivity.this, ourClass);

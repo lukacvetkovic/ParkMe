@@ -2,6 +2,7 @@ package parkme.projectm.hr.parkme.Database.Updater;
 
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.City;
 import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.ParkingZone;
@@ -19,13 +20,6 @@ import parkme.projectm.hr.parkme.Database.Tables;
  */
 public interface UpdateSource {
 
-    /**
-     * Gets values for  table changed after last update.
-     * @param table Table to check.
-     * @param lastUpdate Date of last update.
-     * @return List of changed of added rows.
-     */
-    public List<Object> getNewTableRows(Tables table, Date lastUpdate);
 
     /**
      * Gets values for city table changed after last update.

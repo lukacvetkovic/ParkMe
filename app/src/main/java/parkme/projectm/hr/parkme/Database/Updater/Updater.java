@@ -10,22 +10,14 @@ import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.PostCode;
 import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.ZoneCalendar;
 import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.ZonePrice;
 import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.ZoneWorkTime;
-import parkme.projectm.hr.parkme.Database.Tables;
 
 /**
  * Universal updatable interface.
- * Updates Sqlite database with new values.
+ * Updates database with new values.
  *
  * Created by Adriano Bacac on 29.03.15..
  */
 public interface Updater {
-
-    /**
-     * Updates table with new rows.
-     * @param table Table to update.
-     * @param objects List of changed or added rows.
-     */
-    public void updateTable(Tables table, List<Object> objects);
 
     /**
      * Updates city table with new rows.

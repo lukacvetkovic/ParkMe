@@ -86,27 +86,6 @@ public class OrmLiteDatabaseHelper extends OrmLiteSqliteOpenHelper {
     private Dao<City, Integer> cityDao = null;
     private RuntimeExceptionDao<City, Integer> cityRuntimeDao = null;
 
-    // the DAO object we use to access the parking_zone table
-    private Dao<ParkingZone, Integer> parkingZoneDao = null;
-    private RuntimeExceptionDao<ParkingZone, Integer> parkingZoneRuntimeDao = null;
-
-    // the DAO object we use to access the payment_mode table
-    private Dao<PaymentMode, Integer> paymentModeDao = null;
-    private RuntimeExceptionDao<PaymentMode, Integer> paymentModeRuntimeDao = null;
-
-    // the DAO object we use to access the zone_calendar table
-    private Dao<ZoneCalendar, Integer> zoneCalendarDao = null;
-    private RuntimeExceptionDao<ZoneCalendar, Integer> zoneCalendarRuntimeDao = null;
-
-    // the DAO object we use to access the zone_price table
-    private Dao<ZonePrice, Integer> zonePriceDao = null;
-    private RuntimeExceptionDao<ZonePrice, Integer> zonePriceRuntimeDao = null;
-
-    // the DAO object we use to access the zone_work_time table
-    private Dao<ZoneWorkTime, Integer> zoneWorkTimeDao = null;
-    private RuntimeExceptionDao<ZoneWorkTime, Integer> zoneWorkTimeRuntimeDao = null;
-
-
     /**
      * Returns the Database Access Object (DAO) for our City class. It will create it or just give the cached
      * value.
@@ -129,6 +108,9 @@ public class OrmLiteDatabaseHelper extends OrmLiteSqliteOpenHelper {
         return cityRuntimeDao;
     }
 
+    // the DAO object we use to access the parking_zone table
+    private Dao<ParkingZone, Integer> parkingZoneDao = null;
+    private RuntimeExceptionDao<ParkingZone, Integer> parkingZoneRuntimeDao = null;
 
     /**
      * Returns the Database Access Object (DAO) for our ParkingZone class. It will create it or just give the cached
@@ -152,6 +134,12 @@ public class OrmLiteDatabaseHelper extends OrmLiteSqliteOpenHelper {
         return parkingZoneRuntimeDao;
     }
 
+
+    // the DAO object we use to access the payment_mode table
+    private Dao<PaymentMode, Integer> paymentModeDao = null;
+    private RuntimeExceptionDao<PaymentMode, Integer> paymentModeRuntimeDao = null;
+
+
     /**
      * Returns the Database Access Object (DAO) for our PaymentMode class. It will create it or just give the cached
      * value.
@@ -173,6 +161,11 @@ public class OrmLiteDatabaseHelper extends OrmLiteSqliteOpenHelper {
         }
         return paymentModeRuntimeDao;
     }
+
+    // the DAO object we use to access the zone_calendar table
+    private Dao<ZoneCalendar, Integer> zoneCalendarDao = null;
+    private RuntimeExceptionDao<ZoneCalendar, Integer> zoneCalendarRuntimeDao = null;
+
     /**
      * Returns the Database Access Object (DAO) for our ZoneCalendar class. It will create it or just give the cached
      * value.
@@ -194,6 +187,10 @@ public class OrmLiteDatabaseHelper extends OrmLiteSqliteOpenHelper {
         }
         return zoneCalendarRuntimeDao;
     }
+
+    // the DAO object we use to access the zone_work_time table
+    private Dao<ZoneWorkTime, Integer> zoneWorkTimeDao = null;
+    private RuntimeExceptionDao<ZoneWorkTime, Integer> zoneWorkTimeRuntimeDao = null;
 
     /**
      * Returns the Database Access Object (DAO) for our ZoneWorkTime class. It will create it or just give the cached
@@ -217,6 +214,10 @@ public class OrmLiteDatabaseHelper extends OrmLiteSqliteOpenHelper {
         return zoneWorkTimeRuntimeDao;
     }
 
+    // the DAO object we use to access the zone_price table
+    private Dao<ZonePrice, Integer> zonePriceDao = null;
+    private RuntimeExceptionDao<ZonePrice, Integer> zonePriceRuntimeDao = null;
+
     /**
      * Returns the Database Access Object (DAO) for our ZonePrice class. It will create it or just give the cached
      * value.
@@ -239,7 +240,31 @@ public class OrmLiteDatabaseHelper extends OrmLiteSqliteOpenHelper {
         return zonePriceRuntimeDao;
     }
 
+    // the DAO object we use to access the post_code table
+    private Dao<PostCode, Integer> postcodeDao = null;
+    private RuntimeExceptionDao<PostCode, Integer> postcodeRuntimeDao = null;
 
+    /**
+     * Returns the Database Access Object (DAO) for our PostCode class. It will create it or just give the cached
+     * value.
+     */
+    public Dao<PostCode, Integer> getPostcodeDao() throws SQLException {
+        if (postcodeDao == null) {
+            postcodeDao = getDao(PostCode.class);
+        }
+        return postcodeDao;
+    }
+
+    /**
+     * Returns the RuntimeExceptionDao (Database Access Object) version of a Dao for our PostCode class. It will
+     * create it or just give the cached value. RuntimeExceptionDao only through RuntimeExceptions.
+     */
+    public RuntimeExceptionDao<PostCode, Integer> getRuntimePostcodeDao() {
+        if (postcodeRuntimeDao == null) {
+            postcodeRuntimeDao = getRuntimeExceptionDao(PostCode.class);
+        }
+        return postcodeRuntimeDao;
+    }
     /**
      * Close the database connections and clear any cached DAOs.
      */
