@@ -1,5 +1,6 @@
 package parkme.projectm.hr.parkme.Database.OrmliteDb.Models;
 
+import com.j256.ormlite.field.DataType;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
@@ -16,11 +17,11 @@ import parkme.projectm.hr.parkme.Database.OrmliteDb.SimpleDataModels.SimpleZoneC
 public class ZoneCalendar {
     @DatabaseField(id = true, generatedId = false)
     private int id;
-    @DatabaseField
+    @DatabaseField(columnName = "id_zone")
     private int idZone;
-    @DatabaseField
+    @DatabaseField(columnName = "date_from", dataType = DataType.DATE)
     private Date dateFrom;
-    @DatabaseField
+    @DatabaseField(columnName = "date_to", dataType = DataType.DATE)
     private Date dateTo;
 
     public ZoneCalendar(){

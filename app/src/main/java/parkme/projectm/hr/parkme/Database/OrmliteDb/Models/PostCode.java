@@ -14,9 +14,9 @@ public class PostCode {
 
     @DatabaseField(id = true, generatedId = false)
     private int id;
-    @DatabaseField
+    @DatabaseField(columnName = "id_city")
     private int idCity;
-    @DatabaseField
+    @DatabaseField(columnName = "post_code")
     private String postCode;
 
 

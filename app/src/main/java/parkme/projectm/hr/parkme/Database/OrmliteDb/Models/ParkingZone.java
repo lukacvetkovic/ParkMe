@@ -14,11 +14,11 @@ import parkme.projectm.hr.parkme.Database.OrmliteDb.SimpleDataModels.SimpleParki
 public class ParkingZone {
     @DatabaseField(id = true)
     private int id;
-    @DatabaseField
+    @DatabaseField(columnName = "name")
     private String name;
-    @DatabaseField
+    @DatabaseField(columnName = "phone_number")
     private String phoneNumber;
-    @DatabaseField
+    @DatabaseField(columnName = "id_city")
     private int idCity;
 
     public ParkingZone(){

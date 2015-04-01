@@ -13,15 +13,15 @@ import parkme.projectm.hr.parkme.Database.OrmliteDb.SimpleDataModels.SimpleZoneP
 public class ZonePrice {
     @DatabaseField(id = true, generatedId = false)
     private int id;
-    @DatabaseField
+    @DatabaseField(columnName = "id_payment_mode")
     private int idPaymentMode;
-    @DatabaseField
+    @DatabaseField(columnName = "id_zone_work_time")
     private int idZoneWorkTime;
-    @DatabaseField
+    @DatabaseField(columnName = "price_trimmed")
     private int priceTrimmed;
-    @DatabaseField
+    @DatabaseField(columnName = "price_decimal")
     private int priceDecimal;
-    @DatabaseField
+    @DatabaseField(columnName = "currency")
     private String currency;
 
     public ZonePrice() {
@@ -98,7 +98,7 @@ public class ZonePrice {
     }
 
     public float getPriceFloat(){
-        return priceTrimmed + ((float) priceDecimal) / String.valueOf(priceDecimal).length();
+        return priceTrimmed + ((float) priceDecimal) / (String.valueOf(priceDecimal).length() * 10);
     }
     public void setPriceFloat(float price){
         this.priceTrimmed = (int) price;

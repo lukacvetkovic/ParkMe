@@ -1,10 +1,5 @@
 package parkme.projectm.hr.parkme.Database.OrmliteDb.SimpleDataModels;
 
-import com.j256.ormlite.field.DatabaseField;
-import com.j256.ormlite.table.DatabaseTable;
-
-import java.util.Date;
-
 /**
  * Created by Adriano Bacac on 29.03.15..
  */
@@ -12,7 +7,7 @@ public class SimpleZoneWorkTime {
 
 
     private int id;
-    private int id_calendar;
+    private int id_zone_calendar;
     private int day_name;
     private String time_from;
     private String time_to;
@@ -20,7 +15,7 @@ public class SimpleZoneWorkTime {
 
     public SimpleZoneWorkTime(int id, int idCalendar, int day, String timeFrom, String timeTo) {
         this.id = id;
-        this.id_calendar = idCalendar;
+        this.id_zone_calendar = idCalendar;
         this.day_name = day;
         this.time_from = timeFrom;
         this.time_to = timeTo;
@@ -37,11 +32,11 @@ public class SimpleZoneWorkTime {
     }
 
     public int getIdCalendar() {
-        return id_calendar;
+        return id_zone_calendar;
     }
 
     public void setIdCalendar(int id_calendar) {
-        this.id_calendar = id_calendar;
+        this.id_zone_calendar = id_calendar;
     }
 
     public int getDay() {

@@ -1,5 +1,5 @@
 #
-# generated on 2015/04/01 04:12:41
+# generated on 2015/04/01 11:59:41
 #
 # --table-start--
 dataClass=parkme.projectm.hr.parkme.Database.OrmliteDb.Models.City
@@ -11,6 +11,7 @@ id=true
 # --field-end--
 # --field-start--
 fieldName=name
+columnName=name
 # --field-end--
 # --table-fields-end--
 # --table-end--
@@ -25,12 +26,15 @@ id=true
 # --field-end--
 # --field-start--
 fieldName=name
+columnName=name
 # --field-end--
 # --field-start--
 fieldName=phoneNumber
+columnName=phone_number
 # --field-end--
 # --field-start--
 fieldName=idCity
+columnName=id_city
 # --field-end--
 # --table-fields-end--
 # --table-end--
@@ -48,12 +52,15 @@ fieldName=duration
 # --field-end--
 # --field-start--
 fieldName=smsPrefix
+columnName=sms_prefix
 # --field-end--
 # --field-start--
 fieldName=smsSufix
+columnName=sms_sufix
 # --field-end--
 # --field-start--
 fieldName=idZone
+columnName=id_zone
 # --field-end--
 # --table-fields-end--
 # --table-end--
@@ -68,9 +75,11 @@ id=true
 # --field-end--
 # --field-start--
 fieldName=idCity
+columnName=id_city
 # --field-end--
 # --field-start--
 fieldName=postCode
+columnName=post_code
 # --field-end--
 # --table-fields-end--
 # --table-end--
@@ -85,12 +94,17 @@ id=true
 # --field-end--
 # --field-start--
 fieldName=idZone
+columnName=id_zone
 # --field-end--
 # --field-start--
 fieldName=dateFrom
+columnName=date_from
+dataPersister=DATE
 # --field-end--
 # --field-start--
 fieldName=dateTo
+columnName=date_to
+dataPersister=DATE
 # --field-end--
 # --table-fields-end--
 # --table-end--
@@ -105,15 +119,19 @@ id=true
 # --field-end--
 # --field-start--
 fieldName=idCalendar
+columnName=id_zone_calendar
 # --field-end--
 # --field-start--
 fieldName=dayCode
+columnName=day_name
 # --field-end--
 # --field-start--
 fieldName=timeFrom
+columnName=time_from
 # --field-end--
 # --field-start--
 fieldName=timeTo
+columnName=time_to
 # --field-end--
 # --table-fields-end--
 # --table-end--
@@ -128,18 +146,23 @@ id=true
 # --field-end--
 # --field-start--
 fieldName=idPaymentMode
+columnName=id_payment_mode
 # --field-end--
 # --field-start--
 fieldName=idZoneWorkTime
+columnName=id_zone_work_time
 # --field-end--
 # --field-start--
 fieldName=priceTrimmed
+columnName=price_trimmed
 # --field-end--
 # --field-start--
 fieldName=priceDecimal
+columnName=price_decimal
 # --field-end--
 # --field-start--
 fieldName=currency
+columnName=currency
 # --field-end--
 # --table-fields-end--
 # --table-end--
@@ -154,15 +177,21 @@ id=true
 # --field-end--
 # --field-start--
 fieldName=idZone
+columnName=id_zone
 # --field-end--
 # --field-start--
 fieldName=maxDuration
+columnName=max_duration
 # --field-end--
 # --field-start--
 fieldName=dateFrom
+columnName=date_from
+dataPersister=DATE
 # --field-end--
 # --field-start--
 fieldName=dateTo
+columnName=date_to
+dataPersister=DATE
 # --field-end--
 # --table-fields-end--
 # --table-end--

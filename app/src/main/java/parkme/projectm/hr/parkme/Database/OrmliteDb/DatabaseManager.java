@@ -7,6 +7,7 @@ package parkme.projectm.hr.parkme.Database.OrmliteDb;
 
 import android.content.Context;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.sql.SQLException;
@@ -89,38 +90,45 @@ public class DatabaseManager implements SMSParkingApi, Updater{
             return null;
         }
     }
+    private MaxDuration maxDurationWithMinInterval(List<MaxDuration> maxDurations){
+        MaxDuration min = maxDurations.get(0);
+        if(maxDurations.size() > 1) {
 
-    private Date dateInterval(Date date1, Date date2){
-        long time1 = date1.getTime();
-        long time2 = date2.getTime();
-        Date res = new Date();
-        res.setTime(Math.abs(time2 - time1));
-        return res;
+            for(int i = 1; i<maxDurations.size();++i){
+                MaxDuration query = maxDurations.get(i);
+                long queryInterval = dateInterval(
+                        query.getDateFrom()
+                        , query.getDateTo()
+                ).getTime();
+
+                long minInterval = dateInterval(
+                        min.getDateFrom()
+                        , min.getDateTo()
+                ).getTime();
+
+                if(queryInterval < minInterval){
+                    min = query;
+                }
+            }
+        }
+        return min;
     }
 
-    private ZoneCalendar getCalendarWithMinInterval(Date date, int idZone) throws SQLException {
-        List<ZoneCalendar> dateIntervals;
-        dateIntervals = helper.getRuntimeZoneCalendarDao().queryBuilder()
-                .where()
-                .eq("id_zone", idZone)
-                .and()
-                .gt("date_from", date)
-                .and()
-                .lt("date_to", date).query();
+    private ZoneCalendar calendarWithMinInterval(List<ZoneCalendar> zoneCalendars){
+        ZoneCalendar minCalendar = zoneCalendars.get(0);
+        if(zoneCalendars.size() > 1) {
 
-        if(dateIntervals.isEmpty()){
-            throw new SQLException("No records found in calendar for zone id: " + idZone + ".");
-        }
-        ZoneCalendar minCalendar = dateIntervals.get(0);
-        if(dateIntervals.size() > 1) {
+            for(int i = 1; i<zoneCalendars.size();++i){
+                ZoneCalendar queryCalendar = zoneCalendars.get(i);
+                long queryInterval = dateInterval(
+                        queryCalendar.getDateFrom()
+                        , queryCalendar.getDateTo()
+                ).getTime();
 
-            for(int i = 1; i<dateIntervals.size();++i){
-                ZoneCalendar queryCalendar = dateIntervals.get(i);
-                long queryInterval = dateInterval(queryCalendar.getDateFrom()
-                        , queryCalendar.getDateTo()).getTime();
-
-                long minInterval = dateInterval(minCalendar.getDateFrom()
-                        , minCalendar.getDateTo()).getTime();
+                long minInterval = dateInterval(
+                        minCalendar.getDateFrom()
+                        , minCalendar.getDateTo()
+                ).getTime();
 
                 if(queryInterval < minInterval){
                     minCalendar = queryCalendar;
@@ -129,21 +137,58 @@ public class DatabaseManager implements SMSParkingApi, Updater{
         }
         return minCalendar;
     }
+    private Date dateInterval(Date date1, Date date2){
+        long time1 = date1.getTime();
+        long time2 = date2.getTime();
+        Date res = new Date();
+        res.setTime(Math.abs(time2 - time1));
+        return res;
+    }
+    private Date stripYear(Date date){
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+
+        cal.set(Calendar.YEAR , 1900);
+        return cal.getTime();
+    }
+    private ZoneCalendar getCalendarWithMinInterval(Date date, int idZone) throws SQLException {
+
+        Date strippedDate = stripYear(date);
+        List<ZoneCalendar> dateIntervals;
+        dateIntervals = helper.getRuntimeZoneCalendarDao().queryBuilder()
+                .where()
+                .eq("id_zone", idZone)
+                .and()
+                .lt("date_from", strippedDate)
+                .and()
+                .gt("date_to", strippedDate).query();
+
+        if(dateIntervals.isEmpty()){
+            throw new SQLException("No records found in calendar for zone id: " + idZone + ".");
+        }
+        return  calendarWithMinInterval(dateIntervals);
+    }
+
     private ZoneWorkTime getWorkTime(Date date, int idCalendar) throws SQLException {
 
         Calendar cal = Calendar.getInstance();
         cal.setTime(date);
+
         int day = dayTransform.get(cal.get(Calendar.DAY_OF_WEEK));
+        Date time = new Date();
+
+        time.setTime(date.getTime() % (24*60*60*1000L));
 
         return helper.getRuntimeZoneWorkTimeDao().queryBuilder()
                 .where()
-                .eq("id_zone", idCalendar)
-                .and()
-                .gt("time_from", timeFormatter.format(date))
-                .and()
-                .lt("date_to", timeFormatter.format(date))
-                .and()
-                .eq("day_name", day).queryForFirst();
+                    .eq("id_zone_calendar", idCalendar)
+                    .and()
+                    .lt("time_from", time)
+                    .and()
+                    .gt("time_to", time)
+                    .and()
+                    .eq("day_name", day)
+                .queryForFirst();
 
     }
     public float getPrice(int idZoneWorkTime, int idPaymentMode){
@@ -183,8 +228,24 @@ public class DatabaseManager implements SMSParkingApi, Updater{
     }
 
     @Override
-    public Date getMaxDuration(Date date, int idParkingZone) {
-        return null;
+    public MaxDuration getMaxDuration(Date date, int idParkingZone) {
+        Date strippedDate = stripYear(date);
+
+        List<MaxDuration> maxDurations = new ArrayList<>();
+
+        try {
+            maxDurations = helper.getRuntimeMaxDurationDao().queryBuilder()
+                    .where()
+                    .eq("id_zone", idParkingZone)
+                    .and()
+                    .lt("date_from", strippedDate)
+                    .and()
+                    .gt("date_to", strippedDate).query();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return maxDurationWithMinInterval(maxDurations);
     }
 
     @Override

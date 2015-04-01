@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.City;
+import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.MaxDuration;
 import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.ParkingZone;
 import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.PaymentMode;
 
@@ -49,7 +50,7 @@ public interface SMSParkingApi {
      * @param idParkingZone Parking zone id.
      * @return Max parking duration for selected date in zone.
      */
-    public Date getMaxDuration(Date date, int idParkingZone);
+    public MaxDuration getMaxDuration(Date date, int idParkingZone);
 
 
 }

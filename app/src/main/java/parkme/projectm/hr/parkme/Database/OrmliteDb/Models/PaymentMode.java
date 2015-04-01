@@ -21,11 +21,11 @@ public class PaymentMode {
     private int id;
     @DatabaseField
     private Date duration;
-    @DatabaseField
+    @DatabaseField(columnName = "sms_prefix")
     private String smsPrefix;
-    @DatabaseField
+    @DatabaseField(columnName = "sms_sufix")
     private String smsSufix;
-    @DatabaseField
+    @DatabaseField(columnName = "id_zone")
     private int idZone;
 
     public PaymentMode(){

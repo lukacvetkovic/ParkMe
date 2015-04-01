@@ -14,7 +14,7 @@ import parkme.projectm.hr.parkme.Database.OrmliteDb.SimpleDataModels.SimpleCity;
 public class City {
     @DatabaseField(id = true, generatedId = false)
     private int id;
-    @DatabaseField
+    @DatabaseField(columnName = "name")
     private String name;
 
     public City(){

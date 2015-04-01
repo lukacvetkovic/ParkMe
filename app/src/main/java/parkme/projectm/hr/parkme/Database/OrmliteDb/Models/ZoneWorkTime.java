@@ -18,13 +18,13 @@ public class ZoneWorkTime {
 
     @DatabaseField(id = true, generatedId = false)
     private int id;
-    @DatabaseField
+    @DatabaseField(columnName = "id_zone_calendar")
     private int idCalendar;
-    @DatabaseField
+    @DatabaseField(columnName = "day_name")
     private int dayCode;
-    @DatabaseField
+    @DatabaseField(columnName = "time_from")
     private Date timeFrom;
-    @DatabaseField
+    @DatabaseField(columnName = "time_to")
     private Date timeTo;
 
     public ZoneWorkTime() {
