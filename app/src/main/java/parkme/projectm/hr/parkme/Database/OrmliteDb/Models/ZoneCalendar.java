@@ -3,7 +3,11 @@ package parkme.projectm.hr.parkme.Database.OrmliteDb.Models;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
+import java.text.ParseException;
 import java.util.Date;
+
+import parkme.projectm.hr.parkme.Database.OrmliteDb.DatabaseManager;
+import parkme.projectm.hr.parkme.Database.OrmliteDb.SimpleDataModels.SimpleZoneCalendar;
 
 /**
  * Created by Adriano Bacac on 29.03.15..
@@ -13,45 +17,54 @@ public class ZoneCalendar {
     @DatabaseField(id = true, generatedId = false)
     private int id;
     @DatabaseField
-    private int id_zone;
+    private int idZone;
     @DatabaseField
-    private Date date_from;
+    private Date dateFrom;
     @DatabaseField
-    private Date date_to;
+    private Date dateTo;
 
     public ZoneCalendar(){
 
     }
-
+    public ZoneCalendar(SimpleZoneCalendar simpleZoneCalendar){
+        this.id = simpleZoneCalendar.getId();
+        this.idZone = simpleZoneCalendar.getIdZone();
+        try {
+            this.dateFrom = DatabaseManager.dateFormatter.parse(simpleZoneCalendar.getDateFrom());
+            this.dateTo = DatabaseManager.dateFormatter.parse(simpleZoneCalendar.getDateTo());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+    }
     public ZoneCalendar(int id, int idZone, Date dateFrom, Date dateTo) {
         this.id = id;
-        this.id_zone = idZone;
-        this.date_from = dateFrom;
-        this.date_to = dateTo;
+        this.idZone = idZone;
+        this.dateFrom = dateFrom;
+        this.dateTo = dateTo;
     }
 
     public int getIdZone() {
-        return id_zone;
+        return idZone;
     }
 
     public void setIdZone(int idZone) {
-        this.id_zone = idZone;
+        this.idZone = idZone;
     }
 
     public Date getDateFrom() {
-        return date_from;
+        return dateFrom;
     }
 
     public void setDateFrom(Date dateFrom) {
-        this.date_from = dateFrom;
+        this.dateFrom = dateFrom;
     }
 
     public Date getDateTo() {
-        return date_to;
+        return dateTo;
     }
 
     public void setDateTo(Date dateTo) {
-        this.date_to = dateTo;
+        this.dateTo = dateTo;
     }
 
     public int getId() {

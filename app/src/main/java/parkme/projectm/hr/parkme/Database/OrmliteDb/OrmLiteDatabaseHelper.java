@@ -14,6 +14,7 @@ import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
 
 import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.City;
+import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.MaxDuration;
 import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.ParkingZone;
 import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.PaymentMode;
 import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.PostCode;
@@ -52,6 +53,7 @@ public class OrmLiteDatabaseHelper extends OrmLiteSqliteOpenHelper {
             TableUtils.createTable(connectionSource, ZoneCalendar.class);
             TableUtils.createTable(connectionSource, ZonePrice.class);
             TableUtils.createTable(connectionSource, ZoneWorkTime.class);
+            TableUtils.createTable(connectionSource, MaxDuration.class);
         } catch (SQLException e) {
             Log.e(OrmLiteDatabaseHelper.class.getName(), "Can't create database", e);
             throw new RuntimeException(e);
@@ -73,6 +75,7 @@ public class OrmLiteDatabaseHelper extends OrmLiteSqliteOpenHelper {
             TableUtils.dropTable(connectionSource, ZoneCalendar.class, true);
             TableUtils.dropTable(connectionSource, ZonePrice.class, true);
             TableUtils.dropTable(connectionSource, ZoneWorkTime.class, true);
+            TableUtils.dropTable(connectionSource, MaxDuration.class, true);
             // after we drop the old databases, we create the new ones
             onCreate(db, connectionSource);
         } catch (SQLException e) {
@@ -264,6 +267,34 @@ public class OrmLiteDatabaseHelper extends OrmLiteSqliteOpenHelper {
             postcodeRuntimeDao = getRuntimeExceptionDao(PostCode.class);
         }
         return postcodeRuntimeDao;
+    }
+
+
+
+    // the DAO object we use to access the max_duration table
+    private Dao<MaxDuration, Integer> maxDurationDao = null;
+    private RuntimeExceptionDao<MaxDuration, Integer> maxDurationRuntimeDao = null;
+
+    /**
+     * Returns the Database Access Object (DAO) for our MaxDuration class. It will create it or just give the cached
+     * value.
+     */
+    public Dao<MaxDuration, Integer> getMaxDurationDao() throws SQLException {
+        if (maxDurationDao == null) {
+            maxDurationDao = getDao(MaxDuration.class);
+        }
+        return maxDurationDao;
+    }
+
+    /**
+     * Returns the RuntimeExceptionDao (Database Access Object) version of a Dao for our MaxDuration class. It will
+     * create it or just give the cached value. RuntimeExceptionDao only through RuntimeExceptions.
+     */
+    public RuntimeExceptionDao<MaxDuration, Integer> getRuntimeMaxDurationDao() {
+        if (maxDurationRuntimeDao == null) {
+            maxDurationRuntimeDao = getRuntimeExceptionDao(MaxDuration.class);
+        }
+        return maxDurationRuntimeDao;
     }
     /**
      * Close the database connections and clear any cached DAOs.

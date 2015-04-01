@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.City;
+import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.MaxDuration;
 import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.ParkingZone;
 import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.PaymentMode;
 import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.PostCode;
@@ -63,4 +64,11 @@ public interface UpdateSource {
      * @return List of changed of added rows.
      */
     public List<ZonePrice> getNewZonePriceRows(Date lastUpdate);
+
+    /**
+     * Gets values for max duration table changed after last update.
+     * @param lastUpdate Date of last update.
+     * @return List of changed of added rows.
+     */
+    public List<MaxDuration> getMaxDurationRows(Date lastUpdate);
 }

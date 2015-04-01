@@ -3,29 +3,35 @@ package parkme.projectm.hr.parkme.Database.OrmliteDb.Models;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
+import parkme.projectm.hr.parkme.Database.OrmliteDb.SimpleDataModels.SimplePostCode;
+
 /**
  * Created by Adriano Bacac on 29.3.2015..
  */
-@DatabaseTable(tableName = "post_code")
+@DatabaseTable(tableName = "postCode")
 
 public class PostCode {
 
     @DatabaseField(id = true, generatedId = false)
     private int id;
     @DatabaseField
-    private int id_city;
+    private int idCity;
     @DatabaseField
-    private String post_code;
+    private String postCode;
 
 
     public PostCode(){
 
     }
-
+    public PostCode(SimplePostCode simplePostCode){
+        this.id = simplePostCode.getId();
+        this.idCity = simplePostCode.getIdCity();
+        this.postCode = simplePostCode.getPostCode();
+    }
     public PostCode(int id, int idCity, String postCode) {
         this.id = id;
-        this.id_city = idCity;
-        this.post_code = postCode;
+        this.idCity = idCity;
+        this.postCode = postCode;
     }
 
     public int getId() {
@@ -36,19 +42,19 @@ public class PostCode {
         this.id = id;
     }
 
-    public int getId_city() {
-        return id_city;
+    public int getIdCity() {
+        return idCity;
     }
 
-    public void setId_city(int idCity) {
-        this.id_city = id_city;
+    public void setIdCity(int idCity) {
+        this.idCity = this.idCity;
     }
 
     public String getPostCode() {
-        return post_code;
+        return postCode;
     }
 
     public void setPostCode(String postCode) {
-        this.post_code = postCode;
+        this.postCode = postCode;
     }
 }

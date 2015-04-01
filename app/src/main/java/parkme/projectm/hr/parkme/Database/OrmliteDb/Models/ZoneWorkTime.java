@@ -3,8 +3,11 @@ package parkme.projectm.hr.parkme.Database.OrmliteDb.Models;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
-import java.text.SimpleDateFormat;
+import java.text.ParseException;
 import java.util.Date;
+
+import parkme.projectm.hr.parkme.Database.OrmliteDb.DatabaseManager;
+import parkme.projectm.hr.parkme.Database.OrmliteDb.SimpleDataModels.SimpleZoneWorkTime;
 
 /**
  * Created by Adriano Bacac on 29.03.15..
@@ -16,24 +19,35 @@ public class ZoneWorkTime {
     @DatabaseField(id = true, generatedId = false)
     private int id;
     @DatabaseField
-    private int id_calendar;
+    private int idCalendar;
     @DatabaseField
-    private Date day_name;
+    private int dayCode;
     @DatabaseField
-    private String time_from;
+    private Date timeFrom;
     @DatabaseField
-    private String time_to;
+    private Date timeTo;
 
     public ZoneWorkTime() {
 
     }
+    public ZoneWorkTime(SimpleZoneWorkTime simpleZoneWorkTime){
+        this.id = simpleZoneWorkTime.getId();
+        this.idCalendar = simpleZoneWorkTime.getIdCalendar();
+        this.dayCode = simpleZoneWorkTime.getDay();
 
-    public ZoneWorkTime(int id, int idCalendar, Date day, String timeFrom, String timeTo) {
+        try {
+            this.timeFrom = DatabaseManager.timeFormatter.parse(simpleZoneWorkTime.getTimeFrom());
+            this.timeTo = DatabaseManager.timeFormatter.parse(simpleZoneWorkTime.getTimeTo());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+    }
+    public ZoneWorkTime(int id, int idCalendar, int day, Date timeFrom, Date timeTo) {
         this.id = id;
-        this.id_calendar = idCalendar;
-        this.day_name = day;
-        this.time_from = timeFrom;
-        this.time_to = timeTo;
+        this.idCalendar = idCalendar;
+        this.dayCode = day;
+        this.timeFrom = timeFrom;
+        this.timeTo = timeTo;
 
 
     }
@@ -46,35 +60,35 @@ public class ZoneWorkTime {
         this.id = id;
     }
 
-    public int getId_calendar() {
-        return id_calendar;
+    public int getIdCalendar() {
+        return idCalendar;
     }
 
-    public void setId_calendar(int id_calendar) {
-        this.id_calendar = id_calendar;
+    public void setIdCalendar(int idCalendar) {
+        this.idCalendar = idCalendar;
     }
 
-    public Date getDay() {
-        return day_name;
+    public int getDayCode() {
+        return dayCode;
     }
 
-    public void setDay(Date day) {
-        this.day_name = day;
+    public void setDayCode(int dayCode) {
+        this.dayCode = dayCode;
     }
 
-    public String getTimeFrom() {
-        return time_from;
+    public Date getTimeFrom() {
+        return timeFrom;
     }
 
-    public void setTimeFrom(String timeFrom) {
-        this.time_from = timeFrom;
+    public void setTimeFrom(Date timeFrom) {
+        this.timeFrom = timeFrom;
     }
 
-    public String getTimeTo() {
-        return time_to;
+    public Date getTimeTo() {
+        return timeTo;
     }
 
-    public void setTimeTo(String timeTo) {
-        this.time_to = timeTo;
+    public void setTimeTo(Date timeTo) {
+        this.timeTo = timeTo;
     }
 }

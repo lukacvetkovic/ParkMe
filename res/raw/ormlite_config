@@ -27,7 +27,7 @@ id=true
 fieldName=name
 # --field-end--
 # --field-start--
-fieldName=phone_number
+fieldName=phoneNumber
 # --field-end--
 # --field-start--
 fieldName=id_city
@@ -104,7 +104,7 @@ fieldName=id
 id=true
 # --field-end--
 # --field-start--
-fieldName=id_calendar
+fieldName=idCalendar
 # --field-end--
 # --field-start--
 fieldName=day_name

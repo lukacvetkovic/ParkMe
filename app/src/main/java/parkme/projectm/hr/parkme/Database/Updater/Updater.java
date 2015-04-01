@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Objects;
 
 import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.City;
+import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.MaxDuration;
 import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.ParkingZone;
 import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.PaymentMode;
 import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.PostCode;
@@ -75,4 +76,13 @@ public interface Updater {
      * @param zonePrices List of changed or added rows.
      */
     public void updateZonePrice(List<ZonePrice> zonePrices);
+
+
+    /**
+     * Updates max duration table with new rows.
+     * If row exists changes values, inserts new row otherwise.
+     *
+     * @param maxDurations List of changed or added rows.
+     */
+    public void updateMaxDuration(List<MaxDuration> maxDurations);
 }

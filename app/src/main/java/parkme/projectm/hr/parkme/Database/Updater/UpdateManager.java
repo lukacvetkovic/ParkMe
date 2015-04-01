@@ -23,9 +23,10 @@ public class UpdateManager {
         updater.updateParkingZone(source.getNewParkingZoneRows(lastUpdate));
         updater.updatePostcode(source.getNewPostcodeRows(lastUpdate));
         updater.updatePaymentMode(source.getNewPaymentModeRows(lastUpdate));
-        //updater.updateZoneCalendar(source.getNewZoneCalendarRows(lastUpdate));
-        //updater.updateZoneWorkTime(source.getNewZoneWorkTimeRows(lastUpdate));
+        updater.updateZoneCalendar(source.getNewZoneCalendarRows(lastUpdate));
+        updater.updateZoneWorkTime(source.getNewZoneWorkTimeRows(lastUpdate));
         updater.updateZonePrice(source.getNewZonePriceRows(lastUpdate));
+        updater.updateMaxDuration(source.getMaxDurationRows(lastUpdate));
 
     }
 
