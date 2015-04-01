@@ -51,6 +51,18 @@ public class PaymentMode {
         this.idZone = id_zone;
     }
 
+    public PaymentMode(int id, String duration, String sms_prefix, String sms_sufix, int id_zone) {
+        this.id = id;
+        try {
+            this.duration = DatabaseManager.timeFormatter.parse(duration);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        this.smsPrefix = sms_prefix;
+        this.smsSufix = sms_sufix;
+        this.idZone = id_zone;
+    }
+
 
     public int getId() {
         return id;
