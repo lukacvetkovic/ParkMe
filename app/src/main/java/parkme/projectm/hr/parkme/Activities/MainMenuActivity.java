@@ -40,15 +40,11 @@ public class MainMenuActivity extends Activity{
      *
      */
 
-    int i;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_menu);
         DatabaseManager.init(getApplicationContext());
-        i = 1;
-
 
         payParkingButton = ( ImageButton ) findViewById(R.id.imgBtnPayment);
         //Goes to PaymentMenuActivity

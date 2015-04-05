@@ -52,7 +52,12 @@ public interface SMSParkingApi {
      */
     public MaxDuration getMaxDuration(Date date, int idParkingZone);
 
-    //public String getNameCityFromPostCode(String postCode); TODO
+    /**
+     * Returns requested City name from given post code
+     * @param postCode - query
+     * @return
+     */
+    public String getCityNameFromPostCode(String postCode); // TODO
 
 
 }

@@ -72,6 +72,18 @@ public class DatabaseManager implements SMSParkingApi, Updater{
         return helper.getRuntimeCityDao().queryForAll();
     }
 
+    @Override
+    public String getCityNameFromPostCode(String postCode) {
+        try {
+            int cityId = helper.getRuntimePostcodeDao().queryBuilder()
+                    .where().eq("post_code", postCode).queryForFirst().getIdCity();
+            return helper.getRuntimeCityDao().queryForId(cityId).getName();
+        }
+        catch (Exception e){
+            return null;
+        }
+    }
+
     public List<FavouriteCar> getAllFavouriteCars(){
         return helper.getRuntimeFavouriteCarDao().queryForAll();
     }
