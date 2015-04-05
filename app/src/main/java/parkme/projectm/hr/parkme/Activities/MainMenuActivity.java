@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 
 import java.sql.SQLException;
@@ -31,8 +32,9 @@ public class MainMenuActivity extends Activity{
     /**
      * Button to go to activity where is swipe menu for choosing favs,cars,...
      */
-    Button payment;
-    Button parking;
+    private ImageButton findParkingButton;
+    private ImageButton payParkingButton;
+
     Button update;
     /**
      *
@@ -48,9 +50,9 @@ public class MainMenuActivity extends Activity{
         i = 1;
 
 
-        payment=(Button) findViewById(R.id.bPay);
+        payParkingButton = ( ImageButton ) findViewById(R.id.imgBtnPayment);
         //Goes to PaymentMenuActivity
-        payment.setOnClickListener(new View.OnClickListener() {
+        payParkingButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //!EXTRA
@@ -79,8 +81,8 @@ public class MainMenuActivity extends Activity{
             }
         });
 
-        parking=(Button) findViewById(R.id.bPark);
-        parking.setOnClickListener(new View.OnClickListener() {
+        findParkingButton = ( ImageButton ) findViewById(R.id.imgBtnFindParking);
+        findParkingButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Class ourClass = null;
