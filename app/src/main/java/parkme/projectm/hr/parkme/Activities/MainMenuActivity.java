@@ -28,11 +28,12 @@ public class MainMenuActivity extends Activity{
      * Button to go to activity where is swipe menu for choosing favs,cars,...
      */
     Button payment;
-
+    Button parking;
+    Button update;
     /**
      *
      */
-    Button parking;
+
     int i;
 
     @Override
@@ -42,9 +43,22 @@ public class MainMenuActivity extends Activity{
         DatabaseManager.init(getApplicationContext());
         i = 1;
 
+
         payment=(Button) findViewById(R.id.bPay);
         //Goes to PaymentMenuActivity
         payment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //!EXTRA
+                Class ourClass = null;
+                ourClass = PaymentMenuActivity.class;
+                Intent ourIntent = new Intent(MainMenuActivity.this, ourClass);
+                startActivity(ourIntent);
+            }
+        });
+
+        update=(Button)findViewById(R.id.bUpdate);
+        update.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //EXTRA "update" svega sa neta
@@ -58,11 +72,6 @@ public class MainMenuActivity extends Activity{
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
-                //!EXTRA
-                Class ourClass = null;
-                ourClass = PaymentMenuActivity.class;
-                Intent ourIntent = new Intent(MainMenuActivity.this, ourClass);
-                startActivity(ourIntent);
             }
         });
 

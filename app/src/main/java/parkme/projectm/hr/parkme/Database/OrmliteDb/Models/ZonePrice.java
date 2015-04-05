@@ -3,6 +3,8 @@ package parkme.projectm.hr.parkme.Database.OrmliteDb.Models;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
+import parkme.projectm.hr.parkme.Database.OrmliteDb.SimpleDataModels.SimpleZonePrice;
+
 /**
  * Created by Adriano Bacac on 29.03.15..
  */
@@ -11,18 +13,27 @@ import com.j256.ormlite.table.DatabaseTable;
 public class ZonePrice {
     @DatabaseField(id = true, generatedId = false)
     private int id;
-    @DatabaseField
-    private int id_payment_mode;
-    @DatabaseField
-    private int id_zone_work_time;
-    @DatabaseField
-    private int price_trimmed;
-    @DatabaseField
-    private int price_decimal;
-    @DatabaseField
+    @DatabaseField(columnName = "id_payment_mode")
+    private int idPaymentMode;
+    @DatabaseField(columnName = "id_zone_work_time")
+    private int idZoneWorkTime;
+    @DatabaseField(columnName = "price_trimmed")
+    private int priceTrimmed;
+    @DatabaseField(columnName = "price_decimal")
+    private int priceDecimal;
+    @DatabaseField(columnName = "currency")
     private String currency;
 
     public ZonePrice() {
+    }
+
+    public ZonePrice(SimpleZonePrice simpleZonePrice){
+        this.id = simpleZonePrice.getId();
+        this.idPaymentMode = simpleZonePrice.getIdPaymentMode();
+        this.idZoneWorkTime = simpleZonePrice.getIdZoneWorkTime();
+        this.priceTrimmed = simpleZonePrice.getPriceTrimmed();
+        this.priceDecimal = simpleZonePrice.getPriceDecimal();
+        this.currency = simpleZonePrice.getCurrency();
     }
 
     public ZonePrice(int id, int idPaymentMode, int idZoneWorkTime, float price) {
@@ -39,10 +50,10 @@ public class ZonePrice {
 
     public ZonePrice(int id, int idPaymentMode, int idZoneWorkTime, int priceTrimmed, int priceDecimal, String currency) {
         this.id = id;
-        this.id_payment_mode = idPaymentMode;
-        this.id_zone_work_time = idZoneWorkTime;
-        this.price_trimmed = priceTrimmed;
-        this.price_decimal = priceDecimal;
+        this.idPaymentMode = idPaymentMode;
+        this.idZoneWorkTime = idZoneWorkTime;
+        this.priceTrimmed = priceTrimmed;
+        this.priceDecimal = priceDecimal;
         this.currency = currency;
     }
 
@@ -55,43 +66,43 @@ public class ZonePrice {
     }
 
     public int getIdPaymentMode() {
-        return id_payment_mode;
+        return idPaymentMode;
     }
 
     public void setIdPaymentMode(int idPaymentMode) {
-        this.id_payment_mode = idPaymentMode;
+        this.idPaymentMode = idPaymentMode;
     }
 
     public int getIdZoneWorkTime() {
-        return id_zone_work_time;
+        return idZoneWorkTime;
     }
 
     public void setIdZoneWorkTime(int idZoneWorkTime) {
-        this.id_zone_work_time = idZoneWorkTime;
+        this.idZoneWorkTime = idZoneWorkTime;
     }
 
     public int getPriceTrimmed() {
-        return price_trimmed;
+        return priceTrimmed;
     }
 
     public void setPriceTrimmed(int priceTrimmed) {
-        this.price_trimmed = price_trimmed;
+        this.priceTrimmed = this.priceTrimmed;
     }
 
     public int getPriceDecimal() {
-        return price_decimal;
+        return priceDecimal;
     }
 
     public void setPriceDecimal(int priceDecimal) {
-        this.price_decimal = priceDecimal;
+        this.priceDecimal = priceDecimal;
     }
 
     public float getPriceFloat(){
-        return price_trimmed + ((float) price_decimal) / String.valueOf(price_decimal).length();
+        return priceTrimmed + ((float) priceDecimal) / (String.valueOf(priceDecimal).length() * 10);
     }
     public void setPriceFloat(float price){
-        this.price_trimmed = (int) price;
-        this.price_decimal = ((int)(price * 100))%100;
+        this.priceTrimmed = (int) price;
+        this.priceDecimal = ((int)(price * 100))%100;
     }
 
     public String getCurrency() {

@@ -4,11 +4,11 @@ package parkme.projectm.hr.parkme.Database.OrmliteDb.Models;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
-import java.text.DateFormat;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Locale;
+
+import parkme.projectm.hr.parkme.Database.OrmliteDb.DatabaseManager;
+import parkme.projectm.hr.parkme.Database.OrmliteDb.SimpleDataModels.SimplePaymentMode;
 
 /**
  * Model of payment mode.
@@ -20,24 +20,47 @@ public class PaymentMode {
     @DatabaseField(id = true)
     private int id;
     @DatabaseField
-    private String duration;
-    @DatabaseField
-    private String sms_prefix;
-    @DatabaseField
-    private String sms_sufix;
-    @DatabaseField
-    private int id_zone;
+    private Date duration;
+    @DatabaseField(columnName = "sms_prefix")
+    private String smsPrefix;
+    @DatabaseField(columnName = "sms_sufix")
+    private String smsSufix;
+    @DatabaseField(columnName = "id_zone")
+    private int idZone;
 
     public PaymentMode(){
 
     }
+    public PaymentMode(SimplePaymentMode simplePaymentMode){
+        this.id = simplePaymentMode.getId();
+        try {
+            this.duration = DatabaseManager.timeFormatter.parse(simplePaymentMode.getDuration());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        this.smsPrefix = simplePaymentMode.getSmsPrefix();
+        this.smsSufix = simplePaymentMode.getSmsSufix();
+        this.idZone = simplePaymentMode.getIdZone();
+
+    }
+    public PaymentMode(int id, Date duration, String sms_prefix, String sms_sufix, int id_zone) {
+        this.id = id;
+        this.duration = duration;
+        this.smsPrefix = sms_prefix;
+        this.smsSufix = sms_sufix;
+        this.idZone = id_zone;
+    }
 
     public PaymentMode(int id, String duration, String sms_prefix, String sms_sufix, int id_zone) {
         this.id = id;
-        this.duration = duration;
-        this.sms_prefix = sms_prefix;
-        this.sms_sufix = sms_sufix;
-        this.id_zone = id_zone;
+        try {
+            this.duration = DatabaseManager.timeFormatter.parse(duration);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        this.smsPrefix = sms_prefix;
+        this.smsSufix = sms_sufix;
+        this.idZone = id_zone;
     }
 
 
@@ -49,35 +72,35 @@ public class PaymentMode {
         this.id = id;
     }
 
-    public String getDuration() {
+    public Date getDuration() {
         return duration;
     }
 
-    public void setDuration(String duration) {
+    public void setDuration(Date duration) {
         this.duration = duration;
     }
 
     public String getSmsPrefix() {
-        return sms_prefix;
+        return smsPrefix;
     }
 
     public void setSmsPrefix(String smsPrefix) {
-        this.sms_prefix = smsPrefix;
+        this.smsPrefix = smsPrefix;
     }
 
     public String getSmsSufix() {
-        return sms_sufix;
+        return smsSufix;
     }
 
     public void setSmsSufix(String smsSufix) {
-        this.sms_sufix = smsSufix;
+        this.smsSufix = smsSufix;
     }
 
     public int getIdZone() {
-        return id_zone;
+        return idZone;
     }
 
     public void setIdZone(int idZone) {
-        this.id_zone = idZone;
+        this.idZone = idZone;
     }
 }

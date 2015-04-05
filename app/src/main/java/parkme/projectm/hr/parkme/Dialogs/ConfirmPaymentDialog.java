@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.text.ParseException;
 import java.util.Date;
 
 import parkme.projectm.hr.parkme.Database.OrmliteDb.DatabaseManager;
@@ -99,7 +100,8 @@ public class ConfirmPaymentDialog extends DialogFragment {
             @Override
             public void onClick(DialogInterface dialog, int id) {
 
-                PaymentMode paymentMode = new PaymentMode(1,"1","","",1); /*TODO uzmi iz baze po ID-u*/
+                PaymentMode  paymentMode = new PaymentMode(1, "01:00:00","","",1); /*TODO uzmi iz baze po ID-u*/
+
 
                 String message = paymentMode.getSmsPrefix()+" "+carPlate+" "+paymentMode.getSmsSufix();
 

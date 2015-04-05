@@ -1,9 +1,7 @@
-package parkme.projectm.hr.parkme.Database.OrmliteDb.Models;
+package parkme.projectm.hr.parkme.Database.OrmliteDb.SimpleDataModels;
 
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
-
-import parkme.projectm.hr.parkme.Database.OrmliteDb.SimpleDataModels.SimpleCity;
 
 /**
  * Model of city.
@@ -11,22 +9,16 @@ import parkme.projectm.hr.parkme.Database.OrmliteDb.SimpleDataModels.SimpleCity;
  * Created by Adriano Bacac on 29.03.15..
  */
 @DatabaseTable(tableName = "city")
-public class City {
+public class SimpleCity {
     @DatabaseField(id = true, generatedId = false)
     private int id;
-    @DatabaseField(columnName = "name")
+    @DatabaseField
     private String name;
 
-    public City(){
+    public SimpleCity(){
 
     }
-
-    public City(SimpleCity sCity){
-        this.id = sCity.getId();
-        this.name = sCity.getName();
-    }
-
-    public City(int id, String name) {
+    public SimpleCity(int id, String name) {
         this.id = id;
         this.name = name;
     }

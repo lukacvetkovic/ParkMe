@@ -3,6 +3,8 @@ package parkme.projectm.hr.parkme.Database.OrmliteDb.Models;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
+import parkme.projectm.hr.parkme.Database.OrmliteDb.SimpleDataModels.SimpleParkingZone;
+
 /**
  * Model of parking zone.
  *
@@ -12,22 +14,27 @@ import com.j256.ormlite.table.DatabaseTable;
 public class ParkingZone {
     @DatabaseField(id = true)
     private int id;
-    @DatabaseField
+    @DatabaseField(columnName = "name")
     private String name;
-    @DatabaseField
-    private String phone_number;
-    @DatabaseField
-    private int id_city;
+    @DatabaseField(columnName = "phone_number")
+    private String phoneNumber;
+    @DatabaseField(columnName = "id_city")
+    private int idCity;
 
     public ParkingZone(){
 
     }
-
+    public ParkingZone(SimpleParkingZone simpleParkingZone){
+        this.id = simpleParkingZone.getId();
+        this.name = simpleParkingZone.getName();
+        this.phoneNumber = simpleParkingZone.getPhoneNumber();
+        this.idCity = simpleParkingZone.getIdCity();
+    }
     public ParkingZone(int id, String name, String phone_number, int id_city) {
         this.id = id;
         this.name = name;
-        this.phone_number = phone_number;
-        this.id_city = id_city;
+        this.phoneNumber = phone_number;
+        this.idCity = id_city;
     }
 
     public int getId() {
@@ -46,19 +53,19 @@ public class ParkingZone {
         this.name = name;
     }
 
-    public String getPhone_number() {
-        return phone_number;
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
 
-    public void setPhone_number(String phone_number) {
-        this.phone_number = phone_number;
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
     public int getIdCity() {
-        return id_city;
+        return idCity;
     }
 
     public void setIdCity(int idCity) {
-        this.id_city = idCity;
+        this.idCity = idCity;
     }
 }
