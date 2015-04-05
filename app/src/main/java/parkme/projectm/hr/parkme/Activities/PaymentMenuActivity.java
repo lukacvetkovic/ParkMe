@@ -100,12 +100,15 @@ public class PaymentMenuActivity extends FragmentActivity {
 
         @Override
         public Fragment getItem(int i) {
-            if(i==1){
-                Fragment fragment = new ParkingPayFragment();
+            Fragment fragment;
+            if (i == 0) {
+                fragment = new CarChoosingFragment();
                 return fragment;
-            }
-            else {
-                Fragment fragment = new DemoObjectFragment();
+            } else if (i == 1) {
+                fragment = new ParkingPayFragment();
+                return fragment;
+            } else {
+                fragment = new DemoObjectFragment();
                 Bundle args = new Bundle();
                 args.putInt(DemoObjectFragment.ARG_OBJECT, i + 1); // Our object is just an integer :-P
                 fragment.setArguments(args);
@@ -120,15 +123,19 @@ public class PaymentMenuActivity extends FragmentActivity {
         }
 
         @Override
-        public CharSequence getPageTitle(int position){
-            switch (position){
-                case 0: return "Izbor Auta";
+        public CharSequence getPageTitle(int position) {
+            switch (position) {
+                case 0:
+                    return "Izbor Auta";
 
-                case 1: return "Plati parking";
+                case 1:
+                    return "Plati parking";
 
-                case 2: return "Povijest plačanja";
+                case 2:
+                    return "Povijest plačanja";
 
-                default:return "Undefined";
+                default:
+                    return "Undefined";
 
             }
         }
@@ -164,7 +171,7 @@ public class PaymentMenuActivity extends FragmentActivity {
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_parking_pay, container, false);
 
-            parkingPayButton=(Button)rootView.findViewById(R.id.btnPayParking);
+            parkingPayButton = (Button) rootView.findViewById(R.id.btnPayParking);
 
             final Context context = getActivity();
 
@@ -177,6 +184,32 @@ public class PaymentMenuActivity extends FragmentActivity {
                 }
             });
 
+            return rootView;
+        }
+    }
+
+    public static class CarChoosingFragment extends Fragment {
+
+        Button newCarButton;
+
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                                 Bundle savedInstanceState) {
+
+            View rootView = inflater.inflate(R.layout.fragment_car_choosing, container, false);
+
+            newCarButton = (Button) rootView.findViewById(R.id.btnNewCar);
+
+            final Context context = getActivity();
+
+            newCarButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent i = new Intent(context, NewCarActivity.class);
+                    startActivity(i);
+
+                }
+            });
             return rootView;
         }
     }

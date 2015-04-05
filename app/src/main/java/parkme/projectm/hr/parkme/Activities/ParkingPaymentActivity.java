@@ -18,6 +18,8 @@ import android.widget.Toast;
 import org.json.JSONException;
 
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -228,7 +230,11 @@ public class ParkingPaymentActivity extends Activity {
 
                         //add zonenames to map and arrray
                         for (int i = 0, z = paymentModeList.size(); i < z; ++i) {
-                            paymentModes[i] = paymentModeList.get(i).getDuration().toString();
+                            Log.d("TIME ",paymentModeList.get(i).getDuration().toString() );
+                            Date date = new Date(paymentModeList.get(i).getDuration().getTime());
+                            DateFormat formatter = new SimpleDateFormat("HH:mm:ss");
+                            String dateFormatted = formatter.format(date);
+                            paymentModes[i] = dateFormatted;
                             mapIdOption.put(paymentModes[i], paymentModeList.get(i).getId());
                         }
 
