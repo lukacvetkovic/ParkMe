@@ -68,7 +68,7 @@ public class MainMenuActivity extends Activity{
                         new UrlUpdateSource(new GetRestService(""))
                 );
                 try {
-                    um.updateAll(DatabaseManager.dateFormatter.parse("2010-01-01"));
+                    um.updateAll(DatabaseManager.dateFormatter.parse("2010-01-01"));        // TODO - ubacit ovo u asyncTask ako nije vezano uz placanje
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
