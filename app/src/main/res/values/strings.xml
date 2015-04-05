@@ -14,4 +14,9 @@
     <string name="OdabranoTrajanje">Odabrano trajanje</string>
     <string name="Registracija">Registarska oznaka</string>
     <string name="MaxTrajanje">Maksimalno trajanje</string>
+    <string name="Novi">Novi</string>
+    <string name="title_activity_new_car">NewCar</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
 </resources>

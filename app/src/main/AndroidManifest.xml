@@ -58,10 +58,9 @@
                 <action android:name="android.provider.Telephony.SMS_RECEIVED" />
             </intent-filter>
         </receiver>
-
         <activity
-            android:name=".Activities.MainActivity"
-            android:label="@string/title_activity_main" >
+            android:name=".Activities.NewCarActivity"
+            android:label="@string/title_activity_new_car" >
         </activity>
     </application>
 
