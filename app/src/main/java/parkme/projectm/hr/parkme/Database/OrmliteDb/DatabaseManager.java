@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.Map;
 
 import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.City;
+import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.FavouriteCar;
 import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.MaxDuration;
 import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.ParkingZone;
 import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.PaymentMode;
@@ -69,6 +70,18 @@ public class DatabaseManager implements SMSParkingApi, Updater{
     @Override
     public List<City> getAllCities() {
         return helper.getRuntimeCityDao().queryForAll();
+    }
+
+    public List<FavouriteCar> getAllFavouriteCars(){
+        return helper.getRuntimeFavouriteCarDao().queryForAll();
+    }
+
+    public void addFavouriteCar(FavouriteCar car) {
+        helper.getRuntimeFavouriteCarDao().createIfNotExists(car);
+    }
+
+    public void removeFavouriteCar(FavouriteCar car) {
+        helper.getRuntimeFavouriteCarDao().delete(car);
     }
 
     @Override

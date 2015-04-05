@@ -11,6 +11,7 @@ import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.PostCode;
 import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.ZoneCalendar;
 import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.ZonePrice;
 import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.ZoneWorkTime;
+import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.FavouriteCar;
 
 /**
  * Created by Adriano Bacac on 29.03.15..
@@ -24,7 +25,8 @@ public class DatabaseConfigUtil extends OrmLiteConfigUtil {
             ZoneCalendar.class,
             ZoneWorkTime.class,
             ZonePrice.class,
-            MaxDuration.class
+            MaxDuration.class,
+            FavouriteCar.class
     };
     public static void main(String[] args) throws Exception {
         writeConfigFile("ormlite_config", classes);

@@ -14,6 +14,7 @@ import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
 
 import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.City;
+import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.FavouriteCar;
 import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.MaxDuration;
 import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.ParkingZone;
 import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.PaymentMode;
@@ -32,7 +33,7 @@ public class OrmLiteDatabaseHelper extends OrmLiteSqliteOpenHelper {
     // name of the database file for your application -- change to something appropriate for your app
     private static final String DATABASE_NAME = "parky.db";
     // any time you make changes to your database objects, you may have to increase the database version
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
 
     public OrmLiteDatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION, R.raw.ormlite_config);
@@ -54,6 +55,7 @@ public class OrmLiteDatabaseHelper extends OrmLiteSqliteOpenHelper {
             TableUtils.createTable(connectionSource, ZonePrice.class);
             TableUtils.createTable(connectionSource, ZoneWorkTime.class);
             TableUtils.createTable(connectionSource, MaxDuration.class);
+            TableUtils.createTable(connectionSource, FavouriteCar.class);
         } catch (SQLException e) {
             Log.e(OrmLiteDatabaseHelper.class.getName(), "Can't create database", e);
             throw new RuntimeException(e);
@@ -76,6 +78,7 @@ public class OrmLiteDatabaseHelper extends OrmLiteSqliteOpenHelper {
             TableUtils.dropTable(connectionSource, ZonePrice.class, true);
             TableUtils.dropTable(connectionSource, ZoneWorkTime.class, true);
             TableUtils.dropTable(connectionSource, MaxDuration.class, true);
+            TableUtils.dropTable(connectionSource, FavouriteCar.class, true);
             // after we drop the old databases, we create the new ones
             onCreate(db, connectionSource);
         } catch (SQLException e) {
@@ -296,6 +299,27 @@ public class OrmLiteDatabaseHelper extends OrmLiteSqliteOpenHelper {
         }
         return maxDurationRuntimeDao;
     }
+
+
+    // the DAO object we use to access the favourite_cars table
+    private Dao<FavouriteCar, String> favouriteCarDao = null;
+    private RuntimeExceptionDao<FavouriteCar, String> favouriteCarRuntimeDao = null;
+
+    public Dao<FavouriteCar, String> getFavouriteCarDao() throws SQLException {
+        if(favouriteCarDao == null) {
+            favouriteCarDao = getDao(FavouriteCar.class);
+        }
+        return favouriteCarDao;
+    }
+
+    public RuntimeExceptionDao<FavouriteCar, String> getRuntimeFavouriteCarDao() {
+        if(favouriteCarRuntimeDao == null) {
+            favouriteCarRuntimeDao = getRuntimeExceptionDao(FavouriteCar.class);
+        }
+        return favouriteCarRuntimeDao;
+    }
+
+
     /**
      * Close the database connections and clear any cached DAOs.
      */

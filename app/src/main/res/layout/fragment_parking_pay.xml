@@ -29,10 +29,8 @@
         android:id="@+id/btnPayParking"
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginLeft="10dp"
         android:layout_marginBottom="10dp"
         android:background="#0000a8fd"
-        android:scaleType="fitXY"
         android:text="@string/PlatiParking"/>
 
 </RelativeLayout>

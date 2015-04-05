@@ -11,5 +11,6 @@ public enum Tables {
     ZoneCalendar,
     ZoneWorkTime,
     ZonePrice,
-    MaxDuration
+    MaxDuration,
+    FavCars
 }
