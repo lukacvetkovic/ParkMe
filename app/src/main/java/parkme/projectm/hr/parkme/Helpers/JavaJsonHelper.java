@@ -68,9 +68,9 @@ public class JavaJsonHelper {
     public static PostCode fromJsonToIdPostCode(String postCodeJson) throws JSONException {
         Gson gson = new Gson();
 
-        JSONArray jsonZones = new JSONObject(postCodeJson).getJSONArray("content");
+        JSONArray jsonPostCode = new JSONObject(postCodeJson).getJSONArray("content");
 
-        return gson.fromJson(String.valueOf(jsonZones.getJSONObject(0)), PostCode.class);
+        return gson.fromJson(String.valueOf(jsonPostCode.getJSONObject(0)), PostCode.class);
 
     }
 

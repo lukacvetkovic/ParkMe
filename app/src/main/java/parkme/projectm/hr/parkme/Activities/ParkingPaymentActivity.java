@@ -164,11 +164,16 @@ public class ParkingPaymentActivity extends Activity {
 
             if (response != null) {
                 try {
+                    Log.d("RESPONSE--->", response);
+                    Log.d("MOJ GRAD--->", selectedCity);
                     String cityName = null;
                     PostCode postCode = JavaJsonHelper.fromJsonToIdPostCode(response);
+                    Log.d("POSTCODE---->",postCode.toString());
                     for (Map.Entry<String, Integer> entry : mapIdCity.entrySet()) {
+                        Log.d(String.valueOf(postCode.getIdCity())+"==",String.valueOf(entry.getValue()));
                         if (postCode.getIdCity() == (entry.getValue())) {
                             cityName = entry.getKey();
+                            break;
                         }
                     }
 
