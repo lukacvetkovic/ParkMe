@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import java.sql.SQLException;
 import java.text.ParseException;
@@ -14,6 +15,7 @@ import java.util.List;
 
 import parkme.projectm.hr.parkme.Database.OrmliteDb.DatabaseManager;
 import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.City;
+import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.FavouriteCar;
 import parkme.projectm.hr.parkme.Database.OrmliteDb.OrmLiteDatabaseHelper;
 import parkme.projectm.hr.parkme.Database.Updater.UpdateManager;
 import parkme.projectm.hr.parkme.Database.Updater.UrlUpdateSource;
@@ -24,6 +26,8 @@ import parkme.projectm.hr.parkme.R;
  * Created by Cveki on 11.2.2015..
  */
 public class MainMenuActivity extends Activity{
+
+    private static final String TAG = "MainMenu Activity";
     /**
      * Button to go to activity where is swipe menu for choosing favs,cars,...
      */
@@ -83,7 +87,6 @@ public class MainMenuActivity extends Activity{
                 ourClass =ParkingMenuActivity.class;
                 Intent ourIntent = new Intent(MainMenuActivity.this, ourClass);
                 startActivity(ourIntent);
-
             }
         });
 
