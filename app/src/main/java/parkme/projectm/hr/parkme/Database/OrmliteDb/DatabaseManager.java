@@ -94,11 +94,6 @@ public class DatabaseManager implements SMSParkingApi, Updater{
         return helper.getRuntimePaymentModeDao().queryForId(idPaymentMode);
     }
 
-    @Override
-    public String getPhoneNumberForParking(int idParkingZone, int idPaymentMode) {
-        return null; //TODO
-    }
-
     public List<FavouriteCar> getAllFavouriteCars(){
         return helper.getRuntimeFavouriteCarDao().queryForAll();
     }
