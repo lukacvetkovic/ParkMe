@@ -27,23 +27,20 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.concurrent.ExecutionException;
 
 import parkme.projectm.hr.parkme.Database.OrmliteDb.DatabaseManager;
 import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.City;
+import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.MaxDuration;
 import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.ParkingZone;
 import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.PaymentMode;
-import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.PostCode;
 import parkme.projectm.hr.parkme.Dialogs.ConfirmPaymentDialog;
 import parkme.projectm.hr.parkme.Helpers.Rest.ApiConstants;
 import parkme.projectm.hr.parkme.Helpers.Rest.GetRestService;
-import parkme.projectm.hr.parkme.Helpers.JavaJsonHelper;
 import parkme.projectm.hr.parkme.Helpers.LocationHelper.FallbackLocationTracker;
 import parkme.projectm.hr.parkme.Helpers.LocationHelper.GPSTracker;
 import parkme.projectm.hr.parkme.R;
 
 import static android.widget.Toast.makeText;
-
 
 
 public class ParkingPaymentActivity extends Activity {
@@ -70,7 +67,7 @@ public class ParkingPaymentActivity extends Activity {
     Map<String, Integer> mapIdOption;
 
     String selectedZone;
-    String selectedCity;
+    String selectedCityPostCode;
     String selectedOption;
 
     Button btnPay;
@@ -84,6 +81,7 @@ public class ParkingPaymentActivity extends Activity {
 
     /**
      * On create method, starts with layout
+     *
      * @param savedInstanceState
      */
     @Override
@@ -94,12 +92,12 @@ public class ParkingPaymentActivity extends Activity {
         setContentView(R.layout.activity_parking_payment);
         citySpinner = (Spinner) findViewById(R.id.spinnerCity);
         zoneSpinner = (Spinner) findViewById(R.id.spinnerZone);
-        paymentModeSpinner =(Spinner) findViewById(R.id.spinnerOption);
-        btnPay=(Button)findViewById(R.id.btnPayParking);
-        favs=(CheckBox)findViewById(R.id.cbFavorites);
+        paymentModeSpinner = (Spinner) findViewById(R.id.spinnerOption);
+        btnPay = (Button) findViewById(R.id.btnPayParking);
+        favs = (CheckBox) findViewById(R.id.cbFavorites);
 
         DatabaseManager.init(this);
-        databaseManager=DatabaseManager.getInstance();
+        databaseManager = DatabaseManager.getInstance();
 
         mapIdCity = new HashMap<>();
         getRestService = new GetRestService(ApiConstants.dohvatiSveGradove + ".json");
@@ -110,9 +108,9 @@ public class ParkingPaymentActivity extends Activity {
         FallbackLocationTracker fallbackLocationTracker = new FallbackLocationTracker(this);
         fallbackLocationTracker.start();
 
-        selectedCity = null;
+        selectedCityPostCode = null;
 
-        cityList=databaseManager.getAllCities();
+        cityList = databaseManager.getAllCities();
 
         cityNames = new String[cityList.size()];
 
@@ -127,17 +125,17 @@ public class ParkingPaymentActivity extends Activity {
         //Init adapterZone
         adapterZone = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item);
         //Init adapterPaymentMode
-        adapterOption= new ArrayAdapter<>(this, android.R.layout.simple_spinner_item);
+        adapterOption = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item);
         // Specify the layout to use when the list of choices appears
         adapterCity.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         // Apply the adapter to the spinner
         citySpinner.setAdapter(adapterCity);
 
         //Get location
-        Location mylocation=null;
+        Location mylocation = null;
         mylocation = fallbackLocationTracker.getLocation();
-        if(mylocation==null){
-            mylocation=gpsTracker.getLocation();
+        if (mylocation == null) {
+            mylocation = gpsTracker.getLocation();
         }
 
         //If location not null set spinner to city
@@ -149,44 +147,17 @@ public class ParkingPaymentActivity extends Activity {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            response = null;
             if (addresses.size() > 0) {
-                selectedCity = addresses.get(0).getPostalCode();
-                try {
-                    getRestService.setUrl(ApiConstants.dohvatiGradPrekoPostanskogBroja + selectedCity + ".json");
-                    response = getRestService.execute();
-                } catch (InterruptedException | ExecutionException e) {
-                    e.printStackTrace();
-                }
+                selectedCityPostCode = addresses.get(0).getPostalCode();
 
-                Log.d("MOJ GRAD--->", selectedCity);
+                Log.d("MOJ GRAD--->", selectedCityPostCode);
             }
 
-            if (response != null) {
-                try {
-                    Log.d("RESPONSE--->", response);
-                    Log.d("MOJ GRAD--->", selectedCity);
-                    String cityName = null;
-                    PostCode postCode = JavaJsonHelper.fromJsonToIdPostCode(response);
-                    Log.d("POSTCODE---->",postCode.toString());
-                    for (Map.Entry<String, Integer> entry : mapIdCity.entrySet()) {
-                        Log.d(String.valueOf(postCode.getIdCity())+"==",String.valueOf(entry.getValue()));
-                        if (postCode.getIdCity() == (entry.getValue())) {
-                            cityName = entry.getKey();
-                            break;
-                        }
-                    }
-
-                    assert cityName != null;
-                    citySpinner.setSelection(Arrays.asList(cityNames).indexOf(cityName));
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            } else {
-                Log.d("NIJE USPJELO", "!!!!!!!");
-                Toast toast = makeText(this, "Neuspjelo dohvačanje podataka", Toast.LENGTH_LONG);
-                toast.show();
+            String cityName = databaseManager.getCityNameFromPostCode(selectedCityPostCode);
+            if (cityName != null) {
+                citySpinner.setSelection(Arrays.asList(cityNames).indexOf(cityName));
             }
+
 
         }
 
@@ -197,10 +168,10 @@ public class ParkingPaymentActivity extends Activity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
                 //Get selected city
-                selectedCity = cityNames[position];
-                Log.d("IZABRAN------>", selectedCity);
+                selectedCityPostCode = cityNames[position];
+                Log.d("IZABRAN------>", selectedCityPostCode);
 
-                parkingZoneList=databaseManager.getAllParkingZonesFromCity(mapIdCity.get(selectedCity));
+                parkingZoneList = databaseManager.getAllParkingZonesFromCity(mapIdCity.get(selectedCityPostCode));
 
                 zoneNames = new String[parkingZoneList.size()];
                 mapIdZone = new HashMap<String, Integer>();
@@ -228,14 +199,14 @@ public class ParkingPaymentActivity extends Activity {
                         selectedZone = zoneNames[position];
                         Log.d("IZABRAN------>", selectedZone);
 
-                       paymentModeList=databaseManager.getAllPaymentModesFromParkingZone(mapIdZone.get(selectedZone));
+                        paymentModeList = databaseManager.getAllPaymentModesFromParkingZone(mapIdZone.get(selectedZone));
 
                         paymentModes = new String[paymentModeList.size()];
                         mapIdOption = new HashMap<String, Integer>();
 
                         //add zonenames to map and arrray
                         for (int i = 0, z = paymentModeList.size(); i < z; ++i) {
-                            Log.d("TIME ",paymentModeList.get(i).getDuration().toString() );
+                            Log.d("TIME ", paymentModeList.get(i).getDuration().toString());
                             Date date = new Date(paymentModeList.get(i).getDuration().getTime());
                             DateFormat formatter = new SimpleDateFormat("HH:mm:ss");
                             String dateFormatted = formatter.format(date);
@@ -252,7 +223,7 @@ public class ParkingPaymentActivity extends Activity {
 
                         paymentModeSpinner.setAdapter(adapterOption);
 
-                        if(paymentModeList.size()==1){
+                        if (paymentModeList.size() == 1) {
                             paymentModeSpinner.setEnabled(false);
                         }
 
@@ -277,27 +248,31 @@ public class ParkingPaymentActivity extends Activity {
         btnPay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int parkingZoneId=mapIdZone.get(zoneSpinner.getSelectedItem().toString());
-                int paymentModeId=mapIdOption.get(paymentModeSpinner.getSelectedItem().toString());
+                int parkingZoneId = mapIdZone.get(zoneSpinner.getSelectedItem().toString());
+                int paymentModeId = mapIdOption.get(paymentModeSpinner.getSelectedItem().toString());
 
-                String city=citySpinner.getSelectedItem().toString();
-                Log.d("Grad->",city);
+                String city = citySpinner.getSelectedItem().toString();
+                Log.d("Grad->", city);
 
-                String zone=zoneSpinner.getSelectedItem().toString();
-                Log.d("Zona->",zone);
+                String zone = zoneSpinner.getSelectedItem().toString();
+                Log.d("Zona->", zone);
 
-                Date date= new Date();
-                float price= databaseManager.getPrice(date,paymentModeId);
-                Log.d("Cijena->",String.valueOf(price));
+                Date date = new Date();
+                float price = databaseManager.getPrice(date, paymentModeId);
+                Log.d("Cijena->", String.valueOf(price));
 
-                String duration=paymentModeSpinner.getSelectedItem().toString();
-                Log.d("Trajanje->",duration);
+                String duration = paymentModeSpinner.getSelectedItem().toString();
+                Log.d("Trajanje->", duration);
 
-                String maxDuration=new Date().toLocaleString();
-                Log.d("Maksimalno trajanje->",maxDuration);
+                MaxDuration maxDuration = databaseManager.getMaxDuration(new Date(), parkingZoneId);
+                DateFormat formatter = new SimpleDateFormat("HH:mm:ss");
+                String maxDurationFormated = formatter.format(maxDuration.getMaxDuration().getTime());
+
+                Log.d("Maksimalno trajanje->", String.valueOf(maxDuration.getMaxDuration().getTime()));
+                Log.d("Maksimalno trajanje->", maxDurationFormated);
 
 
-                DialogFragment pay= new ConfirmPaymentDialog();
+                DialogFragment pay = new ConfirmPaymentDialog();
                 // Supply num input as an argument.
                 Bundle args = new Bundle();
 
@@ -305,12 +280,18 @@ public class ParkingPaymentActivity extends Activity {
                 args.putString("zone", zone);
                 args.putFloat("price", price);
                 args.putString("duration", duration);
-                args.putString("maxDuration", maxDuration);
-                args.putInt("parkingZoneId",parkingZoneId);
-                args.putInt("parkingMethodId",paymentModeId);
+                if (maxDurationFormated.equals("00:00:00")) {
+                    //TODO ne znam sta stavit ako je beskonacno trajanje
+                    args.putString("maxDuration", "-");
+                } else {
+                    args.putString("maxDuration", maxDurationFormated);
+                }
+
+                args.putInt("parkingZoneId", parkingZoneId);
+                args.putInt("parkingMethodId", paymentModeId);
 
                 pay.setArguments(args);
-                pay.show(getFragmentManager(),"Plačanje");
+                pay.show(getFragmentManager(), "Plačanje");
 
             }
         });
