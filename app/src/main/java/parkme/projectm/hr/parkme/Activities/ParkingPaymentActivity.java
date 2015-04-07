@@ -288,7 +288,7 @@ public class ParkingPaymentActivity extends Activity {
                 }
 
                 args.putInt("parkingZoneId", parkingZoneId);
-                args.putInt("parkingMethodId", paymentModeId);
+                args.putInt("paymentModeId", paymentModeId);
 
                 pay.setArguments(args);
                 pay.show(getFragmentManager(), "Plačanje");

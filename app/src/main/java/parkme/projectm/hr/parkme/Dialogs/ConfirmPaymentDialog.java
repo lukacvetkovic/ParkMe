@@ -41,7 +41,7 @@ public class ConfirmPaymentDialog extends DialogFragment {
     String carPlate;
     String parkingZoneNumber;
     int parkingZoneId;
-    int parkingMethodId;
+    int paymentModeId;
 
     DatabaseManager databaseManager;
 
@@ -77,7 +77,7 @@ public class ConfirmPaymentDialog extends DialogFragment {
         duration=getArguments().getString("duration");
         maxDuarton=getArguments().getString("maxDuration");
         parkingZoneId=getArguments().getInt("parkingZoneId");
-        parkingMethodId=getArguments().getInt("parkingMethodId");
+        paymentModeId=getArguments().getInt("paymentModeId");
 
         Date date = new Date();
         tvTime.setText(date.getHours()+":"+date.getMinutes());
@@ -90,7 +90,7 @@ public class ConfirmPaymentDialog extends DialogFragment {
 
 
 
-        /*ParkingZone parkingZone=TODO iz aplija dohvati po id-u*/
+        ParkingZone parkingZone=databaseManager.getParkingZoneFromId(parkingZoneId);
 
 
 
@@ -100,13 +100,13 @@ public class ConfirmPaymentDialog extends DialogFragment {
             @Override
             public void onClick(DialogInterface dialog, int id) {
 
-                PaymentMode  paymentMode = new PaymentMode(1, "01:00:00","","",1); /*TODO uzmi iz baze po ID-u*/
+                PaymentMode  paymentMode = databaseManager.getPaymentModeFromId(paymentModeId);
 
 
                 String message = paymentMode.getSmsPrefix()+" "+carPlate+" "+paymentMode.getSmsSufix();
 
                 //SMSHelper.sendSMS(parkingZoneNumber, "BOK, ti si najpametniji, covjece =)");
-                parkingZoneNumber="MOCKANI BROJ";
+                parkingZoneNumber=databaseManager.getPhoneNumberForParking(parkingZoneId,paymentModeId);
                 Context context = getActivity();
                 CharSequence text = "Broj : "+parkingZoneNumber+" Poruka:"+ message;
                 int duration = Toast.LENGTH_LONG;
