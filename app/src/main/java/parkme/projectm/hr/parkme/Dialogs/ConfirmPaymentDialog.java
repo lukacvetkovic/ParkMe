@@ -17,6 +17,7 @@ import java.util.Date;
 import parkme.projectm.hr.parkme.Database.OrmliteDb.DatabaseManager;
 import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.ParkingZone;
 import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.PaymentMode;
+import parkme.projectm.hr.parkme.Helpers.PrefsHelper;
 import parkme.projectm.hr.parkme.Helpers.SMSHelper;
 import parkme.projectm.hr.parkme.R;
 
@@ -45,6 +46,8 @@ public class ConfirmPaymentDialog extends DialogFragment {
 
     DatabaseManager databaseManager;
 
+    PrefsHelper prefsHelper;
+
 
 
 
@@ -59,6 +62,7 @@ public class ConfirmPaymentDialog extends DialogFragment {
 
         DatabaseManager.init(builder.getContext());
         databaseManager= DatabaseManager.getInstance();
+        prefsHelper= new PrefsHelper(getActivity());
 
         tvTime=(TextView)inflator.findViewById(R.id.tvTime);
         tvCity=(TextView)inflator.findViewById(R.id.tvCity);
@@ -69,7 +73,7 @@ public class ConfirmPaymentDialog extends DialogFragment {
         tvCarPlate=(TextView)inflator.findViewById(R.id.tvCarPlate);
 
 
-        carPlate=/*TODO dohvti iz share prefs*/"ZG636FH";
+        carPlate=prefsHelper.getString(PrefsHelper.ActiveCarPlates,"NULL");
 
         city=getArguments().getString("city");
         parkingZone=getArguments().getString("zone");
@@ -90,7 +94,7 @@ public class ConfirmPaymentDialog extends DialogFragment {
 
 
 
-        ParkingZone parkingZone=databaseManager.getParkingZoneFromId(parkingZoneId);
+        final ParkingZone parkingZone=databaseManager.getParkingZoneFromId(parkingZoneId);
 
 
 
@@ -106,7 +110,8 @@ public class ConfirmPaymentDialog extends DialogFragment {
                 String message = paymentMode.getSmsPrefix()+" "+carPlate+" "+paymentMode.getSmsSufix();
 
                 //SMSHelper.sendSMS(parkingZoneNumber, "BOK, ti si najpametniji, covjece =)");
-                parkingZoneNumber=databaseManager.getPhoneNumberForParking(parkingZoneId,paymentModeId);
+                parkingZoneNumber=parkingZone.getPhoneNumber();
+                //parkingZoneNumber=databaseManager.getPhoneNumberForParking(parkingZoneId,paymentModeId); TODO otkomentirat
                 Context context = getActivity();
                 CharSequence text = "Broj : "+parkingZoneNumber+" Poruka:"+ message;
                 int duration = Toast.LENGTH_LONG;

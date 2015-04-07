@@ -59,10 +59,8 @@ public interface SMSParkingApi {
      */
     public String getCityNameFromPostCode(String postCode);
 
-    public ParkingZone getParkingZoneFromId(int idParkingZone); //TODO
+    public ParkingZone getParkingZoneFromId(int idParkingZone);
 
-    public PaymentMode getPaymentModeFromId(int idPaymentMode); //TODO
-
-    public String getPhoneNumberForParking(int idParkingZone,int idPaymentMode ); //TODO, mozda ti idParkingZone ne treba
+    public PaymentMode getPaymentModeFromId(int idPaymentMode);
 
 }
