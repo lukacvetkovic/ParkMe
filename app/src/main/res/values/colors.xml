@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="parky_green">#7dba32</color>
+    <color name="parky_green_darker">#6bad3e</color>
+
+    <color name="parky_text_gray">#999999</color>
+    <color name="parky_text_dark_gray">#555555</color>
+
+    <color name="parky_background_white">#ffffff</color>
+    <color name="parky_shade_gray">#33000000</color>
+
+    <color name="parky_error_red">#e6493e</color>
+
+</resources>

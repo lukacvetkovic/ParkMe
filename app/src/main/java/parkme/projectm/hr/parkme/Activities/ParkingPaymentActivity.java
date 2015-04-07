@@ -34,8 +34,8 @@ import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.MaxDuration;
 import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.ParkingZone;
 import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.PaymentMode;
 import parkme.projectm.hr.parkme.Dialogs.ConfirmPaymentDialog;
-import parkme.projectm.hr.parkme.Helpers.Constants;
-import parkme.projectm.hr.parkme.Helpers.GetRestService;
+import parkme.projectm.hr.parkme.Helpers.Rest.ApiConstants;
+import parkme.projectm.hr.parkme.Helpers.Rest.GetRestService;
 import parkme.projectm.hr.parkme.Helpers.LocationHelper.FallbackLocationTracker;
 import parkme.projectm.hr.parkme.Helpers.LocationHelper.GPSTracker;
 import parkme.projectm.hr.parkme.R;
@@ -100,7 +100,7 @@ public class ParkingPaymentActivity extends Activity {
         databaseManager = DatabaseManager.getInstance();
 
         mapIdCity = new HashMap<>();
-        getRestService = new GetRestService(Constants.dohvatiSveGradove + ".json");
+        getRestService = new GetRestService(ApiConstants.dohvatiSveGradove + ".json");
         parkingZoneList = new ArrayList<>();
 
         //Gps

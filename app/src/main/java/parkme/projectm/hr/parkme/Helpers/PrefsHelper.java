@@ -19,6 +19,8 @@ public class PrefsHelper {
 
     private Context context;
 
+    public static String ActiveCarPlates = "ActiveCarPlates";
+
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
 

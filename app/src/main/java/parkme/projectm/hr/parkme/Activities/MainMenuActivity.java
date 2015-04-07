@@ -7,20 +7,17 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
-import java.sql.SQLException;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.List;
 
 import parkme.projectm.hr.parkme.Database.OrmliteDb.DatabaseManager;
-import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.City;
-import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.FavouriteCar;
-import parkme.projectm.hr.parkme.Database.OrmliteDb.OrmLiteDatabaseHelper;
 import parkme.projectm.hr.parkme.Database.Updater.UpdateManager;
 import parkme.projectm.hr.parkme.Database.Updater.UrlUpdateSource;
-import parkme.projectm.hr.parkme.Helpers.GetRestService;
+import parkme.projectm.hr.parkme.Dialogs.FirstTimeAddCarDialog;
+import parkme.projectm.hr.parkme.Helpers.PrefsHelper;
+import parkme.projectm.hr.parkme.Helpers.Rest.GetRestService;
 import parkme.projectm.hr.parkme.R;
 
 /**
@@ -34,6 +31,11 @@ public class MainMenuActivity extends Activity{
      */
     private ImageButton findParkingButton;
     private ImageButton payParkingButton;
+
+    private RelativeLayout rootRelativeView;
+
+    private FirstTimeAddCarDialog addCarDialog;
+    private PrefsHelper prefsHelper;
 
     Button update;
     /**
@@ -87,6 +89,24 @@ public class MainMenuActivity extends Activity{
                 startActivity(ourIntent);
             }
         });
+
+        prefsHelper = new PrefsHelper(this);
+        if(! prefsHelper.prefsContains(PrefsHelper.ActiveCarPlates)){
+            Log.w(TAG, "Prefs does not contain ActiveCarPlates !");
+            rootRelativeView = (RelativeLayout) findViewById(R.id.rootRelativeView);
+            addCarDialog = new FirstTimeAddCarDialog(this);
+            addCarDialog.setDismissCallback(new FirstTimeAddCarDialog.FirstTimeAddCarCallback() {
+                @Override
+                public void dismissThisDialog() {
+                    rootRelativeView.removeView(addCarDialog);
+                    addCarDialog.setVisibility(View.GONE);
+                }
+            });
+            RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT);
+            params.addRule(RelativeLayout.ALIGN_PARENT_LEFT, RelativeLayout.TRUE);
+            params.addRule(RelativeLayout.ALIGN_PARENT_TOP, RelativeLayout.TRUE);
+            rootRelativeView.addView(addCarDialog, params);
+        }
 
     }
 }
