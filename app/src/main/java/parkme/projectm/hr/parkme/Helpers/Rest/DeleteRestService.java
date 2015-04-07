@@ -1,12 +1,15 @@
-package parkme.projectm.hr.parkme.Helpers;
+package parkme.projectm.hr.parkme.Helpers.Rest;
+
+/**
+ * Created by Cveki on 27.11.2014..
+ */
 
 import android.os.AsyncTask;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpPut;
-import org.apache.http.entity.StringEntity;
+import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.protocol.BasicHttpContext;
 import org.apache.http.protocol.HttpContext;
@@ -14,18 +17,14 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
 
-/**
- * Created by Cveki on 17.12.2014..
- */
-public class PutRestService extends AsyncTask<Void, Void, String>{
+
+public class DeleteRestService extends AsyncTask<Void, Void, String> {
+
 
     public String data = null;
-    public String adresaNaKojojAzuriram;
-    public JSONObject noviObjekt;
-
-
+    public JSONObject json;
+    public String adresaSKojeUziamam;
 
 
     protected String getASCIIContentFromEntity(HttpEntity entity) throws IllegalStateException, IOException {
@@ -42,23 +41,13 @@ public class PutRestService extends AsyncTask<Void, Void, String>{
 
     @Override
     protected String doInBackground(Void... params) {
-        StringEntity input = null;
         HttpClient httpClient = new DefaultHttpClient();
         HttpContext localContext = new BasicHttpContext();
-        HttpPut putRequest = new HttpPut(adresaNaKojojAzuriram);
-        putRequest.addHeader("Content-Type", "application/json");
-        putRequest.addHeader("Accept", "application/json");
-        try{
-          input =new StringEntity(noviObjekt.toString());
-        }
-        catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-
-        }
-        putRequest.setEntity(input);
+        HttpDelete httpDelete = new HttpDelete(adresaSKojeUziamam);
+        httpDelete.addHeader("accept", "application/json");
         String text = null;
         try {
-            HttpResponse response = httpClient.execute(putRequest, localContext);
+            HttpResponse response = httpClient.execute(httpDelete, localContext);
             HttpEntity entity = response.getEntity();
             text = getASCIIContentFromEntity(entity);
         } catch (Exception e) {
@@ -70,9 +59,7 @@ public class PutRestService extends AsyncTask<Void, Void, String>{
     protected void onPostExecute(String results) {
         if (results != null) {
             data = results;
-
         }
-
 
 
     }
@@ -82,19 +69,10 @@ public class PutRestService extends AsyncTask<Void, Void, String>{
         return data;
     }
 
-    public JSONObject getNoviObjekt() {
-        return noviObjekt;
-    }
 
-    public void setNoviObjekt(JSONObject noviObjekt) {
-        this.noviObjekt = noviObjekt;
-    }
-
-    public String getAdresaNaKojojAzuriram() {
-        return adresaNaKojojAzuriram;
-    }
-
-    public void setAdresaNaKojojAzuriram(String adresaNaKojojAzuriram) {
-        this.adresaNaKojojAzuriram = adresaNaKojojAzuriram;
+    public void obrisi(String URL) {
+        adresaSKojeUziamam=URL;
+        execute();
     }
 }
+

@@ -3,7 +3,6 @@ package parkme.projectm.hr.parkme.Database.Updater;
 import org.json.JSONException;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -25,7 +24,7 @@ import parkme.projectm.hr.parkme.Database.OrmliteDb.SimpleDataModels.SimplePostC
 import parkme.projectm.hr.parkme.Database.OrmliteDb.SimpleDataModels.SimpleZoneCalendar;
 import parkme.projectm.hr.parkme.Database.OrmliteDb.SimpleDataModels.SimpleZonePrice;
 import parkme.projectm.hr.parkme.Database.OrmliteDb.SimpleDataModels.SimpleZoneWorkTime;
-import parkme.projectm.hr.parkme.Helpers.GetRestService;
+import parkme.projectm.hr.parkme.Helpers.Rest.GetRestService;
 import parkme.projectm.hr.parkme.Helpers.JavaJsonHelper;
 
 /**

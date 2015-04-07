@@ -35,8 +35,8 @@ import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.ParkingZone;
 import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.PaymentMode;
 import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.PostCode;
 import parkme.projectm.hr.parkme.Dialogs.ConfirmPaymentDialog;
-import parkme.projectm.hr.parkme.Helpers.Constants;
-import parkme.projectm.hr.parkme.Helpers.GetRestService;
+import parkme.projectm.hr.parkme.Helpers.Rest.ApiConstants;
+import parkme.projectm.hr.parkme.Helpers.Rest.GetRestService;
 import parkme.projectm.hr.parkme.Helpers.JavaJsonHelper;
 import parkme.projectm.hr.parkme.Helpers.LocationHelper.FallbackLocationTracker;
 import parkme.projectm.hr.parkme.Helpers.LocationHelper.GPSTracker;
@@ -102,7 +102,7 @@ public class ParkingPaymentActivity extends Activity {
         databaseManager=DatabaseManager.getInstance();
 
         mapIdCity = new HashMap<>();
-        getRestService = new GetRestService(Constants.dohvatiSveGradove + ".json");
+        getRestService = new GetRestService(ApiConstants.dohvatiSveGradove + ".json");
         parkingZoneList = new ArrayList<>();
 
         //Gps
@@ -153,7 +153,7 @@ public class ParkingPaymentActivity extends Activity {
             if (addresses.size() > 0) {
                 selectedCity = addresses.get(0).getPostalCode();
                 try {
-                    getRestService.setUrl(Constants.dohvatiGradPrekoPostanskogBroja + selectedCity + ".json");
+                    getRestService.setUrl(ApiConstants.dohvatiGradPrekoPostanskogBroja + selectedCity + ".json");
                     response = getRestService.execute();
                 } catch (InterruptedException | ExecutionException e) {
                     e.printStackTrace();

@@ -57,7 +57,7 @@ public interface SMSParkingApi {
      * @param postCode - query
      * @return
      */
-    public String getCityNameFromPostCode(String postCode); // TODO
+    public String getCityNameFromPostCode(String postCode);
 
 
 }
