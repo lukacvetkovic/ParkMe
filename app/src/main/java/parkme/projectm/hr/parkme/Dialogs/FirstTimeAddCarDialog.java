@@ -13,6 +13,8 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import parkme.projectm.hr.parkme.Database.OrmliteDb.DatabaseManager;
+import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.FavouriteCar;
 import parkme.projectm.hr.parkme.Helpers.PrefsHelper;
 import parkme.projectm.hr.parkme.R;
 
@@ -95,8 +97,30 @@ public class FirstTimeAddCarDialog extends FrameLayout{
                     errorTextView.setVisibility(VISIBLE);
                 }
                 else {
+                    // Setting up active
                     prefsHelper = new PrefsHelper(context);
                     prefsHelper.putString(PrefsHelper.ActiveCarPlates, carPlatesEditText.getText().toString());
+
+                    //Saving active to the database
+                    DatabaseManager dbManager = DatabaseManager.getInstance();
+                    int carIconResId;
+                    switch (selectedCar){
+                        case BLUE:
+                            carIconResId = R.drawable.car_icon_blue_s;
+                            break;
+                        case GREEN:
+                            carIconResId = R.drawable.car_icon_green_s;
+                            break;
+                        case RED:
+                            carIconResId = R.drawable.car_icon_red_s;
+                            break;
+                        case YELLOW:
+                            carIconResId = R.drawable.car_icon_yellow_s;
+                            break;
+                        default:
+                            carIconResId = R.drawable.car_icon_green_s;
+                    }
+                    dbManager.addFavouriteCar(new FavouriteCar(carPlates, carIconResId));
                     if (dismissCallback != null) {
                         dismissCallback.dismissThisDialog();
                     }

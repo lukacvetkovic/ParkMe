@@ -14,6 +14,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import parkme.projectm.hr.parkme.Fragments.CarChoosingFragment;
+import parkme.projectm.hr.parkme.Fragments.PayParkingFragment;
 import parkme.projectm.hr.parkme.R;
 
 /**
@@ -68,7 +70,7 @@ public class PaymentMenuActivity extends FragmentActivity {
                 fragment = new CarChoosingFragment();
                 return fragment;
             } else if (i == 1) {
-                fragment = new ParkingPayFragment();
+                fragment = new PayParkingFragment();
                 return fragment;
             } else {
                 fragment = new DemoObjectFragment();
@@ -118,61 +120,5 @@ public class PaymentMenuActivity extends FragmentActivity {
             return rootView;
         }
     }
-
-    /**
-     * Class where is current car selected, list of favorite parking payment and button for new payment
-     */
-    public static class ParkingPayFragment extends Fragment {
-
-        Button parkingPayButton;
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_parking_pay, container, false);
-
-            parkingPayButton = (Button) rootView.findViewById(R.id.btnPayParking);
-
-            final Context context = getActivity();
-
-            parkingPayButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent i = new Intent(context, ParkingPaymentActivity.class);
-                    startActivity(i);
-
-                }
-            });
-
-            return rootView;
-        }
-    }
-
-    public static class CarChoosingFragment extends Fragment {
-
-        Button newCarButton;
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-
-            View rootView = inflater.inflate(R.layout.fragment_car_choosing, container, false);
-
-            newCarButton = (Button) rootView.findViewById(R.id.btnNewCar);
-
-            final Context context = getActivity();
-
-            newCarButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent i = new Intent(context, NewCarActivity.class);
-                    startActivity(i);
-
-                }
-            });
-            return rootView;
-        }
-    }
-
 
 }
