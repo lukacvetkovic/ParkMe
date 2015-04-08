@@ -12,6 +12,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 import parkme.projectm.hr.parkme.Database.OrmliteDb.DatabaseManager;
@@ -83,8 +85,11 @@ public class ConfirmPaymentDialog extends DialogFragment {
         parkingZoneId=getArguments().getInt("parkingZoneId");
         paymentModeId=getArguments().getInt("paymentModeId");
 
-        Date date = new Date();
-        tvTime.setText(date.getHours()+":"+date.getMinutes());
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.DATE, 1);
+        SimpleDateFormat format1 = new SimpleDateFormat("HH:mm");
+        String formatted = format1.format(cal.getTime());
+        tvTime.setText(formatted);
         tvCity.setText(city);
         tvParkingZone.setText(parkingZone);
         tvPrice.setText(String.valueOf(price)+ " kn");
@@ -109,9 +114,9 @@ public class ConfirmPaymentDialog extends DialogFragment {
 
                 String message = paymentMode.getSmsPrefix()+" "+carPlate+" "+paymentMode.getSmsSufix();
 
-                //SMSHelper.sendSMS(parkingZoneNumber, "BOK, ti si najpametniji, covjece =)");
+                //SMSHelper.sendSMS(parkingZoneNumber, message);
+                prefsHelper.putString(PrefsHelper.PhoneNumber,parkingZoneNumber);
                 parkingZoneNumber=parkingZone.getPhoneNumber();
-                //parkingZoneNumber=databaseManager.getPhoneNumberForParking(parkingZoneId,paymentModeId); TODO otkomentirat
                 Context context = getActivity();
                 CharSequence text = "Broj : "+parkingZoneNumber+" Poruka:"+ message;
                 int duration = Toast.LENGTH_LONG;
