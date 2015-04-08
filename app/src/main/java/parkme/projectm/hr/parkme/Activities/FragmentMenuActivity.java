@@ -97,8 +97,6 @@ public class FragmentMenuActivity extends FragmentActivity {
 
         @Override
         public Fragment getItem(int i) {
-            //Fragment fragment;
-            //Log.e("FragAdap", "getItem");
             if (i == 0) {
                 ChooseCarFragment fragment = new ChooseCarFragment();
                 fragment.setChooseCarFragmentCallback(new ChooseCarFragmentCallback() {
@@ -162,13 +160,12 @@ public class FragmentMenuActivity extends FragmentActivity {
 
         @Override
         public int getCount() {
-            // For this contrived example, we have a 3-object collection. (Izbor auta,plati parking, povijest placanja)
+            // (Izbor auta,plati parking, povijest placanja)
             return 3;
         }
 
         @Override
         public CharSequence getPageTitle(int position) {
-            //Log.e("FragAdap", "getTitle");
             switch (position) {
                 case 0:
                     return "Izbor Auta";

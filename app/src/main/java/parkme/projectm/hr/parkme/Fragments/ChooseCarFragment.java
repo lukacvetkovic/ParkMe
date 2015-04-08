@@ -12,7 +12,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import java.util.List;
 
@@ -46,8 +45,6 @@ public class ChooseCarFragment extends Fragment {
     private List<FavouriteCar> favoriteCarList;
     private FavoriteCarsArrayAdapter favoriteCarsArrayAdapter;
 
-    private AddCarDialog addCarDialog;
-
     private PrefsHelper prefsHelper;
 
     @Override
@@ -70,9 +67,6 @@ public class ChooseCarFragment extends Fragment {
 
         if(favoriteCarList != null){
             Log.w("PRESS", "FavCarList nije null - number of values : " + favoriteCarList.size());
-            if(activeCarPlates == null) {
-                activeCarPlates = favoriteCarList.get(0).getCarRegistration();
-            }
             favoriteCarsArrayAdapter = new FavoriteCarsArrayAdapter(parentActivity,
                     favoriteCarList.toArray(new FavouriteCar[favoriteCarList.size()]));
         }
@@ -94,14 +88,9 @@ public class ChooseCarFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                FavouriteCar favouriteCar = (FavouriteCar) favoriteCarsArrayAdapter.getItem(position);
+                FavouriteCar favouriteCar = favoriteCarsArrayAdapter.getItem(position);
 
-                //updateActiveCarHeader(favouriteCar);
                 prefsHelper.putString(PrefsHelper.ActiveCarPlates, favouriteCar.getCarRegistration());
-
-                Toast toast = Toast.makeText(context, "Pressed favCar at index " + position
-                        + ", car tables -> " + favouriteCar.getCarRegistration(), Toast.LENGTH_LONG);
-                toast.show();
 
                 if(chooseCarFragmentCallback != null) {
                     chooseCarFragmentCallback.refreshActivity();
@@ -135,11 +124,6 @@ public class ChooseCarFragment extends Fragment {
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         parentActivity = (FragmentMenuActivity) activity;
-    }
-
-    private void updateActiveCarHeader(FavouriteCar favouriteCar) {
-        activeCarView.setCarTablesText(favouriteCar.getCarRegistration());
-        activeCarView.getActiveCarImage().setImageResource(favouriteCar.getCarIcon());
     }
 
     public void setChooseCarFragmentCallback(ChooseCarFragmentCallback chooseCarFragmentCallback) {

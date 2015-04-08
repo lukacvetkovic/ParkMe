@@ -63,8 +63,6 @@ public class PayParkingFragment extends Fragment {
             }
         });
 
-        //Log.w("PAYPARKING", "ovdje je on resume");
-
         return rootView;
     }
 
@@ -74,9 +72,4 @@ public class PayParkingFragment extends Fragment {
         parentActivity = (FragmentMenuActivity) activity;
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        //Log.w("TAG", "onResume");
-    }
 }
