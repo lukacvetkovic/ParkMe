@@ -8,7 +8,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import parkme.projectm.hr.parkme.Activities.PaymentMenuActivity;
+import parkme.projectm.hr.parkme.Activities.FragmentMenuActivity;
 import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.FavouriteCar;
 import parkme.projectm.hr.parkme.R;
 
@@ -16,10 +16,10 @@ import parkme.projectm.hr.parkme.R;
  * Created by Mihael on 8.4.2015..
  */
 public class FavoriteCarsArrayAdapter extends ArrayAdapter<FavouriteCar> {
-    private final PaymentMenuActivity context;
+    private final FragmentMenuActivity context;
     private final FavouriteCar[] values;
 
-    public FavoriteCarsArrayAdapter(PaymentMenuActivity context, FavouriteCar[] values) {
+    public FavoriteCarsArrayAdapter(FragmentMenuActivity context, FavouriteCar[] values) {
         super(context, R.layout.layout_favorite_car , values);
         this.context = context;
         this.values = values;

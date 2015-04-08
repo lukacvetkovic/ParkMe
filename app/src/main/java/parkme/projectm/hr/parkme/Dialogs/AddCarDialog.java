@@ -21,7 +21,7 @@ import parkme.projectm.hr.parkme.R;
 /**
  * Created by Mihael on 7.4.2015..
  */
-public class FirstTimeAddCarDialog extends FrameLayout{
+public class AddCarDialog extends FrameLayout{
 
     private final String TAG = "FirstTimeAddCarDialog";
     private Context context;
@@ -57,17 +57,17 @@ public class FirstTimeAddCarDialog extends FrameLayout{
         void dismissThisDialog();
     }
 
-    public FirstTimeAddCarDialog(Context context) {
+    public AddCarDialog(Context context) {
         super(context);
         init(context);
     }
 
-    public FirstTimeAddCarDialog(Context context, AttributeSet attrs) {
+    public AddCarDialog(Context context, AttributeSet attrs) {
         super(context, attrs);
         init(context);
     }
 
-    public FirstTimeAddCarDialog(Context context, AttributeSet attrs, int defStyleAttr) {
+    public AddCarDialog(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init(context);
     }

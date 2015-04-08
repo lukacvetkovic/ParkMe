@@ -14,7 +14,7 @@ import java.text.ParseException;
 import parkme.projectm.hr.parkme.Database.OrmliteDb.DatabaseManager;
 import parkme.projectm.hr.parkme.Database.Updater.UpdateManager;
 import parkme.projectm.hr.parkme.Database.Updater.UrlUpdateSource;
-import parkme.projectm.hr.parkme.Dialogs.FirstTimeAddCarDialog;
+import parkme.projectm.hr.parkme.Dialogs.AddCarDialog;
 import parkme.projectm.hr.parkme.Helpers.PrefsHelper;
 import parkme.projectm.hr.parkme.Helpers.Rest.GetRestService;
 import parkme.projectm.hr.parkme.R;
@@ -33,7 +33,7 @@ public class MainMenuActivity extends Activity{
 
     private RelativeLayout rootRelativeView;
 
-    private FirstTimeAddCarDialog addCarDialog;
+    private AddCarDialog addCarDialog;
     private PrefsHelper prefsHelper;
 
     Button update;
@@ -57,7 +57,7 @@ public class MainMenuActivity extends Activity{
             public void onClick(View v) {
                 //!EXTRA
                 Class ourClass = null;
-                ourClass = PaymentMenuActivity.class;
+                ourClass = FragmentMenuActivity.class;
                 Intent ourIntent = new Intent(MainMenuActivity.this, ourClass);
                 startActivity(ourIntent);
             }
@@ -96,8 +96,8 @@ public class MainMenuActivity extends Activity{
         if(! prefsHelper.prefsContains(PrefsHelper.ActiveCarPlates)){
             Log.w(TAG, "Prefs does not contain ActiveCarPlates !");
             rootRelativeView = (RelativeLayout) findViewById(R.id.rootRelativeView);
-            addCarDialog = new FirstTimeAddCarDialog(this);
-            addCarDialog.setDismissCallback(new FirstTimeAddCarDialog.FirstTimeAddCarCallback() {
+            addCarDialog = new AddCarDialog(this);
+            addCarDialog.setDismissCallback(new AddCarDialog.FirstTimeAddCarCallback() {
                 @Override
                 public void dismissThisDialog() {
                     rootRelativeView.removeView(addCarDialog);

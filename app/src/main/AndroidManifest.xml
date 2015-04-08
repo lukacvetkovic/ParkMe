@@ -51,7 +51,7 @@
             android:name=".Activities.ParkingPaymentActivity"
             android:label="@string/title_activity_maps" />
         <activity
-            android:name=".Activities.PaymentMenuActivity"
+            android:name=".Activities.FragmentMenuActivity"
             android:label="@string/title_activity_maps" />
 
         <receiver android:name=".Receivers.IncomingSms" >

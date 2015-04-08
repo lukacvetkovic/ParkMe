@@ -10,19 +10,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import java.util.List;
 
-import parkme.projectm.hr.parkme.Activities.NewCarActivity;
-import parkme.projectm.hr.parkme.Activities.PaymentMenuActivity;
+import parkme.projectm.hr.parkme.Activities.FragmentMenuActivity;
 import parkme.projectm.hr.parkme.CustomViewModels.ActiveCarView;
 import parkme.projectm.hr.parkme.CustomViewModels.FavoriteCarsArrayAdapter;
 import parkme.projectm.hr.parkme.Database.OrmliteDb.DatabaseManager;
 import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.FavouriteCar;
+import parkme.projectm.hr.parkme.Dialogs.AddCarDialog;
 import parkme.projectm.hr.parkme.Helpers.PrefsHelper;
 import parkme.projectm.hr.parkme.R;
 
@@ -33,7 +33,9 @@ public class ChooseCarFragment extends Fragment {
 
     private Context context;
 
-    private PaymentMenuActivity parentActivity;
+    private FragmentMenuActivity parentActivity;
+
+    private FragmentActionCallback fragmentActionCallback;
 
     private ActiveCarView activeCarView;
     private FavouriteCar activeCar;
@@ -44,10 +46,12 @@ public class ChooseCarFragment extends Fragment {
     private List<FavouriteCar> favoriteCarList;
     private FavoriteCarsArrayAdapter favoriteCarsArrayAdapter;
 
+    private AddCarDialog addCarDialog;
+
     private PrefsHelper prefsHelper;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
                              Bundle savedInstanceState) {
 
         View rootView = inflater.inflate(R.layout.fragment_car_choosing, container, false);
@@ -101,8 +105,9 @@ public class ChooseCarFragment extends Fragment {
         addCarButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(context, NewCarActivity.class);       // TODO - da koristi add car popup koji vec imamo
-                startActivity(i);
+                if(fragmentActionCallback != null) {
+                    fragmentActionCallback.actionButtonAction();
+                }
             }
         });
         return rootView;
@@ -111,11 +116,15 @@ public class ChooseCarFragment extends Fragment {
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        parentActivity = (PaymentMenuActivity) activity;
+        parentActivity = (FragmentMenuActivity) activity;
     }
 
     private void updateActiveCarHeader(FavouriteCar favouriteCar) {
         activeCarView.setCarTablesText(favouriteCar.getCarRegistration());
         activeCarView.getActiveCarImage().setImageResource(favouriteCar.getCarIcon());
+    }
+
+    public void setFragmentActionCallback(FragmentActionCallback fragmentActionCallback) {
+        this.fragmentActionCallback = fragmentActionCallback;
     }
 }

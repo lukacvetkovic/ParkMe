@@ -9,15 +9,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
 
 import parkme.projectm.hr.parkme.Activities.ParkingPaymentActivity;
-import parkme.projectm.hr.parkme.Activities.PaymentMenuActivity;
+import parkme.projectm.hr.parkme.Activities.FragmentMenuActivity;
 import parkme.projectm.hr.parkme.CustomViewModels.ActiveCarView;
 import parkme.projectm.hr.parkme.Database.OrmliteDb.DatabaseManager;
 import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.FavouriteCar;
@@ -35,7 +33,7 @@ public class PayParkingFragment extends Fragment {
     private ActiveCarView activeCarView;
 
     private PrefsHelper prefsHelper;
-    private PaymentMenuActivity parentActivity;
+    private FragmentMenuActivity parentActivity;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -73,7 +71,7 @@ public class PayParkingFragment extends Fragment {
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        parentActivity = (PaymentMenuActivity) activity;
+        parentActivity = (FragmentMenuActivity) activity;
     }
 
     @Override
