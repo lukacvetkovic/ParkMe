@@ -18,9 +18,11 @@ import java.util.List;
 
 import parkme.projectm.hr.parkme.Activities.NewCarActivity;
 import parkme.projectm.hr.parkme.Activities.PaymentMenuActivity;
+import parkme.projectm.hr.parkme.CustomViewModels.ActiveCarView;
 import parkme.projectm.hr.parkme.CustomViewModels.FavoriteCarsArrayAdapter;
 import parkme.projectm.hr.parkme.Database.OrmliteDb.DatabaseManager;
 import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.FavouriteCar;
+import parkme.projectm.hr.parkme.Helpers.PrefsHelper;
 import parkme.projectm.hr.parkme.R;
 
 /**
@@ -32,25 +34,38 @@ public class CarChoosingFragment extends Fragment {
 
     private PaymentMenuActivity parentActivity;
 
+    private ActiveCarView activeCarView;
+    private FavouriteCar activeCar;
+
     private Button newCarButton;
     private ListView favoriteCarsListView;
 
     private List<FavouriteCar> favoriteCarList;
     private FavoriteCarsArrayAdapter favoriteCarsArrayAdapter;
 
+    private PrefsHelper prefsHelper;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         View rootView = inflater.inflate(R.layout.fragment_car_choosing, container, false);
+        this.context = getActivity();
 
         newCarButton = (Button) rootView.findViewById(R.id.btnNewCar);
         favoriteCarsListView = (ListView) rootView.findViewById(R.id.favoriteCarsListView);
 
-        this.context = getActivity();
+        activeCarView = (ActiveCarView) rootView.findViewById(R.id.activeCarView);
+
+        prefsHelper = new PrefsHelper(this.context);
+        String activeCarPlates = prefsHelper.getString(PrefsHelper.ActiveCarPlates, null);
 
         DatabaseManager dbManager = DatabaseManager.getInstance();
         favoriteCarList = dbManager.getAllFavouriteCars();
+
+        activeCar = dbManager.getFavoriteCarFromPlates(activeCarPlates);
+        activeCarView.setCarTablesText(activeCarPlates);
+        activeCarView.getActiveCarImage().setImageResource(activeCar.getCarIcon());
 
         if(favoriteCarList != null){
             Log.w("PRESS", "FavCarList nije null - number of values : " + favoriteCarList.size());
@@ -72,7 +87,8 @@ public class CarChoosingFragment extends Fragment {
 
                 FavouriteCar favouriteCar = (FavouriteCar) favoriteCarsArrayAdapter.getItem(position);
 
-                // TODO postaviti da je on sad favorite car
+                updateActiveCarHeader(favouriteCar);
+                prefsHelper.putString(PrefsHelper.ActiveCarPlates, favouriteCar.getCarRegistration());
 
                 Toast toast = Toast.makeText(context, "Pressed favCar at index " + position
                         + ", car tables -> " + favouriteCar.getCarRegistration(), Toast.LENGTH_LONG);
@@ -95,5 +111,10 @@ public class CarChoosingFragment extends Fragment {
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         parentActivity = (PaymentMenuActivity) activity;
+    }
+
+    private void updateActiveCarHeader(FavouriteCar favouriteCar) {
+        activeCarView.setCarTablesText(favouriteCar.getCarRegistration());
+        activeCarView.getActiveCarImage().setImageResource(activeCar.getCarIcon());
     }
 }

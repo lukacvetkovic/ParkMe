@@ -7,7 +7,7 @@
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:layout_gravity="center_vertical"
-        android:layout_marginLeft="10dp"
+        android:layout_marginLeft="30dp"
         android:background="@color/parky_green_transparent">
 
         <ImageView

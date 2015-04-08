@@ -6,6 +6,7 @@ package parkme.projectm.hr.parkme.Database.OrmliteDb;
  */
 
 import android.content.Context;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -96,6 +97,17 @@ public class DatabaseManager implements SMSParkingApi, Updater{
 
     public List<FavouriteCar> getAllFavouriteCars(){
         return helper.getRuntimeFavouriteCarDao().queryForAll();
+    }
+
+    public FavouriteCar getFavoriteCarFromPlates(String plates){
+        try {
+            return helper.getRuntimeFavouriteCarDao().queryBuilder()
+                    .where().eq(FavouriteCar.column_car_registration, plates).queryForFirst();
+        }
+        catch (Exception e){
+            Log.e("DatebaseManager", "No car for queried plates -> " + plates);
+            return null;
+        }
     }
 
     public void addFavouriteCar(FavouriteCar car) {
