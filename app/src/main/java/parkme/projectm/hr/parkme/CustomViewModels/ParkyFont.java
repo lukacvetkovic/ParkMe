@@ -11,7 +11,7 @@ public class ParkyFont {
     private static ParkyFont parkyFontInstance;
     private static Typeface parkyTypeface;
 
-    private static String fontAssetsPath = "Fonts/HUSSARBOLD.ttf";
+    private static String fontAssetsPath = "HUSSARBOLD.ttf";
 
     private ParkyFont() {
     }
