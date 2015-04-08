@@ -18,7 +18,8 @@
                 android:text="ZG 1234 FH"
                 android:textAlignment="center"
                 android:layout_gravity="center_horizontal"
-                android:textSize="30dp" />
+                android:textSize="30dp"
+                android:id="@+id/txtActiveCar"/>
 
             </LinearLayout>
         </ScrollView>

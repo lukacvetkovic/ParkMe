@@ -115,6 +115,6 @@ public class CarChoosingFragment extends Fragment {
 
     private void updateActiveCarHeader(FavouriteCar favouriteCar) {
         activeCarView.setCarTablesText(favouriteCar.getCarRegistration());
-        activeCarView.getActiveCarImage().setImageResource(activeCar.getCarIcon());
+        activeCarView.getActiveCarImage().setImageResource(favouriteCar.getCarIcon());
     }
 }

@@ -13,6 +13,7 @@ import android.widget.RelativeLayout;
 import java.text.ParseException;
 
 import parkme.projectm.hr.parkme.Database.OrmliteDb.DatabaseManager;
+import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.FavouriteCar;
 import parkme.projectm.hr.parkme.Database.Updater.UpdateManager;
 import parkme.projectm.hr.parkme.Database.Updater.UrlUpdateSource;
 import parkme.projectm.hr.parkme.Dialogs.FirstTimeAddCarDialog;
@@ -47,6 +48,9 @@ public class MainMenuActivity extends Activity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_menu);
         DatabaseManager.init(getApplicationContext());
+
+        /*DatabaseManager dbManager = DatabaseManager.getInstance();
+        dbManager.addFavouriteCar(new FavouriteCar("TE1234ST", R.drawable.car_icon_yellow_s));*/
 
         payParkingButton = ( ImageButton ) findViewById(R.id.imgBtnPayment);
         //Goes to PaymentMenuActivity
