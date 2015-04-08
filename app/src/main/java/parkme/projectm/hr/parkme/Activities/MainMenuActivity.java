@@ -10,6 +10,8 @@ import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 import parkme.projectm.hr.parkme.Database.OrmliteDb.DatabaseManager;
 import parkme.projectm.hr.parkme.Database.Updater.UpdateManager;
@@ -68,7 +70,31 @@ public class MainMenuActivity extends Activity{
                         new UrlUpdateSource(new GetRestService(""))
                 );
                 try {
-                    um.updateAll(DatabaseManager.dateFormatter.parse("2010-01-01"));        // TODO - ubacit ovo u asyncTask ako nije vezano uz placanje
+
+                    Calendar cal = Calendar.getInstance();
+                    cal.add(Calendar.DATE, 1);
+                    SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
+                    String formatted = format1.format(cal.getTime());
+
+                    String lastUpdate=prefsHelper.getString(PrefsHelper.LastUpdate,"NULL");
+
+                    if(lastUpdate=="NULL"){
+                        Log.d("UPDATE FROM", " NULL");
+                        um.updateAll(DatabaseManager.dateFormatter.parse("2010-01-01"));
+                        prefsHelper.putString(PrefsHelper.LastUpdate,formatted);
+                        Log.d("LAST UPDATE -->"," "+formatted);
+                    }
+                    else if (DatabaseManager.dateFormatter.parse(lastUpdate).getTime()<(DatabaseManager.dateFormatter.parse(formatted)).getTime()){
+                        Log.d("UPDATE FROM", lastUpdate);
+                        um.updateAll(DatabaseManager.dateFormatter.parse(lastUpdate));
+                        prefsHelper.putString(PrefsHelper.LastUpdate,formatted);
+                        Log.d("LAST UPDATE -->"," "+formatted);
+                    }
+                    else{
+                        Log.d("UPDATED", " TODAY");
+                    }
+
+
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }

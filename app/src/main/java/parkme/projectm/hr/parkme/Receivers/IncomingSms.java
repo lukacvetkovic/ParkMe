@@ -9,6 +9,8 @@ import android.telephony.SmsMessage;
 import android.util.Log;
 import android.widget.Toast;
 
+import parkme.projectm.hr.parkme.Helpers.PrefsHelper;
+
 /**
  * Created by Cveki on 29.3.2015..
  */
@@ -25,7 +27,6 @@ public class IncomingSms extends BroadcastReceiver {
         try {
 
             if (bundle != null) {
-
                 final Object[] pdusObj = (Object[]) bundle.get("pdus");
 
                 for (int i = 0; i < pdusObj.length; i++) {
@@ -33,23 +34,32 @@ public class IncomingSms extends BroadcastReceiver {
                     SmsMessage currentMessage = SmsMessage.createFromPdu((byte[]) pdusObj[i]);
                     String phoneNumber = currentMessage.getDisplayOriginatingAddress();
 
+                    PrefsHelper prefsHelper = new PrefsHelper(context);
+
                     String senderNum = phoneNumber;
-                    String message = currentMessage.getDisplayMessageBody();
+                    Log.d("senderNum-->",phoneNumber );
+                    String numberToActOn = prefsHelper.getString(PrefsHelper.PhoneNumber, "NULL");
+                    Log.d("numberToActOn-->",numberToActOn);
+                    if (senderNum.equals(numberToActOn)) {
+                        Log.d("UPISI U TABLICU", "DO KAD TRAJE PARKING I TO");
+                    } else {
+                        String message = currentMessage.getDisplayMessageBody();
 
-                    Log.i("SmsReceiver", "senderNum: " + senderNum + "; message: " + message);
+                        Log.i("SmsReceiver", "senderNum: " + senderNum + "; message: " + message);
 
 
-                    // Show Alert
-                    int duration = Toast.LENGTH_LONG;
-                    Toast toast = Toast.makeText(context,
-                            "senderNum: "+ senderNum + ", message: " + message, duration);
-                    toast.show();
+                        // Show Alert
+                        int duration = Toast.LENGTH_LONG;
+                        Toast toast = Toast.makeText(context,
+                                "senderNum: " + senderNum + ", message: " + message, duration);
+                        toast.show();
+                    }
 
                 } // end for loop
             } // bundle is null
 
         } catch (Exception e) {
-            Log.e("SmsReceiver", "Exception smsReceiver" +e);
+            Log.e("SmsReceiver", "Exception smsReceiver" + e);
 
         }
     }

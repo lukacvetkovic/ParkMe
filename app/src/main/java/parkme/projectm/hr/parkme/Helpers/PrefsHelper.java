@@ -20,6 +20,8 @@ public class PrefsHelper {
     private Context context;
 
     public static String ActiveCarPlates = "ActiveCarPlates";
+    public static String LastUpdate = "LastUpdate";
+    public static String PhoneNumber = "PhoneNumber";
 
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
@@ -31,58 +33,58 @@ public class PrefsHelper {
     }
 
     // ### boiler code
-    public String getString(String varName, String defaulrReturnValue){
+    public String getString(String varName, String defaulrReturnValue) {
         return sharedPreferences.getString(varName, defaulrReturnValue);
     }
 
-    public int getInt(String varName, int defaulrReturnValue){
+    public int getInt(String varName, int defaulrReturnValue) {
         return sharedPreferences.getInt(varName, defaulrReturnValue);
     }
 
-    public Long getLong(String varName, long defaultReturnValue){
+    public Long getLong(String varName, long defaultReturnValue) {
         return sharedPreferences.getLong(varName, defaultReturnValue);
     }
 
-    public boolean getBoolean(String varName, boolean defaulrReturnValue){
+    public boolean getBoolean(String varName, boolean defaulrReturnValue) {
         return sharedPreferences.getBoolean(varName, defaulrReturnValue);
     }
 
-    public Set<String> getStringSet(String varName, Set<String> defaulrReturnValue){
+    public Set<String> getStringSet(String varName, Set<String> defaulrReturnValue) {
         return sharedPreferences.getStringSet(varName, defaulrReturnValue);
     }
 
-    public void putString(String varName, String value){
+    public void putString(String varName, String value) {
         editor.putString(varName, value);
         editor.commit();
     }
 
-    public void putInt(String varName, int value){
+    public void putInt(String varName, int value) {
         editor.putInt(varName, value);
         editor.commit();
     }
 
-    public void putLong(String varName, long value){
+    public void putLong(String varName, long value) {
         editor.putLong(varName, value);
         editor.commit();
     }
 
-    public void putBoolean(String varName, boolean value){
+    public void putBoolean(String varName, boolean value) {
         editor.putBoolean(varName, value);
         editor.commit();
     }
 
-    public void putStringSet(String varName, Set<String> value){
+    public void putStringSet(String varName, Set<String> value) {
         editor.remove(varName);
         editor.commit();
         editor.putStringSet(varName, value);
         editor.apply();
     }
 
-    public boolean prefsContains(String varName){
+    public boolean prefsContains(String varName) {
         return sharedPreferences.contains(varName);
     }
 
-    public SharedPreferences.Editor remove (String varName){
+    public SharedPreferences.Editor remove(String varName) {
         editor.remove(varName);
         editor.commit();
         return editor;
