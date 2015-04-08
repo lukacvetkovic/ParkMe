@@ -12,5 +12,6 @@
     <dimen name="parky_text_title_left_and_right_padding">15dp</dimen>
 
     <dimen name="parky_button_text_size">18sp</dimen>
+    <dimen name="parky_car_tables_text_size">28sp</dimen>
 
 </resources>

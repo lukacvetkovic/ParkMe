@@ -112,7 +112,7 @@ public class ConfirmPaymentDialog extends DialogFragment {
                 PaymentMode  paymentMode = databaseManager.getPaymentModeFromId(paymentModeId);
 
 
-                String message = paymentMode.getSmsPrefix()+" "+carPlate+" "+paymentMode.getSmsSufix();
+                String message = paymentMode.getSmsPrefix()+carPlate+paymentMode.getSmsSufix();
 
                 //SMSHelper.sendSMS(parkingZoneNumber, message);
                 prefsHelper.putString(PrefsHelper.PhoneNumber,parkingZoneNumber);

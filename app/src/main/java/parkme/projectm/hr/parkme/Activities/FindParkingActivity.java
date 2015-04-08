@@ -24,7 +24,7 @@ import parkme.projectm.hr.parkme.R;
 /**
  * Created by Cveki on 8.3.2015..
  */
-public class ParkingMenuActivity extends FragmentActivity implements GooglePlayServicesClient.ConnectionCallbacks,
+public class FindParkingActivity extends FragmentActivity implements GooglePlayServicesClient.ConnectionCallbacks,
         GooglePlayServicesClient.OnConnectionFailedListener, GoogleMap.OnInfoWindowClickListener, View.OnClickListener, GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener{
 

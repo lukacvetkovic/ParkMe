@@ -1,10 +1,9 @@
 package parkme.projectm.hr.parkme.Dialogs;
 
-import android.app.DialogFragment;
 import android.content.Context;
 import android.text.InputFilter;
-import android.text.Layout;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -13,21 +12,24 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import parkme.projectm.hr.parkme.Database.OrmliteDb.DatabaseManager;
+import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.FavouriteCar;
 import parkme.projectm.hr.parkme.Helpers.PrefsHelper;
 import parkme.projectm.hr.parkme.R;
 
 /**
- * Created by Mihael on 7.4.2015..
+ * Created by Mihael on 8.4.2015..
  */
-public class FirstTimeAddCarDialog extends FrameLayout{
+public class UpdateOrRemoveCarDialog extends FrameLayout {
 
-    private final String TAG = "FirstTimeAddCarDialog";
+    private final String TAG = "UpdateOrRemoveCarDIalog";
     private Context context;
 
     private EditText carPlatesEditText;
     private TextView errorTextView;
 
-    private Button saveCarButton;
+    private Button updateCarButton;
+    private Button deleteCar;
 
     private ImageButton blueCarImageButton;
     private ImageView selectedBlueCar;
@@ -42,7 +44,11 @@ public class FirstTimeAddCarDialog extends FrameLayout{
 
     private PrefsHelper prefsHelper;
 
-    private FirstTimeAddCarCallback dismissCallback;
+    private UpdateOrRemoveCarCallback dismissCallback;
+
+    private FavouriteCar favoriteCarInProcess;
+
+    private DatabaseManager dbManager;
 
     private enum SelectedCar {
         BLUE,
@@ -51,33 +57,60 @@ public class FirstTimeAddCarDialog extends FrameLayout{
         YELLOW
     }
 
-    public interface FirstTimeAddCarCallback {
+    public interface UpdateOrRemoveCarCallback {
         void dismissThisDialog();
     }
 
-    public FirstTimeAddCarDialog(Context context) {
+    public UpdateOrRemoveCarDialog(Context context) {
         super(context);
         init(context);
     }
 
-    public FirstTimeAddCarDialog(Context context, AttributeSet attrs) {
+    public UpdateOrRemoveCarDialog(Context context, AttributeSet attrs) {
         super(context, attrs);
         init(context);
     }
 
-    public FirstTimeAddCarDialog(Context context, AttributeSet attrs, int defStyleAttr) {
+    public UpdateOrRemoveCarDialog(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init(context);
     }
 
     private void init(Context context) {
         this.context = context;
-        inflate(getContext(), R.layout.dialog_add_first_car, this);
+        dbManager = DatabaseManager.getInstance();
+        prefsHelper = new PrefsHelper(this.context);
+        inflate(getContext(), R.layout.dialog_update_or_remove_car, this);
         reference();
     }
 
-    public void setDismissCallback(FirstTimeAddCarCallback dismissCallback) {
+    public void setDismissCallback(UpdateOrRemoveCarCallback dismissCallback) {
         this.dismissCallback = dismissCallback;
+    }
+
+    public void setFavoriteCarToUpdate(FavouriteCar favoriteCar){
+        this.favoriteCarInProcess = favoriteCar;
+        hideCheckedIcons();
+        carPlatesEditText.setText(this.favoriteCarInProcess.getCarRegistration());
+        int carResId = this.favoriteCarInProcess.getCarIcon();
+        switch (carResId){
+            case R.drawable.car_icon_blue_s:
+                selectedCar = SelectedCar.BLUE;
+                selectedBlueCar.setVisibility(VISIBLE);
+                break;
+            case R.drawable.car_icon_green_s:
+                selectedCar = SelectedCar.GREEN;
+                selectedGreenCar.setVisibility(VISIBLE);
+                break;
+            case R.drawable.car_icon_red_s:
+                selectedCar = SelectedCar.RED;
+                selectedRedCar.setVisibility(VISIBLE);
+                break;
+            case R.drawable.car_icon_yellow_s:
+                selectedCar = SelectedCar.YELLOW;
+                selectedYellowCar.setVisibility(VISIBLE);
+                break;
+        }
     }
 
     private void reference(){
@@ -85,21 +118,61 @@ public class FirstTimeAddCarDialog extends FrameLayout{
         carPlatesEditText.setFilters(new InputFilter[] {new InputFilter.AllCaps()});
         errorTextView = (TextView) findViewById(R.id.txtError);
         errorTextView.setVisibility(INVISIBLE);
-        saveCarButton = (Button) findViewById(R.id.btnSaveCar);
-        saveCarButton.setOnClickListener(new OnClickListener() {
+        updateCarButton = (Button) findViewById(R.id.btnUpdateCar);
+        updateCarButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
                 String carPlates = carPlatesEditText.getText().toString();
-                if(carPlates.isEmpty()){
+                if (carPlates.isEmpty()) {
                     errorTextView.setText("Please enter car plates");
                     errorTextView.setVisibility(VISIBLE);
-                }
-                else {
-                    prefsHelper = new PrefsHelper(context);
+                } else {
+                    // Setting up active
                     prefsHelper.putString(PrefsHelper.ActiveCarPlates, carPlatesEditText.getText().toString());
+
+                    //Saving active to the database
+                    int carIconResId;
+                    switch (selectedCar) {
+                        case BLUE:
+                            carIconResId = R.drawable.car_icon_blue_s;
+                            break;
+                        case GREEN:
+                            carIconResId = R.drawable.car_icon_green_s;
+                            break;
+                        case RED:
+                            carIconResId = R.drawable.car_icon_red_s;
+                            break;
+                        case YELLOW:
+                            carIconResId = R.drawable.car_icon_yellow_s;
+                            break;
+                        default:
+                            carIconResId = R.drawable.car_icon_green_s;
+                    }
+                    dbManager.removeFavouriteCar(favoriteCarInProcess);
+                    dbManager.addFavouriteCar(new FavouriteCar(carPlates, carIconResId));
                     if (dismissCallback != null) {
                         dismissCallback.dismissThisDialog();
                     }
+                }
+            }
+        });
+
+        deleteCar = (Button) findViewById(R.id.btnDeleteCar);
+        deleteCar.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String removingFavCarplates = favoriteCarInProcess.getCarRegistration();
+
+                Log.w("ERR", "" + removingFavCarplates);
+
+                if(removingFavCarplates.equals(prefsHelper.getString(PrefsHelper.ActiveCarPlates, null))){
+                    Log.w(TAG, "Active car has been removed !");
+                    prefsHelper.putString(PrefsHelper.ActiveCarPlates, null);
+                }
+
+                dbManager.removeFavouriteCar(favoriteCarInProcess);
+                if(dismissCallback != null) {
+                    dismissCallback.dismissThisDialog();
                 }
             }
         });
@@ -109,7 +182,6 @@ public class FirstTimeAddCarDialog extends FrameLayout{
         selectedRedCar = (ImageView) findViewById(R.id.imgViewCheckedRedCar);
         selectedYellowCar = (ImageView) findViewById(R.id.imgViewCheckedYellowCar);
         hideCheckedIcons();
-        selectedBlueCar.setVisibility(VISIBLE);
 
         blueCarImageButton = (ImageButton) findViewById(R.id.imgBtnBlueCar);
         blueCarImageButton.setOnClickListener(new OnClickListener() {
