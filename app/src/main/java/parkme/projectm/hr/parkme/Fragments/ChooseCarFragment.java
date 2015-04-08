@@ -28,7 +28,7 @@ import parkme.projectm.hr.parkme.R;
 /**
  * Created by Mihael on 8.4.2015..
  */
-public class CarChoosingFragment extends Fragment {
+public class ChooseCarFragment extends Fragment {
 
     private Context context;
 

@@ -9,15 +9,17 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.TextView;
 
 import parkme.projectm.hr.parkme.Activities.ParkingPaymentActivity;
 import parkme.projectm.hr.parkme.Activities.PaymentMenuActivity;
+import parkme.projectm.hr.parkme.CustomViewModels.ActiveCarView;
 import parkme.projectm.hr.parkme.Database.OrmliteDb.DatabaseManager;
+import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.FavouriteCar;
 import parkme.projectm.hr.parkme.Helpers.PrefsHelper;
 import parkme.projectm.hr.parkme.R;
 
@@ -29,7 +31,7 @@ public class PayParkingFragment extends Fragment {
     private Context context;
 
     private Button parkingPayButton;
-    private TextView activeCarTextView;
+    private ActiveCarView activeCarView;
 
     private PrefsHelper prefsHelper;
     private PaymentMenuActivity parentActivity;
@@ -42,8 +44,14 @@ public class PayParkingFragment extends Fragment {
 
         prefsHelper = new PrefsHelper(this.context);
         String activeCarPlates = prefsHelper.getString(PrefsHelper.ActiveCarPlates, null);
-        activeCarTextView = (TextView) rootView.findViewById(R.id.txtActiveCar);
-        activeCarTextView.setText(activeCarPlates);
+
+        activeCarView = (ActiveCarView) rootView.findViewById(R.id.activeCarView);
+
+        DatabaseManager dbManager = DatabaseManager.getInstance();
+
+        FavouriteCar activeCar = dbManager.getFavoriteCarFromPlates(activeCarPlates);
+        activeCarView.setCarTablesText(activeCarPlates);
+        activeCarView.getActiveCarImage().setImageResource(activeCar.getCarIcon());
 
         parkingPayButton = (Button) rootView.findViewById(R.id.btnPayParking);
 
@@ -56,6 +64,8 @@ public class PayParkingFragment extends Fragment {
             }
         });
 
+        //Log.w("PAYPARKING", "ovdje je on resume");
+
         return rootView;
     }
 
@@ -63,5 +73,11 @@ public class PayParkingFragment extends Fragment {
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         parentActivity = (PaymentMenuActivity) activity;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        //Log.w("TAG", "onResume");
     }
 }

@@ -7,13 +7,11 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import java.text.ParseException;
 
 import parkme.projectm.hr.parkme.Database.OrmliteDb.DatabaseManager;
-import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.FavouriteCar;
 import parkme.projectm.hr.parkme.Database.Updater.UpdateManager;
 import parkme.projectm.hr.parkme.Database.Updater.UrlUpdateSource;
 import parkme.projectm.hr.parkme.Dialogs.FirstTimeAddCarDialog;
@@ -88,7 +86,7 @@ public class MainMenuActivity extends Activity{
             @Override
             public void onClick(View v) {
                 Class ourClass = null;
-                ourClass =ParkingMenuActivity.class;
+                ourClass =FindParkingActivity.class;
                 Intent ourIntent = new Intent(MainMenuActivity.this, ourClass);
                 startActivity(ourIntent);
             }

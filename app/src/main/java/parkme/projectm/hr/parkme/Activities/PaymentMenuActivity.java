@@ -1,21 +1,20 @@
 package parkme.projectm.hr.parkme.Activities;
 
-import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
 
-import parkme.projectm.hr.parkme.Fragments.CarChoosingFragment;
+import parkme.projectm.hr.parkme.Fragments.ChooseCarFragment;
 import parkme.projectm.hr.parkme.Fragments.PayParkingFragment;
+import parkme.projectm.hr.parkme.Fragments.PaymentHistoryFragment;
 import parkme.projectm.hr.parkme.R;
 
 /**
@@ -66,17 +65,15 @@ public class PaymentMenuActivity extends FragmentActivity {
         @Override
         public Fragment getItem(int i) {
             Fragment fragment;
+            //Log.e("FragAdap", "getItem");
             if (i == 0) {
-                fragment = new CarChoosingFragment();
+                fragment = new ChooseCarFragment();
                 return fragment;
             } else if (i == 1) {
                 fragment = new PayParkingFragment();
                 return fragment;
             } else {
-                fragment = new DemoObjectFragment();
-                Bundle args = new Bundle();
-                args.putInt(DemoObjectFragment.ARG_OBJECT, i + 1); // Our object is just an integer :-P
-                fragment.setArguments(args);
+                fragment = new PaymentHistoryFragment();
                 return fragment;
             }
         }
@@ -89,6 +86,7 @@ public class PaymentMenuActivity extends FragmentActivity {
 
         @Override
         public CharSequence getPageTitle(int position) {
+            //Log.e("FragAdap", "getTitle");
             switch (position) {
                 case 0:
                     return "Izbor Auta";
@@ -100,24 +98,6 @@ public class PaymentMenuActivity extends FragmentActivity {
                     return "Undefined";
 
             }
-        }
-    }
-
-    /**
-     * A dummy fragment representing a section of the app, but that simply displays dummy text.
-     */
-    public static class DemoObjectFragment extends Fragment {
-
-        public static final String ARG_OBJECT = "object";
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_demo, container, false);
-            Bundle args = getArguments();
-            ((TextView) rootView.findViewById(android.R.id.text1)).setText(
-                    Integer.toString(args.getInt(ARG_OBJECT)));
-            return rootView;
         }
     }
 
