@@ -2,7 +2,6 @@ package parkme.projectm.hr.parkme.Fragments;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -12,7 +11,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import java.util.List;
@@ -35,7 +33,7 @@ public class ChooseCarFragment extends Fragment {
 
     private FragmentMenuActivity parentActivity;
 
-    private FragmentActionCallback fragmentActionCallback;
+    private ChooseCarFragmentCallback chooseCarFragmentCallback;
 
     private ActiveCarView activeCarView;
     private FavouriteCar activeCar;
@@ -92,21 +90,24 @@ public class ChooseCarFragment extends Fragment {
 
                 FavouriteCar favouriteCar = (FavouriteCar) favoriteCarsArrayAdapter.getItem(position);
 
-                updateActiveCarHeader(favouriteCar);
+                //updateActiveCarHeader(favouriteCar);
                 prefsHelper.putString(PrefsHelper.ActiveCarPlates, favouriteCar.getCarRegistration());
 
                 Toast toast = Toast.makeText(context, "Pressed favCar at index " + position
                         + ", car tables -> " + favouriteCar.getCarRegistration(), Toast.LENGTH_LONG);
                 toast.show();
 
+                if(chooseCarFragmentCallback != null) {
+                    chooseCarFragmentCallback.refreshActivity();
+                }
             }
         });
 
         addCarButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(fragmentActionCallback != null) {
-                    fragmentActionCallback.actionButtonAction();
+                if(chooseCarFragmentCallback != null) {
+                    chooseCarFragmentCallback.displayAddCarDialog();
                 }
             }
         });
@@ -124,7 +125,7 @@ public class ChooseCarFragment extends Fragment {
         activeCarView.getActiveCarImage().setImageResource(favouriteCar.getCarIcon());
     }
 
-    public void setFragmentActionCallback(FragmentActionCallback fragmentActionCallback) {
-        this.fragmentActionCallback = fragmentActionCallback;
+    public void setChooseCarFragmentCallback(ChooseCarFragmentCallback chooseCarFragmentCallback) {
+        this.chooseCarFragmentCallback = chooseCarFragmentCallback;
     }
 }

@@ -13,7 +13,7 @@ import android.widget.RelativeLayout;
 
 import parkme.projectm.hr.parkme.Dialogs.AddCarDialog;
 import parkme.projectm.hr.parkme.Fragments.ChooseCarFragment;
-import parkme.projectm.hr.parkme.Fragments.FragmentActionCallback;
+import parkme.projectm.hr.parkme.Fragments.ChooseCarFragmentCallback;
 import parkme.projectm.hr.parkme.Fragments.PayParkingFragment;
 import parkme.projectm.hr.parkme.Fragments.PaymentHistoryFragment;
 import parkme.projectm.hr.parkme.R;
@@ -73,9 +73,9 @@ public class FragmentMenuActivity extends FragmentActivity {
             //Log.e("FragAdap", "getItem");
             if (i == 0) {
                 ChooseCarFragment fragment = new ChooseCarFragment();
-                fragment.setFragmentActionCallback(new FragmentActionCallback() {
+                fragment.setChooseCarFragmentCallback(new ChooseCarFragmentCallback() {
                     @Override
-                    public void actionButtonAction() {
+                    public void displayAddCarDialog() {
                         rootRelativeView = (RelativeLayout) findViewById(R.id.rootRelativeView);
                         addCarDialog = new AddCarDialog(context);
                         addCarDialog.setDismissCallback(new AddCarDialog.FirstTimeAddCarCallback() {
@@ -92,6 +92,13 @@ public class FragmentMenuActivity extends FragmentActivity {
                         params.addRule(RelativeLayout.ALIGN_PARENT_LEFT, RelativeLayout.TRUE);
                         params.addRule(RelativeLayout.ALIGN_PARENT_TOP, RelativeLayout.TRUE);
                         rootRelativeView.addView(addCarDialog, params);
+                    }
+
+                    @Override
+                    public void refreshActivity() {
+                        Intent refreshIntent = new Intent(context, FragmentMenuActivity.class);
+                        startActivity(refreshIntent);
+                        finish();
                     }
                 });
                 return fragment;
