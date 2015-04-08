@@ -68,7 +68,7 @@ public class ChooseCarFragment extends Fragment {
 
         activeCar = dbManager.getFavoriteCarFromPlates(activeCarPlates);
         activeCarView.setCarTablesText(activeCarPlates);
-        activeCarView.getActiveCarImage().setImageResource(activeCar.getCarIcon());
+        activeCarView.getActiveCarImage().setImageResource(activeCar.getCarIcon());     // TODO provjera da nije obrisan onaj active pa null pinter dobimo
 
         if(favoriteCarList != null){
             Log.w("PRESS", "FavCarList nije null - number of values : " + favoriteCarList.size());
@@ -100,6 +100,17 @@ public class ChooseCarFragment extends Fragment {
                 if(chooseCarFragmentCallback != null) {
                     chooseCarFragmentCallback.refreshActivity();
                 }
+            }
+        });
+
+        favoriteCarsListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+                FavouriteCar favouriteCar = (FavouriteCar) favoriteCarsArrayAdapter.getItem(i);
+                if(chooseCarFragmentCallback != null) {
+                    chooseCarFragmentCallback.updateOrRemoveFavoriteCar(favouriteCar);
+                }
+                return true;
             }
         });
 

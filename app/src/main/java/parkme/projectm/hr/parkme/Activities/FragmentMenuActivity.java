@@ -11,7 +11,9 @@ import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.RelativeLayout;
 
+import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.FavouriteCar;
 import parkme.projectm.hr.parkme.Dialogs.AddCarDialog;
+import parkme.projectm.hr.parkme.Dialogs.UpdateOrRemoveCarDialog;
 import parkme.projectm.hr.parkme.Fragments.ChooseCarFragment;
 import parkme.projectm.hr.parkme.Fragments.ChooseCarFragmentCallback;
 import parkme.projectm.hr.parkme.Fragments.PayParkingFragment;
@@ -34,6 +36,7 @@ public class FragmentMenuActivity extends FragmentActivity {
 
     private RelativeLayout rootRelativeView;
     private AddCarDialog addCarDialog;
+    private UpdateOrRemoveCarDialog updateorRemoveCarDialog;
     private Context context;
 
     /**
@@ -99,6 +102,27 @@ public class FragmentMenuActivity extends FragmentActivity {
                         Intent refreshIntent = new Intent(context, FragmentMenuActivity.class);
                         startActivity(refreshIntent);
                         finish();
+                    }
+
+                    @Override
+                    public void updateOrRemoveFavoriteCar(FavouriteCar favoriteCar) {
+                        rootRelativeView = (RelativeLayout) findViewById(R.id.rootRelativeView);
+                        updateorRemoveCarDialog = new UpdateOrRemoveCarDialog(context);
+                        updateorRemoveCarDialog.setFavoriteCarToUpdate(favoriteCar);
+                        updateorRemoveCarDialog.setDismissCallback(new UpdateOrRemoveCarDialog.UpdateOrRemoveCarCallback() {
+                            @Override
+                            public void dismissThisDialog() {
+                                rootRelativeView.removeView(addCarDialog);
+                                updateorRemoveCarDialog.setVisibility(View.GONE);
+                                Intent refreshIntent = new Intent(context, FragmentMenuActivity.class);
+                                startActivity(refreshIntent);
+                                finish();
+                            }
+                        });
+                        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT);
+                        params.addRule(RelativeLayout.ALIGN_PARENT_LEFT, RelativeLayout.TRUE);
+                        params.addRule(RelativeLayout.ALIGN_PARENT_TOP, RelativeLayout.TRUE);
+                        rootRelativeView.addView(updateorRemoveCarDialog, params);
                     }
                 });
                 return fragment;

@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/parky_shade_gray">
+
+    <FrameLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_gravity="center"
+        android:layout_margin="20dp"
+        android:background="@drawable/custom_dialog_border_and_background">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent">
+
+            <view
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                class="parkme.projectm.hr.parkme.CustomViewModels.HeaderView"
+                android:id="@+id/view2"
+                android:layout_gravity="center_horizontal|top" />
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top">
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_gravity="center">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:text="Update or remove car"
+                        android:id="@+id/txtTitle"
+                        android:textColor="@color/parky_green_darker"
+                        android:textStyle="bold"
+                        android:textSize="24sp"
+                        android:paddingLeft="@dimen/parky_text_title_left_and_right_padding"
+                        android:paddingRight="@dimen/parky_text_title_left_and_right_padding"
+                        android:paddingTop="@dimen/parky_custom_linear_layout_vertical_spacing" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textColor="@color/parky_text_dark_gray"
+                        android:paddingLeft="@dimen/parky_text_left_and_right_padding"
+                        android:paddingRight="@dimen/parky_text_left_and_right_padding"
+                        android:paddingTop="@dimen/parky_custom_linear_layout_vertical_spacing"
+                        android:text="Here you can update your cars licence plate or pick a different image to display it ^^"
+                        android:id="@+id/txtItApperas" />
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/edTxtCarPlate"
+                        android:layout_marginLeft="@dimen/parky_text_left_and_right_padding"
+                        android:layout_marginRight="@dimen/parky_text_left_and_right_padding"
+                        android:layout_marginTop="@dimen/parky_custom_linear_layout_vertical_spacing_plus"
+                        android:gravity="center_horizontal"
+                        android:inputType="text|textCapCharacters"
+                        android:singleLine="true"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textColor="@color/parky_text_dark_gray"
+                        android:paddingLeft="@dimen/parky_text_left_and_right_padding"
+                        android:paddingRight="@dimen/parky_text_left_and_right_padding"
+                        android:paddingTop="@dimen/parky_custom_linear_layout_vertical_spacing_plus"
+                        android:text="Pick an image :"
+                        android:id="@+id/txtImagePick" />
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+
+                        android:layout_marginLeft="@dimen/parky_text_title_left_and_right_padding"
+                        android:layout_marginRight="@dimen/parky_text_title_left_and_right_padding"
+                        android:layout_marginTop="@dimen/parky_custom_linear_layout_vertical_spacing"
+                        android:gravity="center_horizontal">
+
+                        <FrameLayout
+                            android:layout_width="70dp"
+                            android:layout_height="70dp">
+
+                            <ImageButton
+                                android:layout_width="70dp"
+                                android:layout_height="70dp"
+                                android:id="@+id/imgBtnBlueCar"
+                                android:layout_gravity="center_horizontal"
+                                android:background="@drawable/car_icon_blue_s" />
+
+                            <ImageView
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:id="@+id/imgViewCheckedBlueCar"
+                                android:layout_gravity="right|bottom"
+                                android:background="@drawable/checked_icon"
+                                android:layout_marginBottom="10dp" />
+                        </FrameLayout>
+
+                        <FrameLayout
+                            android:layout_width="70dp"
+                            android:layout_height="70dp">
+
+                            <ImageButton
+                                android:layout_width="70dp"
+                                android:layout_height="70dp"
+                                android:id="@+id/imgBtnGreenCar"
+                                android:background="@drawable/car_icon_green_s" />
+
+                            <ImageView
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:id="@+id/imgViewCheckedGreenCar"
+                                android:layout_marginBottom="10dp"
+                                android:background="@drawable/checked_icon"
+                                android:layout_gravity="right|bottom" />
+                        </FrameLayout>
+
+
+
+                        <FrameLayout
+                            android:layout_width="70dp"
+                            android:layout_height="70dp">
+                            <ImageButton
+                                android:layout_width="70dp"
+                                android:layout_height="70dp"
+                                android:id="@+id/imgBtnRedCar"
+                                android:background="@drawable/car_icon_red_s"/>
+
+                            <ImageView
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:id="@+id/imgViewCheckedRedCar"
+                                android:layout_marginBottom="10dp"
+                                android:background="@drawable/checked_icon"
+                                android:layout_gravity="right|bottom" />
+                        </FrameLayout>
+
+
+
+                        <FrameLayout
+                            android:layout_width="70dp"
+                            android:layout_height="70dp">
+                            <ImageButton
+                                android:layout_width="70dp"
+                                android:layout_height="70dp"
+                                android:id="@+id/imgBtnYellowCar"
+                                android:layout_gravity="center_horizontal"
+                                android:background="@drawable/car_icon_yellow_s"/>
+
+                            <ImageView
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:id="@+id/imgViewCheckedYellowCar"
+                                android:layout_marginBottom="10dp"
+                                android:background="@drawable/checked_icon"
+                                android:layout_gravity="right|bottom" />
+                        </FrameLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/parky_text_left_and_right_padding"
+                        android:paddingLeft="@dimen/parky_text_left_and_right_padding"
+                        android:paddingRight="@dimen/parky_text_left_and_right_padding"
+                        android:gravity="center_vertical|center_horizontal">
+
+                        <Button
+                            android:layout_width="150dp"
+                            android:layout_height="wrap_content"
+                            android:text="Delete car"
+                            android:id="@+id/btnDeleteCar"
+                            android:textColor="@color/parky_error_red" />
+
+                        <Button
+                            android:layout_width="150dp"
+                            android:layout_height="wrap_content"
+                            android:text="Update Car"
+                            android:id="@+id/btnUpdateCar"/>
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textColor="@color/parky_error_red"
+                        android:paddingLeft="@dimen/parky_text_left_and_right_padding"
+                        android:paddingRight="@dimen/parky_text_left_and_right_padding"
+                        android:paddingTop="@dimen/parky_custom_linear_layout_vertical_spacing"
+                        android:paddingBottom="@dimen/parky_custom_linear_layout_vertical_spacing"
+                        android:text="ERROR TEXT"
+                        android:id="@+id/txtError"
+                        android:layout_gravity="center_horizontal" />
+
+                </LinearLayout>
+            </ScrollView>
+        </LinearLayout>
+
+    </FrameLayout>
+
+</FrameLayout>
