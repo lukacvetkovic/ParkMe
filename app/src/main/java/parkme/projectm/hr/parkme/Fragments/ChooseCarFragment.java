@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -37,7 +38,7 @@ public class ChooseCarFragment extends Fragment {
     private ActiveCarView activeCarView;
     private FavouriteCar activeCar;
 
-    private Button newCarButton;
+    private ImageButton addCarButton;
     private ListView favoriteCarsListView;
 
     private List<FavouriteCar> favoriteCarList;
@@ -52,7 +53,7 @@ public class ChooseCarFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_car_choosing, container, false);
         this.context = getActivity();
 
-        newCarButton = (Button) rootView.findViewById(R.id.btnNewCar);
+        addCarButton = (ImageButton) rootView.findViewById(R.id.imgBtnAddCar);
         favoriteCarsListView = (ListView) rootView.findViewById(R.id.favoriteCarsListView);
 
         activeCarView = (ActiveCarView) rootView.findViewById(R.id.activeCarView);
@@ -97,10 +98,10 @@ public class ChooseCarFragment extends Fragment {
             }
         });
 
-        newCarButton.setOnClickListener(new View.OnClickListener() {
+        addCarButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(context, NewCarActivity.class);
+                Intent i = new Intent(context, NewCarActivity.class);       // TODO - da koristi add car popup koji vec imamo
                 startActivity(i);
             }
         });

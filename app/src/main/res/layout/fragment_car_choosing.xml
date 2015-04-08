@@ -22,17 +22,15 @@
 
     </LinearLayout>
 
-
-    <Button
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:id="@+id/btnNewCar"
-        android:layout_alignParentRight="true"
+    <ImageButton
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:id="@+id/imgBtnAddCar"
         android:layout_alignParentBottom="true"
-        android:layout_marginLeft="10dp"
-        android:layout_marginBottom="10dp"
-        android:background="#0000a8fd"
-        android:scaleType="fitXY"
-        android:text="@string/Novi"/>
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="20dp"
+        android:layout_marginRight="20dp"
+        android:background="@drawable/parky_plus_icon" />
+
 
 </RelativeLayout>

@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 
 import parkme.projectm.hr.parkme.Activities.ParkingPaymentActivity;
 import parkme.projectm.hr.parkme.Activities.PaymentMenuActivity;
@@ -30,7 +31,7 @@ public class PayParkingFragment extends Fragment {
 
     private Context context;
 
-    private Button parkingPayButton;
+    private ImageButton payParkingButton;
     private ActiveCarView activeCarView;
 
     private PrefsHelper prefsHelper;
@@ -53,9 +54,9 @@ public class PayParkingFragment extends Fragment {
         activeCarView.setCarTablesText(activeCarPlates);
         activeCarView.getActiveCarImage().setImageResource(activeCar.getCarIcon());
 
-        parkingPayButton = (Button) rootView.findViewById(R.id.btnPayParking);
+        payParkingButton = (ImageButton) rootView.findViewById(R.id.imgBtnPayParking);
 
-        parkingPayButton.setOnClickListener(new View.OnClickListener() {
+        payParkingButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(context, ParkingPaymentActivity.class);

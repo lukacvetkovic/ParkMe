@@ -21,14 +21,15 @@
             </LinearLayout>
         </ScrollView>
 
-    <Button
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:id="@+id/btnPayParking"
-        android:layout_alignParentRight="true"
+    <ImageButton
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:id="@+id/imgBtnPayParking"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="10dp"
-        android:background="#0000a8fd"
-        android:text="@string/PlatiParking"/>
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="20dp"
+        android:layout_marginRight="20dp"
+        android:background="@drawable/parky_novac_icon" />
 
 </RelativeLayout>
