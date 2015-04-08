@@ -3,6 +3,7 @@ package parkme.projectm.hr.parkme.Dialogs;
 import android.content.Context;
 import android.text.InputFilter;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -78,6 +79,7 @@ public class UpdateOrRemoveCarDialog extends FrameLayout {
     private void init(Context context) {
         this.context = context;
         dbManager = DatabaseManager.getInstance();
+        prefsHelper = new PrefsHelper(this.context);
         inflate(getContext(), R.layout.dialog_update_or_remove_car, this);
         reference();
     }
@@ -126,7 +128,6 @@ public class UpdateOrRemoveCarDialog extends FrameLayout {
                     errorTextView.setVisibility(VISIBLE);
                 } else {
                     // Setting up active
-                    prefsHelper = new PrefsHelper(context);
                     prefsHelper.putString(PrefsHelper.ActiveCarPlates, carPlatesEditText.getText().toString());
 
                     //Saving active to the database
@@ -160,6 +161,15 @@ public class UpdateOrRemoveCarDialog extends FrameLayout {
         deleteCar.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
+                String removingFavCarplates = favoriteCarInProcess.getCarRegistration();
+
+                Log.w("ERR", "" + removingFavCarplates);
+
+                if(removingFavCarplates.equals(prefsHelper.getString(PrefsHelper.ActiveCarPlates, null))){
+                    Log.w(TAG, "Active car has been removed !");
+                    prefsHelper.putString(PrefsHelper.ActiveCarPlates, null);
+                }
+
                 dbManager.removeFavouriteCar(favoriteCarInProcess);
                 if(dismissCallback != null) {
                     dismissCallback.dismissThisDialog();

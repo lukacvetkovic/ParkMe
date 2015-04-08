@@ -2,6 +2,7 @@ package parkme.projectm.hr.parkme.Fragments;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -16,6 +17,7 @@ import android.widget.Toast;
 import java.util.List;
 
 import parkme.projectm.hr.parkme.Activities.FragmentMenuActivity;
+import parkme.projectm.hr.parkme.Activities.MainMenuActivity;
 import parkme.projectm.hr.parkme.CustomViewModels.ActiveCarView;
 import parkme.projectm.hr.parkme.CustomViewModels.FavoriteCarsArrayAdapter;
 import parkme.projectm.hr.parkme.Database.OrmliteDb.DatabaseManager;
@@ -66,20 +68,24 @@ public class ChooseCarFragment extends Fragment {
         DatabaseManager dbManager = DatabaseManager.getInstance();
         favoriteCarList = dbManager.getAllFavouriteCars();
 
-        activeCar = dbManager.getFavoriteCarFromPlates(activeCarPlates);
-        activeCarView.setCarTablesText(activeCarPlates);
-        activeCarView.getActiveCarImage().setImageResource(activeCar.getCarIcon());     // TODO provjera da nije obrisan onaj active pa null pinter dobimo
-
         if(favoriteCarList != null){
             Log.w("PRESS", "FavCarList nije null - number of values : " + favoriteCarList.size());
+            if(activeCarPlates == null) {
+                activeCarPlates = favoriteCarList.get(0).getCarRegistration();
+            }
             favoriteCarsArrayAdapter = new FavoriteCarsArrayAdapter(parentActivity,
                     favoriteCarList.toArray(new FavouriteCar[favoriteCarList.size()]));
-
         }
         else{
-            Log.w("PRESS", "FavCarList je null - nema favs autiju");        // TODO ako dode do ovoga, bacit  popup first time add car
+            Log.w("PRESS", "FavCarList je null - nema favs autiju");
             favoriteCarsArrayAdapter = new FavoriteCarsArrayAdapter(parentActivity, new FavouriteCar[0]);
+            Intent fillFirstCarAgain = new Intent(this.context, MainMenuActivity.class);
+            startActivity(fillFirstCarAgain);
         }
+
+        activeCar = dbManager.getFavoriteCarFromPlates(activeCarPlates);
+        activeCarView.setCarTablesText(activeCarPlates);
+        activeCarView.getActiveCarImage().setImageResource(activeCar.getCarIcon());
 
         favoriteCarsListView.setAdapter(favoriteCarsArrayAdapter);
 

@@ -93,7 +93,7 @@ public class MainMenuActivity extends Activity{
         });
 
         prefsHelper = new PrefsHelper(this);
-        if(! prefsHelper.prefsContains(PrefsHelper.ActiveCarPlates)){
+        if(! prefsHelper.prefsContains(PrefsHelper.ActiveCarPlates) || prefsHelper.getString(PrefsHelper.ActiveCarPlates, null) == null){
             Log.w(TAG, "Prefs does not contain ActiveCarPlates !");
             rootRelativeView = (RelativeLayout) findViewById(R.id.rootRelativeView);
             addCarDialog = new AddCarDialog(this);

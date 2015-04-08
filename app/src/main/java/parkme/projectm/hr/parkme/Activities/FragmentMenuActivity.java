@@ -11,6 +11,9 @@ import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.RelativeLayout;
 
+import java.util.List;
+
+import parkme.projectm.hr.parkme.Database.OrmliteDb.DatabaseManager;
 import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.FavouriteCar;
 import parkme.projectm.hr.parkme.Dialogs.AddCarDialog;
 import parkme.projectm.hr.parkme.Dialogs.UpdateOrRemoveCarDialog;
@@ -18,6 +21,7 @@ import parkme.projectm.hr.parkme.Fragments.ChooseCarFragment;
 import parkme.projectm.hr.parkme.Fragments.ChooseCarFragmentCallback;
 import parkme.projectm.hr.parkme.Fragments.PayParkingFragment;
 import parkme.projectm.hr.parkme.Fragments.PaymentHistoryFragment;
+import parkme.projectm.hr.parkme.Helpers.PrefsHelper;
 import parkme.projectm.hr.parkme.R;
 
 /**
@@ -48,6 +52,27 @@ public class FragmentMenuActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fragment_menu_header_fragment);
         this.context = this;
+
+        PrefsHelper prefsHelper = new PrefsHelper(this.context);
+        String activeCarPlates = prefsHelper.getString(PrefsHelper.ActiveCarPlates, null);
+
+        if(activeCarPlates == null){
+            // trying to recover
+            DatabaseManager dbManager = DatabaseManager.getInstance();
+            List<FavouriteCar> favoriteCarList = dbManager.getAllFavouriteCars();
+
+            if(favoriteCarList != null && favoriteCarList.size() > 0) {     // lazy evaluation and we recovered, fuck yeah
+                FavouriteCar favouriteCar = favoriteCarList.get(0);
+                activeCarPlates = favouriteCar.getCarRegistration();
+                prefsHelper.putString(PrefsHelper.ActiveCarPlates, activeCarPlates);
+            }
+            else {  // fuck it
+                Intent startMainForNewCar = new Intent(this, MainMenuActivity.class);
+                startActivity(startMainForNewCar);
+                finish();
+            }
+        }
+
         // Create an adapter that when requested, will return a fragment representing an object in
         // the collection.
         //
