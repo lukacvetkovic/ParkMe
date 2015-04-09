@@ -65,7 +65,17 @@ public class ChooseCarFragment extends Fragment {
         DatabaseManager dbManager = DatabaseManager.getInstance();
         favoriteCarList = dbManager.getAllFavouriteCars();
 
+        activeCar = dbManager.getFavoriteCarFromPlates(activeCarPlates);
+        activeCarView.setCarTablesText(activeCarPlates);
+        activeCarView.getActiveCarImage().setImageResource(activeCar.getCarIcon());
+
         if(favoriteCarList != null){
+            for(FavouriteCar favouriteCar : favoriteCarList){
+                if(favouriteCar.getCarRegistration().equals(activeCarPlates)){
+                    favoriteCarList.remove(favouriteCar);
+                    break;
+                }
+            }
             Log.w("PRESS", "FavCarList nije null - number of values : " + favoriteCarList.size());
             favoriteCarsArrayAdapter = new FavoriteCarsArrayAdapter(parentActivity,
                     favoriteCarList.toArray(new FavouriteCar[favoriteCarList.size()]));
@@ -76,10 +86,6 @@ public class ChooseCarFragment extends Fragment {
             Intent fillFirstCarAgain = new Intent(this.context, MainMenuActivity.class);
             startActivity(fillFirstCarAgain);
         }
-
-        activeCar = dbManager.getFavoriteCarFromPlates(activeCarPlates);
-        activeCarView.setCarTablesText(activeCarPlates);
-        activeCarView.getActiveCarImage().setImageResource(activeCar.getCarIcon());
 
         favoriteCarsListView.setAdapter(favoriteCarsArrayAdapter);
 
