@@ -43,6 +43,10 @@ public class FragmentMenuActivity extends FragmentActivity {
     private UpdateOrRemoveCarDialog updateorRemoveCarDialog;
     private Context context;
 
+    private PrefsHelper prefsHelper;
+
+    private int pageToTurnTo = 1;
+
     /**
      * The {@link android.support.v4.view.ViewPager} that will display the object collection.
      */
@@ -53,9 +57,22 @@ public class FragmentMenuActivity extends FragmentActivity {
         setContentView(R.layout.activity_fragment_menu_header_fragment);
         this.context = this;
 
-        PrefsHelper prefsHelper = new PrefsHelper(this.context);
-        String activeCarPlates = prefsHelper.getString(PrefsHelper.ActiveCarPlates, null);
+        prefsHelper = new PrefsHelper(this.context);
 
+        mViewPager = (ViewPager) findViewById(R.id.pager);
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mDemoCollectionPagerAdapter = new DemoCollectionPagerAdapter(getSupportFragmentManager());
+
+        // Set up the ViewPager, attaching the adapter.
+        mViewPager.setAdapter(mDemoCollectionPagerAdapter);
+        mViewPager.setCurrentItem(pageToTurnTo, true);     // postavlja inicijalno na srednji, TODO - ovisno o tome dal postoji parkirna karta
+
+        String activeCarPlates = prefsHelper.getString(PrefsHelper.ActiveCarPlates, null);
         if(activeCarPlates == null){
             // trying to recover
             DatabaseManager dbManager = DatabaseManager.getInstance();
@@ -72,17 +89,6 @@ public class FragmentMenuActivity extends FragmentActivity {
                 finish();
             }
         }
-
-        // Create an adapter that when requested, will return a fragment representing an object in
-        // the collection.
-        //
-        // ViewPager and its adapters use support library fragments, so we must use
-        // getSupportFragmentManager.
-        mDemoCollectionPagerAdapter = new DemoCollectionPagerAdapter(getSupportFragmentManager());
-
-        // Set up the ViewPager, attaching the adapter.
-        mViewPager = (ViewPager) findViewById(R.id.pager);
-        mViewPager.setAdapter(mDemoCollectionPagerAdapter);
     }
 
     /**
@@ -109,9 +115,8 @@ public class FragmentMenuActivity extends FragmentActivity {
                             public void dismissThisDialog() {
                                 rootRelativeView.removeView(addCarDialog);
                                 addCarDialog.setVisibility(View.GONE);
-                                Intent refreshIntent = new Intent(context, FragmentMenuActivity.class);
-                                startActivity(refreshIntent);
-                                finish();
+                                pageToTurnTo = 0;
+                                onResume();
                             }
                         });
                         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT);
@@ -121,10 +126,9 @@ public class FragmentMenuActivity extends FragmentActivity {
                     }
 
                     @Override
-                    public void refreshActivity() {
-                        Intent refreshIntent = new Intent(context, FragmentMenuActivity.class);
-                        startActivity(refreshIntent);
-                        finish();
+                    public void refreshActivity() {     // when fav car is selected as active
+                        pageToTurnTo = 0;
+                        onResume();
                     }
 
                     @Override
@@ -137,9 +141,8 @@ public class FragmentMenuActivity extends FragmentActivity {
                             public void dismissThisDialog() {
                                 rootRelativeView.removeView(addCarDialog);
                                 updateorRemoveCarDialog.setVisibility(View.GONE);
-                                Intent refreshIntent = new Intent(context, FragmentMenuActivity.class);
-                                startActivity(refreshIntent);
-                                finish();
+                                pageToTurnTo = 0;
+                                onResume();
                             }
                         });
                         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT);
