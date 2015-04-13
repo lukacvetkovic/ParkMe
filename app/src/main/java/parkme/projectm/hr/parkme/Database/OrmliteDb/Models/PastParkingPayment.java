@@ -18,7 +18,7 @@ public class PastParkingPayment {
     public final static String columnDateOfPayment = "date_of_payment";
 
 
-    @DatabaseField(id = true, generatedId = true)
+    @DatabaseField(generatedId = true)
     private int pastParkingPaymentId;
 
     @DatabaseField(columnName = columnGradId)

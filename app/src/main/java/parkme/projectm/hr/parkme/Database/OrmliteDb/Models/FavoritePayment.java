@@ -15,7 +15,7 @@ public class FavoritePayment {
     public final static String columnZoneId = "zone_id";
     public final static String columnPaymentMethodId = "payment_method_id";
 
-    @DatabaseField(id = true, generatedId = true)
+    @DatabaseField(generatedId = true)
     private int favoritePaymentId;
 
     @DatabaseField(columnName = columnGradId)
