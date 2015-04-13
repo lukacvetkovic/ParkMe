@@ -1,5 +1,5 @@
 #
-# generated on 2015/04/01 11:59:41
+# generated on 2015/04/13 09:18:39
 #
 # --table-start--
 dataClass=parkme.projectm.hr.parkme.Database.OrmliteDb.Models.City
@@ -192,6 +192,74 @@ dataPersister=DATE
 fieldName=dateTo
 columnName=date_to
 dataPersister=DATE
+# --field-end--
+# --table-fields-end--
+# --table-end--
+#################################
+# --table-start--
+dataClass=parkme.projectm.hr.parkme.Database.OrmliteDb.Models.FavouriteCar
+tableName=favourite_cars
+# --table-fields-start--
+# --field-start--
+fieldName=carRegistration
+columnName=car_registration
+id=true
+# --field-end--
+# --field-start--
+fieldName=carIcon
+columnName=car_icon
+# --field-end--
+# --table-fields-end--
+# --table-end--
+#################################
+# --table-start--
+dataClass=parkme.projectm.hr.parkme.Database.OrmliteDb.Models.FavoritePayment
+tableName=favorite_payments
+# --table-fields-start--
+# --field-start--
+fieldName=favoritePaymentId
+id=true
+generatedId=true
+# --field-end--
+# --field-start--
+fieldName=gradId
+columnName=grad_id
+# --field-end--
+# --field-start--
+fieldName=zoneID
+columnName=zone_id
+# --field-end--
+# --field-start--
+fieldName=paymentMethodId
+columnName=payment_method_id
+# --field-end--
+# --table-fields-end--
+# --table-end--
+#################################
+# --table-start--
+dataClass=parkme.projectm.hr.parkme.Database.OrmliteDb.Models.PastParkingPayment
+tableName=past_parking_payments
+# --table-fields-start--
+# --field-start--
+fieldName=pastParkingPaymentId
+id=true
+generatedId=true
+# --field-end--
+# --field-start--
+fieldName=gradId
+columnName=grad_id
+# --field-end--
+# --field-start--
+fieldName=zoneID
+columnName=zone_id
+# --field-end--
+# --field-start--
+fieldName=paymentMethodId
+columnName=payment_method_id
+# --field-end--
+# --field-start--
+fieldName=dateOfPayment
+columnName=date_of_payment
 # --field-end--
 # --table-fields-end--
 # --table-end--
