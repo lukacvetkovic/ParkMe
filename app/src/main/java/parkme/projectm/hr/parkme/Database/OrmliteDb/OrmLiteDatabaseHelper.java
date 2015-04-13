@@ -4,6 +4,7 @@ package parkme.projectm.hr.parkme.Database.OrmliteDb;
 import java.sql.SQLException;
 
 import android.content.Context;
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
@@ -14,9 +15,11 @@ import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
 
 import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.City;
+import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.FavoritePayment;
 import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.FavouriteCar;
 import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.MaxDuration;
 import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.ParkingZone;
+import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.PastParkingPayment;
 import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.PaymentMode;
 import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.PostCode;
 import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.ZoneCalendar;
@@ -30,10 +33,12 @@ import parkme.projectm.hr.parkme.R;
  */
 public class OrmLiteDatabaseHelper extends OrmLiteSqliteOpenHelper {
 
+    public static int DataBaseVersion = 3;
+
     // name of the database file for your application -- change to something appropriate for your app
     private static final String DATABASE_NAME = "parky.db";
     // any time you make changes to your database objects, you may have to increase the database version
-    private static final int DATABASE_VERSION = 2;
+    private static final int DATABASE_VERSION = DataBaseVersion;
 
     public OrmLiteDatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION, R.raw.ormlite_config);
@@ -56,6 +61,8 @@ public class OrmLiteDatabaseHelper extends OrmLiteSqliteOpenHelper {
             TableUtils.createTable(connectionSource, ZoneWorkTime.class);
             TableUtils.createTable(connectionSource, MaxDuration.class);
             TableUtils.createTable(connectionSource, FavouriteCar.class);
+            TableUtils.createTable(connectionSource, FavoritePayment.class);
+            TableUtils.createTable(connectionSource, PastParkingPayment.class);
         } catch (SQLException e) {
             Log.e(OrmLiteDatabaseHelper.class.getName(), "Can't create database", e);
             throw new RuntimeException(e);
@@ -79,6 +86,8 @@ public class OrmLiteDatabaseHelper extends OrmLiteSqliteOpenHelper {
             TableUtils.dropTable(connectionSource, ZoneWorkTime.class, true);
             TableUtils.dropTable(connectionSource, MaxDuration.class, true);
             TableUtils.dropTable(connectionSource, FavouriteCar.class, true);
+            TableUtils.dropTable(connectionSource, FavoritePayment.class, true);
+            TableUtils.dropTable(connectionSource, PastParkingPayment.class, true);
             // after we drop the old databases, we create the new ones
             onCreate(db, connectionSource);
         } catch (SQLException e) {
@@ -319,6 +328,42 @@ public class OrmLiteDatabaseHelper extends OrmLiteSqliteOpenHelper {
         return favouriteCarRuntimeDao;
     }
 
+    // the DAO object we use to access the favorite_payments table
+    private Dao<FavoritePayment, Integer> favoritePaymentDao = null;
+    private RuntimeExceptionDao<FavoritePayment, Integer> favoritePaymentRuntimeDao = null;
+
+    public Dao<FavoritePayment, Integer> getFavouritePaymentDao() throws SQLException {
+        if(favoritePaymentDao == null) {
+            favoritePaymentDao = getDao(FavoritePayment.class);
+        }
+        return favoritePaymentDao;
+    }
+
+    public RuntimeExceptionDao<FavoritePayment, Integer> getRuntimeFavouritePaymentDao() {
+        if(favoritePaymentRuntimeDao == null) {
+            favoritePaymentRuntimeDao = getRuntimeExceptionDao(FavoritePayment.class);
+        }
+        return favoritePaymentRuntimeDao;
+    }
+
+
+    // the DAO object we use to access the past_parking_payments table
+    private Dao<PastParkingPayment, Integer> pastPaymentDao = null;
+    private RuntimeExceptionDao<PastParkingPayment, Integer> pastPaymentRuntimeDao = null;
+
+    public Dao<PastParkingPayment, Integer> getPastPaymentDao() throws SQLException {
+        if(pastPaymentDao == null) {
+            pastPaymentDao = getDao(PastParkingPayment.class);
+        }
+        return pastPaymentDao;
+    }
+
+    public RuntimeExceptionDao<PastParkingPayment, Integer> getRuntimePastPaymentDao() {
+        if(pastPaymentRuntimeDao == null) {
+            pastPaymentRuntimeDao = getRuntimeExceptionDao(PastParkingPayment.class);
+        }
+        return pastPaymentRuntimeDao;
+    }
 
     /**
      * Close the database connections and clear any cached DAOs.
