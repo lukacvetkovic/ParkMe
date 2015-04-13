@@ -18,9 +18,11 @@ import java.util.List;
 import java.util.Map;
 
 import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.City;
+import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.FavoritePayment;
 import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.FavouriteCar;
 import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.MaxDuration;
 import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.ParkingZone;
+import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.PastParkingPayment;
 import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.PaymentMode;
 import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.PostCode;
 import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.ZoneCalendar;
@@ -85,15 +87,43 @@ public class DatabaseManager implements SMSParkingApi, Updater{
         }
     }
 
-    @Override
-    public ParkingZone getParkingZoneFromId(int idParkingZone) {
-        return helper.getRuntimeParkingZoneDao().queryForId(idParkingZone);
+    // ## Favoritepayment methods
+    public List<FavoritePayment> getAllFavoritePayments(){
+        return helper.getRuntimeFavouritePaymentDao().queryForAll();
     }
 
-    @Override
-    public PaymentMode getPaymentModeFromId(int idPaymentMode) {
-        return helper.getRuntimePaymentModeDao().queryForId(idPaymentMode);
+    public void addFavoritePayment(FavoritePayment favoritePayment) {
+        helper.getRuntimeFavouritePaymentDao().createIfNotExists(favoritePayment);
     }
+
+    public FavoritePayment getFavoritePaymentFromId(int id) {
+        return helper.getRuntimeFavouritePaymentDao().queryForId(id);
+    }
+
+    public void removeFavoritePayment(FavoritePayment favoritePayment) {
+        helper.getRuntimeFavouritePaymentDao().delete(favoritePayment);
+    }
+
+
+    // ## PastparkingPayments metods
+    public List<PastParkingPayment> getAllPastparkingPayments(){
+        return helper.getRuntimePastPaymentDao().queryForAll();
+    }
+
+    public void addPastparkingPayment(PastParkingPayment pastParkingPayment) {
+        helper.getRuntimePastPaymentDao().createIfNotExists(pastParkingPayment);
+    }
+
+    public PastParkingPayment getPastParkingPaymentFromId(int id){
+        return helper.getRuntimePastPaymentDao().queryForId(id);
+    }
+
+    public void removePastParkingPayment(PastParkingPayment pastParkingPayment){
+        helper.getRuntimePastPaymentDao().delete(pastParkingPayment);
+    }
+
+
+    // ## FavoriteCar methods
 
     public List<FavouriteCar> getAllFavouriteCars(){
         return helper.getRuntimeFavouriteCarDao().queryForAll();
@@ -117,6 +147,17 @@ public class DatabaseManager implements SMSParkingApi, Updater{
     public void removeFavouriteCar(FavouriteCar car) {
         helper.getRuntimeFavouriteCarDao().delete(car);
     }
+
+    @Override
+    public ParkingZone getParkingZoneFromId(int idParkingZone) {
+        return helper.getRuntimeParkingZoneDao().queryForId(idParkingZone);
+    }
+
+    @Override
+    public PaymentMode getPaymentModeFromId(int idPaymentMode) {
+        return helper.getRuntimePaymentModeDao().queryForId(idPaymentMode);
+    }
+
 
     @Override
     public List<ParkingZone> getAllParkingZonesFromCity(int idCity) {
