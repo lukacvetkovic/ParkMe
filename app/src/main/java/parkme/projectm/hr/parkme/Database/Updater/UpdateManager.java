@@ -18,16 +18,19 @@ public class UpdateManager {
         this.source = source;
     }
 
-    public void updateAll(Date lastUpdate){
-        updater.updateCity(source.getNewCityRows(lastUpdate));
-        updater.updateParkingZone(source.getNewParkingZoneRows(lastUpdate));
-        updater.updatePostcode(source.getNewPostcodeRows(lastUpdate));
-        updater.updatePaymentMode(source.getNewPaymentModeRows(lastUpdate));
-        updater.updateZoneCalendar(source.getNewZoneCalendarRows(lastUpdate));
-        updater.updateZoneWorkTime(source.getNewZoneWorkTimeRows(lastUpdate));
-        updater.updateZonePrice(source.getNewZonePriceRows(lastUpdate));
-        updater.updateMaxDuration(source.getMaxDurationRows(lastUpdate));
-
+    public void updateAll(Date lastUpdate) throws Exception {
+        try {
+            updater.updateCity(source.getNewCityRows(lastUpdate));
+            updater.updateParkingZone(source.getNewParkingZoneRows(lastUpdate));
+            updater.updatePostcode(source.getNewPostcodeRows(lastUpdate));
+            updater.updatePaymentMode(source.getNewPaymentModeRows(lastUpdate));
+            updater.updateZoneCalendar(source.getNewZoneCalendarRows(lastUpdate));
+            updater.updateZoneWorkTime(source.getNewZoneWorkTimeRows(lastUpdate));
+            updater.updateZonePrice(source.getNewZonePriceRows(lastUpdate));
+            updater.updateMaxDuration(source.getMaxDurationRows(lastUpdate));
+        }catch (NullPointerException e){
+            throw new Exception("Update error"); // TODO promjeni lanac exceptiona, ovo bi trebao bit neki UpdateException
+        }
     }
 
     public void setUpdater(Updater updater) {

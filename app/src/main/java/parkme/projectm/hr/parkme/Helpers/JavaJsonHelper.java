@@ -20,17 +20,13 @@ public class JavaJsonHelper {
     public static <T> List<T> fromStringToList(String citiesJson, Class<T> dotClass) throws JSONException {
 
         Gson gson = new Gson();
-        List<T> cityList = new ArrayList<>();
-
-        if(citiesJson==null){
-            return cityList;
-        }
-
+        List<T> outputList = new ArrayList<>();
         JSONArray jsonCities = new JSONObject(citiesJson).getJSONArray("content");
         for (int i = 0; i < jsonCities.length(); i++) {
-            cityList.add(gson.fromJson(String.valueOf(jsonCities.getJSONObject(i)), dotClass));
+            outputList.add(gson.fromJson(String.valueOf(jsonCities.getJSONObject(i)), dotClass));
         }
-        return cityList;
+
+        return outputList;
     }
 
     public static List<City> fromStringToCityList(String citiesJson) throws JSONException {
