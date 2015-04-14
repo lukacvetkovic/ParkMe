@@ -1,6 +1,8 @@
 package parkme.projectm.hr.parkme.Activities;
 
+import android.content.ComponentName;
 import android.content.IntentSender;
+import android.content.pm.PackageManager;
 import android.location.Location;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
@@ -23,6 +25,7 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import parkme.projectm.hr.parkme.R;
+import parkme.projectm.hr.parkme.Receivers.IncomingSms;
 
 public class MapsActivity extends FragmentActivity implements GooglePlayServicesClient.ConnectionCallbacks,
         GooglePlayServicesClient.OnConnectionFailedListener, GoogleMap.OnInfoWindowClickListener, View.OnClickListener, GoogleApiClient.ConnectionCallbacks,
@@ -172,6 +175,15 @@ public class MapsActivity extends FragmentActivity implements GooglePlayServices
         // Disconnecting the client invalidates it.
         mGoogleApiClient.disconnect();
         super.onStop();
+    }
+
+    @Override
+    protected void onDestroy() {
+        ComponentName component = new ComponentName(this, IncomingSms.class);
+        getPackageManager()
+                .setComponentEnabledSetting(component,
+                        PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
+                        PackageManager.DONT_KILL_APP);
     }
 }
 

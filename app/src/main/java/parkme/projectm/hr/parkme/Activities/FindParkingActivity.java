@@ -1,5 +1,7 @@
 package parkme.projectm.hr.parkme.Activities;
 
+import android.content.ComponentName;
+import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -20,13 +22,14 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import parkme.projectm.hr.parkme.R;
+import parkme.projectm.hr.parkme.Receivers.IncomingSms;
 
 /**
  * Created by Cveki on 8.3.2015..
  */
 public class FindParkingActivity extends FragmentActivity implements GooglePlayServicesClient.ConnectionCallbacks,
         GooglePlayServicesClient.OnConnectionFailedListener, GoogleMap.OnInfoWindowClickListener, View.OnClickListener, GoogleApiClient.ConnectionCallbacks,
-        GoogleApiClient.OnConnectionFailedListener{
+        GoogleApiClient.OnConnectionFailedListener {
 
 
     private GoogleMap mMap; // Might be null if Google Play services APK is not available.
@@ -37,7 +40,6 @@ public class FindParkingActivity extends FragmentActivity implements GooglePlayS
     private GoogleApiClient mGoogleApiClient;
 
     private LocationRequest mLocationRequest;
-
 
 
     @Override
@@ -134,15 +136,14 @@ public class FindParkingActivity extends FragmentActivity implements GooglePlayS
     }
 
 
-
     @Override
     public void onConnectionSuspended(int i) {
-        Log.d("FAIL","SUSFAIL");
+        Log.d("FAIL", "SUSFAIL");
     }
 
     @Override
     public void onDisconnected() {
-        Log.d("FAIL","DISFAIL");
+        Log.d("FAIL", "DISFAIL");
     }
 
     @Override
@@ -152,7 +153,7 @@ public class FindParkingActivity extends FragmentActivity implements GooglePlayS
 
     @Override
     public void onConnectionFailed(ConnectionResult connectionResult) {
-        Log.d("FAIL","CONFAIL");
+        Log.d("FAIL", "CONFAIL");
     }
 
     @Override
@@ -172,5 +173,14 @@ public class FindParkingActivity extends FragmentActivity implements GooglePlayS
         // Disconnecting the client invalidates it.
         mGoogleApiClient.disconnect();
         super.onStop();
+    }
+
+    @Override
+    protected void onDestroy() {
+        ComponentName component = new ComponentName(this, IncomingSms.class);
+        getPackageManager()
+                .setComponentEnabledSetting(component,
+                        PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
+                        PackageManager.DONT_KILL_APP);
     }
 }

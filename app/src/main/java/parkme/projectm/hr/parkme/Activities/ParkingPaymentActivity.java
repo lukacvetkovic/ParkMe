@@ -2,6 +2,8 @@ package parkme.projectm.hr.parkme.Activities;
 
 import android.app.Activity;
 import android.app.DialogFragment;
+import android.content.ComponentName;
+import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -39,6 +41,7 @@ import parkme.projectm.hr.parkme.Helpers.Rest.GetRestService;
 import parkme.projectm.hr.parkme.Helpers.LocationHelper.FallbackLocationTracker;
 import parkme.projectm.hr.parkme.Helpers.LocationHelper.GPSTracker;
 import parkme.projectm.hr.parkme.R;
+import parkme.projectm.hr.parkme.Receivers.IncomingSms;
 
 import static android.widget.Toast.makeText;
 
@@ -296,6 +299,15 @@ public class ParkingPaymentActivity extends Activity {
             }
         });
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        ComponentName component = new ComponentName(this, IncomingSms.class);
+        getPackageManager()
+                .setComponentEnabledSetting(component,
+                        PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
+                        PackageManager.DONT_KILL_APP);
     }
 
 }

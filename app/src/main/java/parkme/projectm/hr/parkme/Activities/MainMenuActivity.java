@@ -1,7 +1,9 @@
 package parkme.projectm.hr.parkme.Activities;
 
 import android.app.Activity;
+import android.content.ComponentName;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -20,6 +22,7 @@ import parkme.projectm.hr.parkme.Dialogs.AddCarDialog;
 import parkme.projectm.hr.parkme.Helpers.PrefsHelper;
 import parkme.projectm.hr.parkme.Helpers.Rest.GetRestService;
 import parkme.projectm.hr.parkme.R;
+import parkme.projectm.hr.parkme.Receivers.IncomingSms;
 
 /**
  * Created by Cveki on 11.2.2015..
@@ -128,5 +131,14 @@ public class MainMenuActivity extends Activity {
             rootRelativeView.addView(addCarDialog, params);
         }
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        ComponentName component = new ComponentName(this, IncomingSms.class);
+        getPackageManager()
+                .setComponentEnabledSetting(component,
+                        PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
+                        PackageManager.DONT_KILL_APP);
     }
 }
