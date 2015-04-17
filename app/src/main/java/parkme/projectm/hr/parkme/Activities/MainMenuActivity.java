@@ -1,7 +1,9 @@
 package parkme.projectm.hr.parkme.Activities;
 
 import android.app.Activity;
+import android.content.ComponentName;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -20,11 +22,12 @@ import parkme.projectm.hr.parkme.Dialogs.AddCarDialog;
 import parkme.projectm.hr.parkme.Helpers.PrefsHelper;
 import parkme.projectm.hr.parkme.Helpers.Rest.GetRestService;
 import parkme.projectm.hr.parkme.R;
+import parkme.projectm.hr.parkme.Receivers.IncomingSms;
 
 /**
  * Created by Cveki on 11.2.2015..
  */
-public class MainMenuActivity extends Activity{
+public class MainMenuActivity extends Activity {
 
     private static final String TAG = "MainMenu Activity";
     /**
@@ -46,7 +49,7 @@ public class MainMenuActivity extends Activity{
         setContentView(R.layout.activity_main_menu);
         DatabaseManager.init(getApplicationContext());
 
-        payParkingButton = ( ImageButton ) findViewById(R.id.imgBtnPayment);
+        payParkingButton = (ImageButton) findViewById(R.id.imgBtnPayment);
         //Goes to PaymentMenuActivity
         payParkingButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,7 +62,7 @@ public class MainMenuActivity extends Activity{
             }
         });
 
-        update=(Button)findViewById(R.id.bUpdate);
+        update = (Button) findViewById(R.id.bUpdate);
         update.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -69,51 +72,49 @@ public class MainMenuActivity extends Activity{
                         DatabaseManager.getInstance(),
                         new UrlUpdateSource(new GetRestService(""))
                 );
-                try {
-
-                    Calendar cal = Calendar.getInstance();
-                    cal.add(Calendar.DATE, 1);
-                    SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
-                    String formatted = format1.format(cal.getTime());
-
-                    String lastUpdate=prefsHelper.getString(PrefsHelper.LastUpdate,"NULL");
-
-                    if(lastUpdate=="NULL"){
-                        Log.d("UPDATE FROM", " NULL");
-                        um.updateAll(DatabaseManager.dateFormatter.parse("2010-01-01"));
-                        prefsHelper.putString(PrefsHelper.LastUpdate,formatted);
-                        Log.d("LAST UPDATE -->"," "+formatted);
-                    }
-                    else if (DatabaseManager.dateFormatter.parse(lastUpdate).getTime()<(DatabaseManager.dateFormatter.parse(formatted)).getTime()){
-                        Log.d("UPDATE FROM", lastUpdate);
-                        um.updateAll(DatabaseManager.dateFormatter.parse(lastUpdate));
-                        prefsHelper.putString(PrefsHelper.LastUpdate,formatted);
-                        Log.d("LAST UPDATE -->"," "+formatted);
-                    }
-                    else{
-                        Log.d("UPDATED", " TODAY");
-                    }
 
 
-                } catch (ParseException e) {
-                    e.printStackTrace();
+                Calendar cal = Calendar.getInstance();
+                cal.add(Calendar.DATE, 1);
+                SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
+                String formatted = format1.format(cal.getTime());
+
+                String lastUpdate = prefsHelper.getString(PrefsHelper.LastUpdate, "NULL");
+                if (lastUpdate == "NULL") {
+                    lastUpdate = "2010-01-01";
                 }
+
+                if (lastUpdate == "NULL") {
+                    Log.d("UPDATE FROM", lastUpdate);
+                    boolean updated = true;
+
+                    try {
+                        um.updateAll(DatabaseManager.dateFormatter.parse(lastUpdate));
+                    } catch (Exception e) {
+                        updated = false;
+                    }
+                    if (updated) {
+                        prefsHelper.putString(PrefsHelper.LastUpdate, formatted);
+                        Log.d("LAST UPDATE -->", " " + formatted);
+                    }
+                }
+
             }
         });
 
-        findParkingButton = ( ImageButton ) findViewById(R.id.imgBtnFindParking);
+        findParkingButton = (ImageButton) findViewById(R.id.imgBtnFindParking);
         findParkingButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Class ourClass = null;
-                ourClass =FindParkingActivity.class;
+                ourClass = FindParkingActivity.class;
                 Intent ourIntent = new Intent(MainMenuActivity.this, ourClass);
                 startActivity(ourIntent);
             }
         });
 
         prefsHelper = new PrefsHelper(this);
-        if(! prefsHelper.prefsContains(PrefsHelper.ActiveCarPlates) || prefsHelper.getString(PrefsHelper.ActiveCarPlates, null) == null){
+        if (!prefsHelper.prefsContains(PrefsHelper.ActiveCarPlates) || prefsHelper.getString(PrefsHelper.ActiveCarPlates, null) == null) {
             Log.w(TAG, "Prefs does not contain ActiveCarPlates !");
             rootRelativeView = (RelativeLayout) findViewById(R.id.rootRelativeView);
             addCarDialog = new AddCarDialog(this);
@@ -130,5 +131,14 @@ public class MainMenuActivity extends Activity{
             rootRelativeView.addView(addCarDialog, params);
         }
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        ComponentName component = new ComponentName(this, IncomingSms.class);
+        getPackageManager()
+                .setComponentEnabledSetting(component,
+                        PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
+                        PackageManager.DONT_KILL_APP);
     }
 }

@@ -1,7 +1,9 @@
 package parkme.projectm.hr.parkme.Activities;
 
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -23,6 +25,7 @@ import parkme.projectm.hr.parkme.Fragments.PayParkingFragment;
 import parkme.projectm.hr.parkme.Fragments.PaymentHistoryFragment;
 import parkme.projectm.hr.parkme.Helpers.PrefsHelper;
 import parkme.projectm.hr.parkme.R;
+import parkme.projectm.hr.parkme.Receivers.IncomingSms;
 
 /**
  * Created by Cveki on 8.3.2015..
@@ -181,6 +184,15 @@ public class FragmentMenuActivity extends FragmentActivity {
 
             }
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        ComponentName component = new ComponentName(this, IncomingSms.class);
+        getPackageManager()
+                .setComponentEnabledSetting(component,
+                        PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
+                        PackageManager.DONT_KILL_APP);
     }
 
 }

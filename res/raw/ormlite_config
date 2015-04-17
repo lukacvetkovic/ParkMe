@@ -1,5 +1,5 @@
 #
-# generated on 2015/04/13 09:20:27
+# generated on 2015/04/13 09:40:02
 #
 # --table-start--
 dataClass=parkme.projectm.hr.parkme.Database.OrmliteDb.Models.City
@@ -218,7 +218,6 @@ tableName=favorite_payments
 # --table-fields-start--
 # --field-start--
 fieldName=favoritePaymentId
-id=true
 generatedId=true
 # --field-end--
 # --field-start--
@@ -242,7 +241,6 @@ tableName=past_parking_payments
 # --table-fields-start--
 # --field-start--
 fieldName=pastParkingPaymentId
-id=true
 generatedId=true
 # --field-end--
 # --field-start--
