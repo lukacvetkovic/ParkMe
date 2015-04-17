@@ -22,6 +22,7 @@ import parkme.projectm.hr.parkme.Dialogs.UpdateOrRemoveCarDialog;
 import parkme.projectm.hr.parkme.Fragments.ChooseCarFragment;
 import parkme.projectm.hr.parkme.Fragments.ChooseCarFragmentCallback;
 import parkme.projectm.hr.parkme.Fragments.PayParkingFragment;
+import parkme.projectm.hr.parkme.Fragments.PayParkingFragmentCallback;
 import parkme.projectm.hr.parkme.Fragments.PaymentHistoryFragment;
 import parkme.projectm.hr.parkme.Helpers.PrefsHelper;
 import parkme.projectm.hr.parkme.R;
@@ -113,13 +114,11 @@ public class FragmentMenuActivity extends FragmentActivity {
                     public void displayAddCarDialog() {
                         rootRelativeView = (RelativeLayout) findViewById(R.id.rootRelativeView);
                         addCarDialog = new AddCarDialog(context);
+                        addCarDialog.setDialogActive(true);
                         addCarDialog.setDismissCallback(new AddCarDialog.FirstTimeAddCarCallback() {
                             @Override
                             public void dismissThisDialog() {
-                                rootRelativeView.removeView(addCarDialog);
-                                addCarDialog.setVisibility(View.GONE);
-                                pageToTurnTo = 0;
-                                onResume();
+                                removeAddCarDialog();
                             }
                         });
                         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT);
@@ -138,14 +137,12 @@ public class FragmentMenuActivity extends FragmentActivity {
                     public void updateOrRemoveFavoriteCar(FavouriteCar favoriteCar) {
                         rootRelativeView = (RelativeLayout) findViewById(R.id.rootRelativeView);
                         updateorRemoveCarDialog = new UpdateOrRemoveCarDialog(context);
+                        updateorRemoveCarDialog.setDialogActive(true);
                         updateorRemoveCarDialog.setFavoriteCarToUpdate(favoriteCar);
                         updateorRemoveCarDialog.setDismissCallback(new UpdateOrRemoveCarDialog.UpdateOrRemoveCarCallback() {
                             @Override
                             public void dismissThisDialog() {
-                                rootRelativeView.removeView(addCarDialog);
-                                updateorRemoveCarDialog.setVisibility(View.GONE);
-                                pageToTurnTo = 0;
-                                onResume();
+                                removeUpdateOrDeleteCarDIalog();
                             }
                         });
                         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT);
@@ -157,6 +154,18 @@ public class FragmentMenuActivity extends FragmentActivity {
                 return fragment;
             } else if (i == 1) {
                 PayParkingFragment fragment = new PayParkingFragment();
+                fragment.setPayParkingFragmentCallback(new PayParkingFragmentCallback() {
+                    @Override
+                    public void refreshActivity() {
+                        pageToTurnTo = 1;
+                        onResume();
+                    }
+
+                    @Override
+                    public void swipeToChooseCarFragment() {
+                        mViewPager.setCurrentItem(0, true);
+                    }
+                });
                 return fragment;
             } else {
                 PaymentHistoryFragment fragment = new PaymentHistoryFragment();
@@ -187,7 +196,39 @@ public class FragmentMenuActivity extends FragmentActivity {
     }
 
     @Override
+    public void onBackPressed() {       // TODO
+        if(addCarDialog != null && addCarDialog.isDialogActive()){
+            this.removeAddCarDialog();
+        }
+
+        else if(updateorRemoveCarDialog != null && updateorRemoveCarDialog.isDialogActive()) {
+            this.removeUpdateOrDeleteCarDIalog();
+        }
+
+        else{
+            super.onBackPressed();
+        }
+    }
+
+    private void removeAddCarDialog(){
+        addCarDialog.setDialogActive(false);
+        rootRelativeView.removeView(addCarDialog);
+        addCarDialog.setVisibility(View.GONE);
+        pageToTurnTo = 0;
+        onResume();
+    }
+
+    private void removeUpdateOrDeleteCarDIalog(){
+        updateorRemoveCarDialog.setDialogActive(false);
+        rootRelativeView.removeView(addCarDialog);
+        updateorRemoveCarDialog.setVisibility(View.GONE);
+        pageToTurnTo = 0;
+        onResume();
+    }
+
+    @Override
     protected void onDestroy() {
+        super.onDestroy();
         ComponentName component = new ComponentName(this, IncomingSms.class);
         getPackageManager()
                 .setComponentEnabledSetting(component,

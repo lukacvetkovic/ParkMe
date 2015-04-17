@@ -135,6 +135,7 @@ public class MainMenuActivity extends Activity {
 
     @Override
     protected void onDestroy() {
+        super.onDestroy();
         ComponentName component = new ComponentName(this, IncomingSms.class);
         getPackageManager()
                 .setComponentEnabledSetting(component,

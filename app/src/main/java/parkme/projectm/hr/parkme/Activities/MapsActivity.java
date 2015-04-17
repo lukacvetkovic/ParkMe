@@ -179,6 +179,7 @@ public class MapsActivity extends FragmentActivity implements GooglePlayServices
 
     @Override
     protected void onDestroy() {
+        super.onDestroy();
         ComponentName component = new ComponentName(this, IncomingSms.class);
         getPackageManager()
                 .setComponentEnabledSetting(component,

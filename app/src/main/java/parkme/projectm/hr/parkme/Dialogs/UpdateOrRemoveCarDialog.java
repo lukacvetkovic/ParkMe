@@ -25,6 +25,8 @@ public class UpdateOrRemoveCarDialog extends FrameLayout {
     private final String TAG = "UpdateOrRemoveCarDIalog";
     private Context context;
 
+    private boolean isDialogActive = false;
+
     private EditText carPlatesEditText;
     private TextView errorTextView;
 
@@ -226,5 +228,13 @@ public class UpdateOrRemoveCarDialog extends FrameLayout {
         selectedGreenCar.setVisibility(INVISIBLE);
         selectedRedCar.setVisibility(INVISIBLE);
         selectedYellowCar.setVisibility(INVISIBLE);
+    }
+
+    public boolean isDialogActive() {
+        return isDialogActive;
+    }
+
+    public void setDialogActive(boolean isDialogActive) {
+        this.isDialogActive = isDialogActive;
     }
 }

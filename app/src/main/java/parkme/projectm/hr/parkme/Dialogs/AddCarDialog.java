@@ -26,6 +26,8 @@ public class AddCarDialog extends FrameLayout{
     private final String TAG = "FirstTimeAddCarDialog";
     private Context context;
 
+    private boolean isDialogActive = false;
+
     private EditText carPlatesEditText;
     private TextView errorTextView;
 
@@ -178,5 +180,13 @@ public class AddCarDialog extends FrameLayout{
         selectedGreenCar.setVisibility(INVISIBLE);
         selectedRedCar.setVisibility(INVISIBLE);
         selectedYellowCar.setVisibility(INVISIBLE);
+    }
+
+    public boolean isDialogActive() {
+        return isDialogActive;
+    }
+
+    public void setDialogActive(boolean isDialogActive) {
+        this.isDialogActive = isDialogActive;
     }
 }

@@ -175,7 +175,7 @@
                     </LinearLayout>
 
                     <LinearLayout
-                        android:orientation="horizontal"
+                        android:orientation="vertical"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/parky_text_left_and_right_padding"
@@ -188,11 +188,13 @@
                             android:layout_height="wrap_content"
                             android:text="Delete car"
                             android:id="@+id/btnDeleteCar"
+                            android:layout_marginTop="@dimen/parky_text_left_and_right_padding"
                             android:textColor="@color/parky_error_red" />
 
                         <Button
                             android:layout_width="150dp"
                             android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/parky_text_left_and_right_padding"
                             android:text="Update Car"
                             android:id="@+id/btnUpdateCar"/>
                     </LinearLayout>

@@ -35,6 +35,8 @@ public class PayParkingFragment extends Fragment {
     private PrefsHelper prefsHelper;
     private FragmentMenuActivity parentActivity;
 
+    private PayParkingFragmentCallback payParkingFragmentCallback;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -51,6 +53,15 @@ public class PayParkingFragment extends Fragment {
         FavouriteCar activeCar = dbManager.getFavoriteCarFromPlates(activeCarPlates);
         activeCarView.setCarTablesText(activeCarPlates);
         activeCarView.getActiveCarImage().setImageResource(activeCar.getCarIcon());
+
+        activeCarView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(payParkingFragmentCallback != null) {
+                    payParkingFragmentCallback.swipeToChooseCarFragment();
+                }
+            }
+        });
 
         payParkingButton = (ImageButton) rootView.findViewById(R.id.imgBtnPayParking);
 
@@ -72,4 +83,11 @@ public class PayParkingFragment extends Fragment {
         parentActivity = (FragmentMenuActivity) activity;
     }
 
+    public PayParkingFragmentCallback getPayParkingFragmentCallback() {
+        return payParkingFragmentCallback;
+    }
+
+    public void setPayParkingFragmentCallback(PayParkingFragmentCallback payParkingFragmentCallback) {
+        this.payParkingFragmentCallback = payParkingFragmentCallback;
+    }
 }
