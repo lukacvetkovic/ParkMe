@@ -20,6 +20,7 @@ import parkme.projectm.hr.parkme.Activities.MainMenuActivity;
 import parkme.projectm.hr.parkme.CustomViewModels.ActiveCarView;
 import parkme.projectm.hr.parkme.CustomViewModels.FavoriteCarsArrayAdapter;
 import parkme.projectm.hr.parkme.Database.OrmliteDb.DatabaseManager;
+import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.FavoritePayment;
 import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.FavouriteCar;
 import parkme.projectm.hr.parkme.Dialogs.AddCarDialog;
 import parkme.projectm.hr.parkme.Helpers.PrefsHelper;
@@ -62,12 +63,21 @@ public class ChooseCarFragment extends Fragment {
         prefsHelper = new PrefsHelper(this.context);
         String activeCarPlates = prefsHelper.getString(PrefsHelper.ActiveCarPlates, null);
 
-        DatabaseManager dbManager = DatabaseManager.getInstance();
+        final DatabaseManager dbManager = DatabaseManager.getInstance();
         favoriteCarList = dbManager.getAllFavouriteCars();
 
         activeCar = dbManager.getFavoriteCarFromPlates(activeCarPlates);
         activeCarView.setCarTablesText(activeCarPlates);
         activeCarView.getActiveCarImage().setImageResource(activeCar.getCarIcon());
+        activeCarView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FavouriteCar favoriteCar = dbManager.getFavoriteCarFromPlates(activeCarView.getCarTablesText());
+                if(favoriteCar != null && chooseCarFragmentCallback != null) {
+                    chooseCarFragmentCallback.updateOrRemoveFavoriteCar(favoriteCar);
+                }
+            }
+        });
 
         if(favoriteCarList != null){
             for(FavouriteCar favouriteCar : favoriteCarList){

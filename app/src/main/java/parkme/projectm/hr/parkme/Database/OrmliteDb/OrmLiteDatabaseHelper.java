@@ -14,6 +14,7 @@ import com.j256.ormlite.dao.RuntimeExceptionDao;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
 
+import parkme.projectm.hr.parkme.CustomViewModels.FavoriteCarsArrayAdapter;
 import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.City;
 import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.FavoritePayment;
 import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.FavouriteCar;

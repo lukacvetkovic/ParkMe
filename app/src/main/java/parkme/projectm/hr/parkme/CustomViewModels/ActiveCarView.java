@@ -49,4 +49,8 @@ public class ActiveCarView extends LinearLayout {
         this.carTablesText.setText(carTablesText);
     }
 
+    public String getCarTablesText() {
+        return this.carTablesText.getText().toString();
+    }
+
 }
