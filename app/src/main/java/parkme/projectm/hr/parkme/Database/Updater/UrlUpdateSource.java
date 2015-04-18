@@ -1,5 +1,7 @@
 package parkme.projectm.hr.parkme.Database.Updater;
 
+import android.util.Log;
+
 import org.json.JSONException;
 
 import java.util.ArrayList;
@@ -41,7 +43,9 @@ public class UrlUpdateSource implements UpdateSource{
         rest.setUrl(url);
         String response;
         try {
+            Log.d("Upit","REST");
             response = rest.execute();
+            Log.d("Upit gotov","REST");
             return JavaJsonHelper.fromStringToList(response, dotClass);
         } catch (ExecutionException | InterruptedException | JSONException e) {
             return new ArrayList<T>();

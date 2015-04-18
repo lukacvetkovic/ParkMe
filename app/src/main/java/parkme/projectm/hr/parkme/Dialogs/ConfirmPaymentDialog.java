@@ -115,8 +115,9 @@ public class ConfirmPaymentDialog extends DialogFragment {
                 String message = paymentMode.getSmsPrefix()+carPlate+paymentMode.getSmsSufix();
 
                 //SMSHelper.sendSMS(parkingZoneNumber, message);
-                prefsHelper.putString(PrefsHelper.PhoneNumber,parkingZoneNumber);
+
                 parkingZoneNumber=parkingZone.getPhoneNumber();
+                prefsHelper.putString(PrefsHelper.PhoneNumber,parkingZoneNumber);
                 Context context = getActivity();
                 CharSequence text = "Broj : "+parkingZoneNumber+" Poruka:"+ message;
                 int duration = Toast.LENGTH_LONG;

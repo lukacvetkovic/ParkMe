@@ -226,14 +226,5 @@ public class FragmentMenuActivity extends FragmentActivity {
         onResume();
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        ComponentName component = new ComponentName(this, IncomingSms.class);
-        getPackageManager()
-                .setComponentEnabledSetting(component,
-                        PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
-                        PackageManager.DONT_KILL_APP);
-    }
 
 }

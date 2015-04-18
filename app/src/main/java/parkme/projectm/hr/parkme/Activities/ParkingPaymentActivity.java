@@ -107,9 +107,9 @@ public class ParkingPaymentActivity extends Activity {
         parkingZoneList = new ArrayList<>();
 
         //Gps
-        gpsTracker = new GPSTracker(this);
+        /*gpsTracker = new GPSTracker(this);
         FallbackLocationTracker fallbackLocationTracker = new FallbackLocationTracker(this);
-        fallbackLocationTracker.start();
+        fallbackLocationTracker.start()*/
 
         selectedCityPostCode = null;
 
@@ -136,10 +136,10 @@ public class ParkingPaymentActivity extends Activity {
 
         //Get location
         Location mylocation = null;
-        mylocation = fallbackLocationTracker.getLocation();
+       /* mylocation = fallbackLocationTracker.getLocation();
         if (mylocation == null) {
             mylocation = gpsTracker.getLocation();
-        }
+        }*/
 
         //If location not null set spinner to city
         if (mylocation != null) {
@@ -299,16 +299,6 @@ public class ParkingPaymentActivity extends Activity {
             }
         });
 
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        ComponentName component = new ComponentName(this, IncomingSms.class);
-        getPackageManager()
-                .setComponentEnabledSetting(component,
-                        PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
-                        PackageManager.DONT_KILL_APP);
     }
 
 }

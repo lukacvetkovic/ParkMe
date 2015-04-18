@@ -24,6 +24,7 @@ public class IncomingSms extends BroadcastReceiver {
         // Retrieves a map of extended data from the intent.
         final Bundle bundle = intent.getExtras();
 
+        Log.d("Citanje","poruke");
         try {
 
             if (bundle != null) {
@@ -42,17 +43,7 @@ public class IncomingSms extends BroadcastReceiver {
                     Log.d("numberToActOn-->",numberToActOn);
                     if (senderNum.equals(numberToActOn)) {
                         Log.d("UPISI U TABLICU", "DO KAD TRAJE PARKING I TO");
-                    } else {
                         String message = currentMessage.getDisplayMessageBody();
-
-                        Log.i("SmsReceiver", "senderNum: " + senderNum + "; message: " + message);
-
-
-                        // Show Alert
-                        int duration = Toast.LENGTH_LONG;
-                        Toast toast = Toast.makeText(context,
-                                "senderNum: " + senderNum + ", message: " + message, duration);
-                        toast.show();
                     }
 
                 } // end for loop
