@@ -13,6 +13,9 @@ public class SmsData {
     private Date dateTime;
 
 
+    public SmsData() {
+    }
+
     public SmsData(String zoneName, int cijenaKn, int cijenaLp, Date dateTime) {
         this.zoneName = zoneName;
         this.cijenaKn = cijenaKn;

@@ -10,6 +10,9 @@ import android.util.Log;
 import android.widget.Toast;
 
 import parkme.projectm.hr.parkme.Helpers.PrefsHelper;
+import parkme.projectm.hr.parkme.SmsParser.MasterParser;
+import parkme.projectm.hr.parkme.SmsParser.SmsData;
+import parkme.projectm.hr.parkme.SmsParser.SmsParser;
 
 /**
  * Created by Cveki on 29.3.2015..
@@ -42,8 +45,19 @@ public class IncomingSms extends BroadcastReceiver {
                     String numberToActOn = prefsHelper.getString(PrefsHelper.PhoneNumber, "NULL");
                     Log.d("numberToActOn-->",numberToActOn);
                     if (senderNum.equals(numberToActOn)) {
-                        Log.d("UPISI U TABLICU", "DO KAD TRAJE PARKING I TO");
                         String message = currentMessage.getDisplayMessageBody();
+
+                        SmsParser smsParser= new MasterParser();
+                        SmsData smsData= smsParser.parse(message);
+
+                        Log.d("UPISI U TABLICU", "DO KAD TRAJE PARKING I TO");
+
+                        if(smsData.getZoneName()!=null){
+
+                            Log.d("POSALJI U BAZU", "PODATKE");
+
+                        }
+
                     }
 
                 } // end for loop
