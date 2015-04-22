@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.google.android.gms.maps.model.Marker;
@@ -42,8 +43,8 @@ public class MainMenuActivity extends Activity {
     /**
      * Button to go to activity where is swipe menu for choosing favs,cars,...
      */
-    private ImageButton findParkingButton;
-    private ImageButton payParkingButton;
+    private ImageView findParkingButton;
+    private ImageView payParkingButton;
 
     private RelativeLayout rootRelativeView;
 
@@ -59,17 +60,18 @@ public class MainMenuActivity extends Activity {
         setContentView(R.layout.activity_main_menu);
         DatabaseManager.init(getApplicationContext());
 
-        post=(Button)findViewById(R.id.bPost);
+
+        post = (Button) findViewById(R.id.bPost);
         post.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                marker m= new marker(1,1.09,1.04568,6);
-                Gson g= new Gson();
-                String json=g.toJson(m);
-                DeleteRestService postRestService= new DeleteRestService("https://lumipex.me/ParkMe/api/data/marker/49.json",json);
+                marker m = new marker(1, 1.09, 1.04568, 6);
+                Gson g = new Gson();
+                String json = g.toJson(m);
+                DeleteRestService postRestService = new DeleteRestService("https://lumipex.me/ParkMe/api/data/marker/49.json", json);
                 try {
-                    String a= postRestService.execute();
-                    Log.d("RESP-->",a);
+                    String a = postRestService.execute();
+                    Log.d("RESP-->", a);
                 } catch (ExecutionException e) {
                     e.printStackTrace();
                 } catch (InterruptedException e) {
@@ -81,6 +83,9 @@ public class MainMenuActivity extends Activity {
         });
 
         payParkingButton = (ImageButton) findViewById(R.id.imgBtnPayment);
+
+        payParkingButton = (ImageView) findViewById(R.id.imgBtnPayment);
+
         //Goes to PaymentMenuActivity
         payParkingButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -147,7 +152,7 @@ public class MainMenuActivity extends Activity {
 
         });
 
-        findParkingButton = (ImageButton) findViewById(R.id.imgBtnFindParking);
+        findParkingButton = (ImageView) findViewById(R.id.imgBtnFindParking);
         findParkingButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

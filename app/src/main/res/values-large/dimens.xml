@@ -2,7 +2,8 @@
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
-    
+
+    <!--  TODO
     <dimen name="parky_custom_dialog_rounded_corners_radius">30dp</dimen>
 
     <dimen name="parky_custom_linear_layout_vertical_spacing">10dp</dimen>
@@ -13,6 +14,8 @@
 
     <dimen name="parky_button_text_size">18sp</dimen>
     <dimen name="parky_car_tables_text_size">28sp</dimen>
+    -->
 
-    <dimen name="parky_title_text_size">32sp</dimen>
+    <dimen name="parky_title_text_size">36sp</dimen>
+
 </resources>

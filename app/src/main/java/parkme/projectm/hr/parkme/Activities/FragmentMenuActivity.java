@@ -196,7 +196,7 @@ public class FragmentMenuActivity extends FragmentActivity {
     }
 
     @Override
-    public void onBackPressed() {       // TODO
+    public void onBackPressed() {
         if(addCarDialog != null && addCarDialog.isDialogActive()){
             this.removeAddCarDialog();
         }

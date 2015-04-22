@@ -9,61 +9,74 @@
         android:layout_height="match_parent">
 
         <view
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
             class="parkme.projectm.hr.parkme.CustomViewModels.HeaderView"
             android:id="@+id/view"
             android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true" />
+            android:layout_centerHorizontal="true"
+            android:layout_weight="0.15" />
 
-        <ScrollView
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.8">
 
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent">
+            <parkme.projectm.hr.parkme.CustomViewModels.ScaleImageView
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:id="@+id/imgBtnFindParking"
+                android:layout_gravity="center_horizontal"
+                android:src="@drawable/find_parking_small"
+                android:layout_weight="1"
+                android:paddingTop="5dp" />
 
-                <ImageButton
-                    android:layout_width="200dp"
-                    android:layout_height="200dp"
-                    android:id="@+id/imgBtnFindParking"
-                    android:layout_alignParentTop="true"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginTop="20dp"
-                    android:background="@drawable/find_parking_small"
-                    android:layout_gravity="center_horizontal" />
 
-                <ImageButton
-                    android:layout_width="200dp"
-                    android:layout_height="200dp"
-                    android:id="@+id/imgBtnPayment"
-                    android:layout_gravity="center_horizontal"
-                    android:background="@drawable/placanje_small" />
-
-                <Button
+            <parkme.projectm.hr.parkme.CustomViewModels.ScaleImageView
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:id="@+id/imgBtnPayment"
+                android:layout_gravity="center_horizontal"
+                android:src="@drawable/placanje_small"
+                android:layout_weight="1"
+                android:paddingBottom="5dp" />
+            <!--
+            <ImageButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Update DB"
-                android:layout_gravity="center"
-                android:id="@+id/bUpdate"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true" />
+                android:id="@+id/imgBtnFindParking"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/find_parking_small"
+                android:layout_gravity="center_horizontal"
+                android:layout_weight="1"
+                android:adjustViewBounds="false" />
+                -->
 
-                <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Post test"
-                    android:layout_gravity="center"
-                    android:id="@+id/bPost"
-                    android:layout_alignParentBottom="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_alignParentEnd="true" />
-            </LinearLayout>
+            <!--
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/imgBtnPayment"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/placanje_small"
+                android:layout_weight="1" />
+                -->
 
-        </ScrollView>
+        </LinearLayout>
 
     </LinearLayout>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Update DB"
+        android:layout_gravity="center"
+        android:id="@+id/bUpdate"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_weight="1" />
 </RelativeLayout>
