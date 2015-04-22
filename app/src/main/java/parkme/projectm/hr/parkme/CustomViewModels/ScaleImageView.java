@@ -9,6 +9,7 @@ import android.widget.ImageView;
  * Created by Mihael on 22.4.2015..
  */
 public class ScaleImageView extends ImageView {
+
     public ScaleImageView(Context context) {
         super(context);
     }
