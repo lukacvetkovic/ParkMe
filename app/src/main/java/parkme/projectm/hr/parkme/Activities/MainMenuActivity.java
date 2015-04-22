@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -14,6 +15,7 @@ import android.widget.RelativeLayout;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.concurrent.ExecutionException;
 
 import parkme.projectm.hr.parkme.Database.OrmliteDb.DatabaseManager;
 import parkme.projectm.hr.parkme.Database.Updater.UpdateManager;
@@ -66,40 +68,55 @@ public class MainMenuActivity extends Activity {
         update.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //EXTRA "update" svega sa neta
-                DatabaseManager.init(getApplicationContext());
-                UpdateManager um = new UpdateManager(
-                        DatabaseManager.getInstance(),
-                        new UrlUpdateSource(new GetRestService(""))
-                );
+
+                Thread thread= new Thread( new Runnable() {
+                    public void run() {
+                        try {
+                            //EXTRA "update" svega sa neta
+                            DatabaseManager.init(getApplicationContext());
+                            UpdateManager um = new UpdateManager(
+                                    DatabaseManager.getInstance(),
+                                    new UrlUpdateSource(new GetRestService(""))
+                            );
 
 
-                Calendar cal = Calendar.getInstance();
-                cal.add(Calendar.DATE, 1);
-                SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
-                String formatted = format1.format(cal.getTime());
+                            Calendar cal = Calendar.getInstance();
+                            SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
+                            String formatted = format1.format(cal.getTime());
 
-                String lastUpdate = prefsHelper.getString(PrefsHelper.LastUpdate, "NULL");
-                if (lastUpdate == "NULL") {
-                    lastUpdate = "2010-01-01";
-                }
 
-                if (lastUpdate == "NULL") {
-                    Log.d("UPDATE FROM", lastUpdate);
-                    boolean updated = true;
 
-                    try {
-                        um.updateAll(DatabaseManager.dateFormatter.parse(lastUpdate));
-                    } catch (Exception e) {
-                        updated = false;
+                            String lastUpdate = prefsHelper.getString(PrefsHelper.LastUpdate, "NULL");
+
+                            Log.d(lastUpdate, "---> last update");
+                            if (lastUpdate == "NULL") {
+                                lastUpdate = "2010-01-01";
+                            }
+
+                            Log.d("UPDATE FROM", lastUpdate);
+                            boolean updated = true;
+
+                            try {
+                                um.updateAll(DatabaseManager.dateFormatter.parse(lastUpdate));
+                                Log.d("Update"," done");
+                            } catch (Exception e) {
+                                updated = false;
+                            }
+                            if (updated) {
+                                prefsHelper.putString(PrefsHelper.LastUpdate, formatted);
+                                Log.d("LAST UPDATE -->", " " + formatted);
+                            }
+
+                        }
+                        catch(Exception e){}
+
                     }
-                    if (updated) {
-                        prefsHelper.putString(PrefsHelper.LastUpdate, formatted);
-                        Log.d("LAST UPDATE -->", " " + formatted);
-                    }
-                }
+                });
 
+                thread.start();
             }
+
+
         });
 
         findParkingButton = (ImageButton) findViewById(R.id.imgBtnFindParking);
@@ -133,13 +150,7 @@ public class MainMenuActivity extends Activity {
 
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        ComponentName component = new ComponentName(this, IncomingSms.class);
-        getPackageManager()
-                .setComponentEnabledSetting(component,
-                        PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
-                        PackageManager.DONT_KILL_APP);
-    }
+
 }
+
+

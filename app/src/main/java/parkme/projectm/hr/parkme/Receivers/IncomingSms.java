@@ -10,6 +10,9 @@ import android.util.Log;
 import android.widget.Toast;
 
 import parkme.projectm.hr.parkme.Helpers.PrefsHelper;
+import parkme.projectm.hr.parkme.SmsParser.MasterParser;
+import parkme.projectm.hr.parkme.SmsParser.SmsData;
+import parkme.projectm.hr.parkme.SmsParser.SmsParser;
 
 /**
  * Created by Cveki on 29.3.2015..
@@ -24,6 +27,7 @@ public class IncomingSms extends BroadcastReceiver {
         // Retrieves a map of extended data from the intent.
         final Bundle bundle = intent.getExtras();
 
+        Log.d("Citanje","poruke");
         try {
 
             if (bundle != null) {
@@ -41,18 +45,19 @@ public class IncomingSms extends BroadcastReceiver {
                     String numberToActOn = prefsHelper.getString(PrefsHelper.PhoneNumber, "NULL");
                     Log.d("numberToActOn-->",numberToActOn);
                     if (senderNum.equals(numberToActOn)) {
-                        Log.d("UPISI U TABLICU", "DO KAD TRAJE PARKING I TO");
-                    } else {
                         String message = currentMessage.getDisplayMessageBody();
 
-                        Log.i("SmsReceiver", "senderNum: " + senderNum + "; message: " + message);
+                        SmsParser smsParser= new MasterParser();
+                        SmsData smsData= smsParser.parse(message);
 
+                        Log.d("UPISI U TABLICU", "DO KAD TRAJE PARKING I TO");
 
-                        // Show Alert
-                        int duration = Toast.LENGTH_LONG;
-                        Toast toast = Toast.makeText(context,
-                                "senderNum: " + senderNum + ", message: " + message, duration);
-                        toast.show();
+                        if(smsData.getZoneName()!=null){
+
+                            Log.d("POSALJI U BAZU", "PODATKE");
+
+                        }
+
                     }
 
                 } // end for loop

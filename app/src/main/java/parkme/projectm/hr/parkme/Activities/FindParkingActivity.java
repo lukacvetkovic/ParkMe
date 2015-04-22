@@ -175,13 +175,4 @@ public class FindParkingActivity extends FragmentActivity implements GooglePlayS
         super.onStop();
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        ComponentName component = new ComponentName(this, IncomingSms.class);
-        getPackageManager()
-                .setComponentEnabledSetting(component,
-                        PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
-                        PackageManager.DONT_KILL_APP);
-    }
 }
