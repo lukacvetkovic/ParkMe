@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import java.text.ParseException;
@@ -35,8 +36,8 @@ public class MainMenuActivity extends Activity {
     /**
      * Button to go to activity where is swipe menu for choosing favs,cars,...
      */
-    private ImageButton findParkingButton;
-    private ImageButton payParkingButton;
+    private ImageView findParkingButton;
+    private ImageView payParkingButton;
 
     private RelativeLayout rootRelativeView;
 
@@ -51,7 +52,7 @@ public class MainMenuActivity extends Activity {
         setContentView(R.layout.activity_main_menu);
         DatabaseManager.init(getApplicationContext());
 
-        payParkingButton = (ImageButton) findViewById(R.id.imgBtnPayment);
+        payParkingButton = (ImageView) findViewById(R.id.imgBtnPayment);
         //Goes to PaymentMenuActivity
         payParkingButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -119,7 +120,7 @@ public class MainMenuActivity extends Activity {
 
         });
 
-        findParkingButton = (ImageButton) findViewById(R.id.imgBtnFindParking);
+        findParkingButton = (ImageView) findViewById(R.id.imgBtnFindParking);
         findParkingButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

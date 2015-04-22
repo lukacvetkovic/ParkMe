@@ -9,35 +9,38 @@
         android:layout_height="match_parent">
 
         <view
-            android:layout_width="wrap_content"
-            android:layout_height="80dp"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
             class="parkme.projectm.hr.parkme.CustomViewModels.HeaderView"
             android:id="@+id/view"
             android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"/>
+            android:layout_centerHorizontal="true"
+            android:layout_weight="0.15" />
 
         <LinearLayout
             android:orientation="vertical"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:weightSum="2">
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.8">
 
             <parkme.projectm.hr.parkme.CustomViewModels.ScaleImageView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
                 android:id="@+id/imgBtnFindParking"
                 android:layout_gravity="center_horizontal"
                 android:src="@drawable/find_parking_small"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:paddingTop="5dp" />
 
 
             <parkme.projectm.hr.parkme.CustomViewModels.ScaleImageView
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
                 android:id="@+id/imgBtnPayment"
                 android:layout_gravity="center_horizontal"
                 android:src="@drawable/placanje_small"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:paddingBottom="5dp" />
             <!--
             <ImageButton
                 android:layout_width="wrap_content"
