@@ -43,11 +43,21 @@
                     android:background="@drawable/placanje_small" />
 
                 <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Update DB"
+                android:layout_gravity="center"
+                android:id="@+id/bUpdate"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true" />
+
+                <Button
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Update DB"
+                    android:text="Post test"
                     android:layout_gravity="center"
-                    android:id="@+id/bUpdate"
+                    android:id="@+id/bPost"
                     android:layout_alignParentBottom="true"
                     android:layout_alignParentRight="true"
                     android:layout_alignParentEnd="true" />

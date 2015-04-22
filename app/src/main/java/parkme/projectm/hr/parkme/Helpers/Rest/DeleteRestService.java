@@ -1,78 +1,72 @@
 package parkme.projectm.hr.parkme.Helpers.Rest;
 
-/**
- * Created by Cveki on 27.11.2014..
- */
-
 import android.os.AsyncTask;
 
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpDelete;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.protocol.BasicHttpContext;
-import org.apache.http.protocol.HttpContext;
-import org.json.JSONObject;
+import com.squareup.okhttp.MediaType;
+import com.squareup.okhttp.OkHttpClient;
+import com.squareup.okhttp.Request;
+import com.squareup.okhttp.RequestBody;
+import com.squareup.okhttp.Response;
 
 import java.io.IOException;
-import java.io.InputStream;
+import java.util.concurrent.ExecutionException;
+
+/**
+ * Created by Cveki on 17.12.2014..
+ */
+public class DeleteRestService {
+    String url;
+    OkHttpClient client;
+    public static final MediaType JSON
+            = MediaType.parse("Content-Type=application/json; charset=unicode");
 
 
-public class DeleteRestService extends AsyncTask<Void, Void, String> {
+    public DeleteRestService(String url, String json) {
+        this.url = url;
+        this.client = new OkHttpClient();
+    }
 
+    public String execute() throws ExecutionException, InterruptedException {
+        DeleteWorker deleteWorker = new DeleteWorker();
+        return deleteWorker.execute().get();
 
-    public String data = null;
-    public JSONObject json;
-    public String adresaSKojeUziamam;
+    }
 
+    private class DeleteWorker extends AsyncTask<Void, Void, String> {
+        @Override
+        protected String doInBackground(Void... params) {
+            RequestBody body = RequestBody.create(JSON, "");
+            Request request = new Request.Builder()
+                    .url(url)
+                    .method("DELETE",body)
+                    .addHeader("Content-Type","application/json")
+                    .addHeader("charset","unicode")
+                    .build();
+            Response response = null;
+            try {
+                response = client.newCall(request).execute();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            if (response != null) {
+                try {
+                    return response.body().string();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
 
-    protected String getASCIIContentFromEntity(HttpEntity entity) throws IllegalStateException, IOException {
-        InputStream in = entity.getContent();
-        StringBuffer out = new StringBuffer();
-        int n = 1;
-        while (n > 0) {
-            byte[] b = new byte[4096];
-            n = in.read(b);
-            if (n > 0) out.append(new String(b, 0, n));
+            return null;
+
         }
-        return out.toString();
     }
 
-    @Override
-    protected String doInBackground(Void... params) {
-        HttpClient httpClient = new DefaultHttpClient();
-        HttpContext localContext = new BasicHttpContext();
-        HttpDelete httpDelete = new HttpDelete(adresaSKojeUziamam);
-        httpDelete.addHeader("accept", "application/json");
-        String text = null;
-        try {
-            HttpResponse response = httpClient.execute(httpDelete, localContext);
-            HttpEntity entity = response.getEntity();
-            text = getASCIIContentFromEntity(entity);
-        } catch (Exception e) {
-            return e.getLocalizedMessage();
-        }
-        return text;
+    public String getUrl() {
+        return url;
     }
 
-    protected void onPostExecute(String results) {
-        if (results != null) {
-            data = results;
-        }
-
-
+    public void setUrl(String url) {
+        this.url = url;
     }
 
-
-    public String getData() {
-        return data;
-    }
-
-
-    public void obrisi(String URL) {
-        adresaSKojeUziamam=URL;
-        execute();
-    }
 }
-
