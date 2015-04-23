@@ -61,7 +61,7 @@ public class MainMenuActivity extends Activity {
         DatabaseManager.init(getApplicationContext());
 
 
-        post = (Button) findViewById(R.id.bPost);
+       /* post = (Button) findViewById(R.id.bPost);
         post.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -80,9 +80,7 @@ public class MainMenuActivity extends Activity {
 
 
             }
-        });
-
-        payParkingButton = (ImageButton) findViewById(R.id.imgBtnPayment);
+        }); */
 
         payParkingButton = (ImageView) findViewById(R.id.imgBtnPayment);
 

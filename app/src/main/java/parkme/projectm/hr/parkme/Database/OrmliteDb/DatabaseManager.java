@@ -279,7 +279,7 @@ public class DatabaseManager implements SMSParkingApi, Updater{
                 .queryForFirst();
 
     }
-    public float getPrice(int idZoneWorkTime, int idPaymentMode){
+    public ZonePrice getPriceObj(int idZoneWorkTime, int idPaymentMode){
         try {
             ZonePrice price= helper.getRuntimeZonePriceDao().queryBuilder()
                     .where()
@@ -287,14 +287,14 @@ public class DatabaseManager implements SMSParkingApi, Updater{
                     .and()
                     .eq("id_payment_mode", idPaymentMode)
                     .queryForFirst();
-            return price.getPriceFloat();
+            return price;
         } catch (SQLException e) {
-            return 0;
+            return null;
         }
     }
 
     @Override
-    public float getPrice(Date date, int idPaymentMode) {
+    public ZonePrice getPrice(Date date, int idPaymentMode) {
         PaymentMode mode = helper.getRuntimePaymentModeDao().queryForId(idPaymentMode);
         ParkingZone zone = helper.getRuntimeParkingZoneDao().queryForId(mode.getIdZone());
 
@@ -303,16 +303,16 @@ public class DatabaseManager implements SMSParkingApi, Updater{
         try {
             calendar = getCalendarWithMinInterval(date, zone.getId());
         } catch (SQLException e) {
-            return 0;
+            return null;
         }
 
         ZoneWorkTime workTime;
         try {
             workTime = getWorkTime(date, calendar.getId());
         } catch (SQLException e) {
-            return 0;
+            return null;
         }
-        return getPrice(workTime.getId(), idPaymentMode);
+        return getPriceObj(workTime.getId(), idPaymentMode);
     }
 
     @Override

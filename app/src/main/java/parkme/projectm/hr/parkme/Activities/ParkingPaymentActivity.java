@@ -35,7 +35,9 @@ import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.City;
 import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.MaxDuration;
 import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.ParkingZone;
 import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.PaymentMode;
+import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.ZonePrice;
 import parkme.projectm.hr.parkme.Dialogs.ConfirmPaymentDialog;
+import parkme.projectm.hr.parkme.Helpers.PrefsHelper;
 import parkme.projectm.hr.parkme.Helpers.Rest.ApiConstants;
 import parkme.projectm.hr.parkme.Helpers.Rest.GetRestService;
 import parkme.projectm.hr.parkme.Helpers.LocationHelper.FallbackLocationTracker;
@@ -261,8 +263,8 @@ public class ParkingPaymentActivity extends Activity {
                 Log.d("Zona->", zone);
 
                 Date date = new Date();
-                float price = databaseManager.getPrice(date, paymentModeId);
-                Log.d("Cijena->", String.valueOf(price));
+                ZonePrice price = databaseManager.getPrice(date, paymentModeId);
+                Log.d("Cijena->", String.valueOf(price.getPriceFloat()));
 
                 String duration = paymentModeSpinner.getSelectedItem().toString();
                 Log.d("Trajanje->", duration);
@@ -281,7 +283,7 @@ public class ParkingPaymentActivity extends Activity {
 
                 args.putString("city", city);
                 args.putString("zone", zone);
-                args.putFloat("price", price);
+                args.putFloat("price", price.getPriceFloat());
                 args.putString("duration", duration);
                 if (maxDurationFormated.equals("00:00:00")) {
                     //TODO ne znam sta stavit ako je beskonacno trajanje
@@ -292,6 +294,12 @@ public class ParkingPaymentActivity extends Activity {
 
                 args.putInt("parkingZoneId", parkingZoneId);
                 args.putInt("paymentModeId", paymentModeId);
+
+                //Spremanje parkingZoneId-a i tonePriceId da mogu update napraviti
+                PrefsHelper prefsHelper= new PrefsHelper(getBaseContext());
+                prefsHelper.putInt("parkingZoneId", parkingZoneId);
+                prefsHelper.putInt("zonePriceId",price.getId());
+                prefsHelper.putString("priceString",String.valueOf(price.getPriceFloat()));
 
                 pay.setArguments(args);
                 pay.show(getFragmentManager(), "Plačanje");
