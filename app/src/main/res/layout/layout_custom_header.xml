@@ -20,7 +20,8 @@
             android:layout_height="wrap_content"
             android:id="@+id/imgViewLogo"
             android:src="@drawable/only_logo_round_small"
-            android:layout_weight="0.30" />
+            android:layout_weight="0.30"
+            android:layout_margin="5dp" />
 
         <!--
         <ImageView
