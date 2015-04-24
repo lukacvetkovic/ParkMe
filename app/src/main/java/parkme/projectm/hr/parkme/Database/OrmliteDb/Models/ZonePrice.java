@@ -26,6 +26,11 @@ public class ZonePrice {
 
     public ZonePrice() {
     }
+    public ZonePrice(int id,int kn, int lp) {
+        this.id=id;
+        this.priceDecimal=kn;
+        this.priceDecimal=lp;
+    }
 
     public ZonePrice(SimpleZonePrice simpleZonePrice){
         this.id = simpleZonePrice.getId();

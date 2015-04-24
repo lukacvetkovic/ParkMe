@@ -24,6 +24,10 @@ public class ParkingZone {
     public ParkingZone(){
 
     }
+    public ParkingZone(int id, String name){
+        this.id=id;
+        this.name=name;
+    }
     public ParkingZone(SimpleParkingZone simpleParkingZone){
         this.id = simpleParkingZone.getId();
         this.name = simpleParkingZone.getName();

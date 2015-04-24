@@ -2,99 +2,80 @@ package parkme.projectm.hr.parkme.Helpers.Rest;
 
 import android.os.AsyncTask;
 
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpPut;
-import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.protocol.BasicHttpContext;
-import org.apache.http.protocol.HttpContext;
-import org.json.JSONObject;
+import com.squareup.okhttp.MediaType;
+import com.squareup.okhttp.OkHttpClient;
+import com.squareup.okhttp.Request;
+import com.squareup.okhttp.RequestBody;
+import com.squareup.okhttp.Response;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
+import java.util.concurrent.ExecutionException;
 
 /**
  * Created by Cveki on 17.12.2014..
  */
-public class PutRestService extends AsyncTask<Void, Void, String>{
+public class PutRestService {
+    String url;
+    OkHttpClient client;
+    String json;
+    public static final MediaType JSON
+            = MediaType.parse("Content-Type=application/json; charset=unicode");
 
-    public String data = null;
-    public String adresaNaKojojAzuriram;
-    public JSONObject noviObjekt;
 
-
-
-
-    protected String getASCIIContentFromEntity(HttpEntity entity) throws IllegalStateException, IOException {
-        InputStream in = entity.getContent();
-        StringBuffer out = new StringBuffer();
-        int n = 1;
-        while (n > 0) {
-            byte[] b = new byte[4096];
-            n = in.read(b);
-            if (n > 0) out.append(new String(b, 0, n));
-        }
-        return out.toString();
+    public PutRestService(String url, String json) {
+        this.url = url;
+        this.json = json;
+        this.client = new OkHttpClient();
     }
 
-    @Override
-    protected String doInBackground(Void... params) {
-        StringEntity input = null;
-        HttpClient httpClient = new DefaultHttpClient();
-        HttpContext localContext = new BasicHttpContext();
-        HttpPut putRequest = new HttpPut(adresaNaKojojAzuriram);
-        putRequest.addHeader("Content-Type", "application/json");
-        putRequest.addHeader("Accept", "application/json");
-        try{
-          input =new StringEntity(noviObjekt.toString());
-        }
-        catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
+    public String execute() throws ExecutionException, InterruptedException {
+        PutWorker putWorker = new PutWorker();
+        return putWorker.execute().get();
 
-        }
-        putRequest.setEntity(input);
-        String text = null;
-        try {
-            HttpResponse response = httpClient.execute(putRequest, localContext);
-            HttpEntity entity = response.getEntity();
-            text = getASCIIContentFromEntity(entity);
-        } catch (Exception e) {
-            return e.getLocalizedMessage();
-        }
-        return text;
     }
 
-    protected void onPostExecute(String results) {
-        if (results != null) {
-            data = results;
+    private class PutWorker extends AsyncTask<Void, Void, String> {
+        @Override
+        protected String doInBackground(Void... params) {
+            RequestBody body = RequestBody.create(JSON, json);
+            Request request = new Request.Builder()
+                    .url(url)
+                    .method("PUT",body)
+                    .addHeader("Content-Type","application/json")
+                    .addHeader("charset","unicode")
+                    .build();
+            Response response = null;
+            try {
+                response = client.newCall(request).execute();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            if (response != null) {
+                try {
+                    return response.body().string();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            return null;
 
         }
-
-
-
     }
 
-
-    public String getData() {
-        return data;
+    public String getUrl() {
+        return url;
     }
 
-    public JSONObject getNoviObjekt() {
-        return noviObjekt;
+    public void setUrl(String url) {
+        this.url = url;
     }
 
-    public void setNoviObjekt(JSONObject noviObjekt) {
-        this.noviObjekt = noviObjekt;
+    public String getJson() {
+        return json;
     }
 
-    public String getAdresaNaKojojAzuriram() {
-        return adresaNaKojojAzuriram;
-    }
-
-    public void setAdresaNaKojojAzuriram(String adresaNaKojojAzuriram) {
-        this.adresaNaKojojAzuriram = adresaNaKojojAzuriram;
+    public void setJson(String json) {
+        this.json = json;
     }
 }

@@ -13,6 +13,9 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
+import com.google.android.gms.maps.model.Marker;
+import com.google.gson.Gson;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -23,7 +26,11 @@ import parkme.projectm.hr.parkme.Database.Updater.UpdateManager;
 import parkme.projectm.hr.parkme.Database.Updater.UrlUpdateSource;
 import parkme.projectm.hr.parkme.Dialogs.AddCarDialog;
 import parkme.projectm.hr.parkme.Helpers.PrefsHelper;
+import parkme.projectm.hr.parkme.Helpers.Rest.DeleteRestService;
 import parkme.projectm.hr.parkme.Helpers.Rest.GetRestService;
+import parkme.projectm.hr.parkme.Helpers.Rest.PostRestService;
+import parkme.projectm.hr.parkme.Helpers.Rest.PutRestService;
+import parkme.projectm.hr.parkme.PomocPOST.marker;
 import parkme.projectm.hr.parkme.R;
 import parkme.projectm.hr.parkme.Receivers.IncomingSms;
 
@@ -45,6 +52,7 @@ public class MainMenuActivity extends Activity {
     private PrefsHelper prefsHelper;
 
     private Button update;
+    private Button post;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +60,30 @@ public class MainMenuActivity extends Activity {
         setContentView(R.layout.activity_main_menu);
         DatabaseManager.init(getApplicationContext());
 
+
+       /* post = (Button) findViewById(R.id.bPost);
+        post.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                marker m = new marker(1, 1.09, 1.04568, 6);
+                Gson g = new Gson();
+                String json = g.toJson(m);
+                DeleteRestService postRestService = new DeleteRestService("https://lumipex.me/ParkMe/api/data/marker/49.json", json);
+                try {
+                    String a = postRestService.execute();
+                    Log.d("RESP-->", a);
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+
+            }
+        }); */
+
         payParkingButton = (ImageView) findViewById(R.id.imgBtnPayment);
+
         //Goes to PaymentMenuActivity
         payParkingButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -70,7 +101,7 @@ public class MainMenuActivity extends Activity {
             @Override
             public void onClick(View v) {
 
-                Thread thread= new Thread( new Runnable() {
+                Thread thread = new Thread(new Runnable() {
                     public void run() {
                         try {
                             //EXTRA "update" svega sa neta
@@ -86,7 +117,6 @@ public class MainMenuActivity extends Activity {
                             String formatted = format1.format(cal.getTime());
 
 
-
                             String lastUpdate = prefsHelper.getString(PrefsHelper.LastUpdate, "NULL");
 
                             Log.d(lastUpdate, "---> last update");
@@ -99,7 +129,7 @@ public class MainMenuActivity extends Activity {
 
                             try {
                                 um.updateAll(DatabaseManager.dateFormatter.parse(lastUpdate));
-                                Log.d("Update"," done");
+                                Log.d("Update", " done");
                             } catch (Exception e) {
                                 updated = false;
                             }
@@ -108,8 +138,8 @@ public class MainMenuActivity extends Activity {
                                 Log.d("LAST UPDATE -->", " " + formatted);
                             }
 
+                        } catch (Exception e) {
                         }
-                        catch(Exception e){}
 
                     }
                 });

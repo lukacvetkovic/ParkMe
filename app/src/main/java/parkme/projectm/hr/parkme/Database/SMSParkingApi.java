@@ -7,6 +7,7 @@ import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.City;
 import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.MaxDuration;
 import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.ParkingZone;
 import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.PaymentMode;
+import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.ZonePrice;
 
 /**
  * Created by Cveki on 29.3.2015..
@@ -40,9 +41,9 @@ public interface SMSParkingApi {
      * Calculates price for payment mode.
      * @param date Date and time.
      * @param idPaymentMode Payment mode id.
-     * @return Price for selected payment mode at single moment.
+     * @return Price object for selected payment mode at single moment.
      */
-    public float getPrice(Date date, int idPaymentMode);
+    public ZonePrice getPrice(Date date, int idPaymentMode);
 
     /**
      * Returns max parking duration for selected date in zone.
