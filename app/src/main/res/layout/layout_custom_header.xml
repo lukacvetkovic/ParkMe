@@ -1,54 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="match_parent"
+    android:layout_width="fill_parent" android:layout_height="80dp"
     android:background="@drawable/header">
 
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_gravity="center_vertical">
+    <ImageView
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:id="@+id/imgViewLogo"
+        android:layout_alignParentTop="false"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="15dp"
+        android:background="@drawable/only_logo_round_small" />
 
-        <FrameLayout
-            android:layout_width="0dp"
-            android:layout_height="fill_parent"
-            android:layout_weight="0.04"></FrameLayout>
-
-        <parkme.projectm.hr.parkme.CustomViewModels.ScaleImageView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:id="@+id/imgViewLogo"
-            android:src="@drawable/only_logo_round_small"
-            android:layout_weight="0.30"
-            android:layout_margin="5dp" />
-
-        <!--
-        <ImageView
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:id="@+id/imgViewLogo"
-            android:layout_alignParentTop="false"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="15dp"
-            android:background="@drawable/only_logo_round_small" />
-        -->
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Parky"
-            android:id="@+id/txtParkyTitle"
-            android:textColor="#ffffffff"
-            android:textStyle="bold"
-            android:gravity="center_vertical|start"
-            android:paddingLeft="10dp"
-            android:layout_weight="0.6"
-            android:layout_gravity="center_vertical"
-            android:textSize="@dimen/parky_title_text_size" />
-
-    </LinearLayout>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Parky"
+        android:id="@+id/txtParkyTitle"
+        android:layout_toRightOf="@+id/imgViewLogo"
+        android:layout_toEndOf="@+id/imgViewLogo"
+        android:textColor="#ffffffff"
+        android:textStyle="bold"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="left|center_vertical"
+        android:layout_marginLeft="86dp"
+        android:textSize="35sp" />
 </FrameLayout>

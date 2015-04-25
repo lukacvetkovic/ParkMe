@@ -12,7 +12,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:background="@drawable/header"
-            android:layout_weight="0.15"
+            android:layout_weight="0.13"
             android:id="@+id/HeaderLayout">
 
             <parkme.projectm.hr.parkme.CustomViewModels.ScaleImageView
@@ -22,7 +22,9 @@
                 android:src="@drawable/only_logo_round_small"
                 android:layout_weight="0.30"
                 android:layout_margin="5dp"
-                android:paddingLeft="15dp" />
+                android:paddingLeft="15dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp" />
 
             <TextView
                 android:layout_width="0dp"
@@ -36,22 +38,10 @@
                 android:layout_weight="0.6"
                 android:layout_gravity="center_vertical"
                 android:textSize="@dimen/parky_title_text_size"
-                android:paddingLeft="15dp"
-                android:paddingRight="50dp"
-                android:paddingBottom="20dp"
-                android:paddingTop="20dp" />
+                android:paddingLeft="15dp" />
 
         </parkme.projectm.hr.parkme.CustomViewModels.CustomHeaderLayout>
 
-
-        <view
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            class="parkme.projectm.hr.parkme.CustomViewModels.HeaderView"
-            android:id="@+id/view"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:layout_weight="0.15" />
 
         <LinearLayout
             android:orientation="vertical"
@@ -59,14 +49,21 @@
             android:layout_height="0dp"
             android:layout_weight="0.8">
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:id="@+id/spacerTop"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="0.02" />
+
             <parkme.projectm.hr.parkme.CustomViewModels.ScaleImageView
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:id="@+id/imgBtnFindParking"
                 android:layout_gravity="center_horizontal"
                 android:src="@drawable/find_parking_small"
-                android:layout_weight="1"
-                android:paddingTop="5dp" />
+                android:layout_weight="1" />
 
 
             <parkme.projectm.hr.parkme.CustomViewModels.ScaleImageView
@@ -75,31 +72,15 @@
                 android:id="@+id/imgBtnPayment"
                 android:layout_gravity="center_horizontal"
                 android:src="@drawable/placanje_small"
-                android:layout_weight="1"
-                android:paddingBottom="5dp" />
-            <!--
-            <ImageButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/imgBtnFindParking"
-                android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="20dp"
-                android:background="@drawable/find_parking_small"
-                android:layout_gravity="center_horizontal"
-                android:layout_weight="1"
-                android:adjustViewBounds="false" />
-                -->
-
-            <!--
-            <ImageButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/imgBtnPayment"
-                android:layout_gravity="center_horizontal"
-                android:background="@drawable/placanje_small"
                 android:layout_weight="1" />
-                -->
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:id="@+id/spacerBotom"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="0.05" />
 
         </LinearLayout>
 

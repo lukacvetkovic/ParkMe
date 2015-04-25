@@ -9,14 +9,39 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <view
-            android:layout_width="wrap_content"
+        <parkme.projectm.hr.parkme.CustomViewModels.CustomHeaderLayout
+            android:layout_width="match_parent"
             android:layout_height="0dp"
-            class="parkme.projectm.hr.parkme.CustomViewModels.HeaderView"
-            android:id="@+id/view"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:layout_weight="0.15" />
+            android:background="@drawable/header"
+            android:layout_weight="0.13"
+            android:id="@+id/HeaderLayout">
+
+            <parkme.projectm.hr.parkme.CustomViewModels.ScaleImageView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/imgViewLogo"
+                android:src="@drawable/only_logo_round_small"
+                android:layout_weight="0.30"
+                android:layout_margin="5dp"
+                android:paddingLeft="15dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Parky"
+                android:id="@+id/txtParkyTitle"
+                android:textColor="#ffffffff"
+                android:textStyle="bold"
+                android:gravity="center_vertical|start"
+                android:layout_weight="0.6"
+                android:layout_gravity="center_vertical"
+                android:textSize="@dimen/parky_title_text_size"
+                android:paddingLeft="15dp" />
+
+        </parkme.projectm.hr.parkme.CustomViewModels.CustomHeaderLayout>
 
         <android.support.v4.view.ViewPager
             xmlns:android="http://schemas.android.com/apk/res/android"
