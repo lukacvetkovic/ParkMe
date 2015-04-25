@@ -1,4 +1,4 @@
-package parkme.projectm.hr.parkme.PomocPOST;
+package parkme.projectm.hr.parkme.Helpers.Rest.PomocPOST;
 
 /**
  * Created by Luka on 22.4.2015..

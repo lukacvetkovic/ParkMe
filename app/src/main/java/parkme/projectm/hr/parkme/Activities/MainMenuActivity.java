@@ -1,38 +1,24 @@
 package parkme.projectm.hr.parkme.Activities;
 
 import android.app.Activity;
-import android.content.ComponentName;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
-import com.google.android.gms.maps.model.Marker;
-import com.google.gson.Gson;
-
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.concurrent.ExecutionException;
 
 import parkme.projectm.hr.parkme.Database.OrmliteDb.DatabaseManager;
 import parkme.projectm.hr.parkme.Database.Updater.UpdateManager;
 import parkme.projectm.hr.parkme.Database.Updater.UrlUpdateSource;
 import parkme.projectm.hr.parkme.Dialogs.AddCarDialog;
 import parkme.projectm.hr.parkme.Helpers.PrefsHelper;
-import parkme.projectm.hr.parkme.Helpers.Rest.DeleteRestService;
 import parkme.projectm.hr.parkme.Helpers.Rest.GetRestService;
-import parkme.projectm.hr.parkme.Helpers.Rest.PostRestService;
-import parkme.projectm.hr.parkme.Helpers.Rest.PutRestService;
-import parkme.projectm.hr.parkme.PomocPOST.marker;
 import parkme.projectm.hr.parkme.R;
-import parkme.projectm.hr.parkme.Receivers.IncomingSms;
 
 /**
  * Created by Cveki on 11.2.2015..
