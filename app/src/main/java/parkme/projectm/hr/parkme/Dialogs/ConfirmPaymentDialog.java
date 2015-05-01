@@ -45,6 +45,7 @@ public class ConfirmPaymentDialog extends DialogFragment {
     String parkingZoneNumber;
     int parkingZoneId;
     int paymentModeId;
+    boolean favs;
 
     DatabaseManager databaseManager;
 
@@ -66,6 +67,7 @@ public class ConfirmPaymentDialog extends DialogFragment {
         databaseManager= DatabaseManager.getInstance();
         prefsHelper= new PrefsHelper(getActivity());
 
+
         tvTime=(TextView)inflator.findViewById(R.id.tvTime);
         tvCity=(TextView)inflator.findViewById(R.id.tvCity);
         tvParkingZone=(TextView)inflator.findViewById(R.id.tvParkingZone);
@@ -84,6 +86,7 @@ public class ConfirmPaymentDialog extends DialogFragment {
         maxDuarton=getArguments().getString("maxDuration");
         parkingZoneId=getArguments().getInt("parkingZoneId");
         paymentModeId=getArguments().getInt("paymentModeId");
+        favs=getArguments().getBoolean("favs");
 
         Calendar cal = Calendar.getInstance();
         cal.add(Calendar.DATE, 1);
@@ -126,6 +129,10 @@ public class ConfirmPaymentDialog extends DialogFragment {
                 toast.show();
 
                 getActivity().finish();
+
+                if(favs){
+                    //TODO upisi u tablicu u bazu favs
+                }
 
             }
         })
