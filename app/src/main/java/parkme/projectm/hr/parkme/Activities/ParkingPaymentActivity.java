@@ -300,6 +300,7 @@ public class ParkingPaymentActivity extends Activity {
                 PrefsHelper prefsHelper= new PrefsHelper(getBaseContext());
                 prefsHelper.putInt("parkingZoneId", parkingZoneId);
                 prefsHelper.putInt("zonePriceId",price.getId());
+                prefsHelper.putInt("citiyId",mapIdCity.get(city));
                 prefsHelper.putString("priceString",String.valueOf(price.getPriceFloat()));
 
                 pay.setArguments(args);

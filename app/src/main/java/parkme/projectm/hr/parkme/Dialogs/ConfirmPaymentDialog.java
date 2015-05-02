@@ -6,6 +6,7 @@ import android.app.DialogFragment;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
@@ -17,6 +18,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 import parkme.projectm.hr.parkme.Database.OrmliteDb.DatabaseManager;
+import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.FavoritePayment;
 import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.ParkingZone;
 import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.PaymentMode;
 import parkme.projectm.hr.parkme.Helpers.PrefsHelper;
@@ -45,6 +47,7 @@ public class ConfirmPaymentDialog extends DialogFragment {
     String parkingZoneNumber;
     int parkingZoneId;
     int paymentModeId;
+    int citiyId;
     boolean favs;
 
     DatabaseManager databaseManager;
@@ -86,6 +89,7 @@ public class ConfirmPaymentDialog extends DialogFragment {
         maxDuarton=getArguments().getString("maxDuration");
         parkingZoneId=getArguments().getInt("parkingZoneId");
         paymentModeId=getArguments().getInt("paymentModeId");
+        citiyId=getArguments().getInt("citiyId");
         favs=getArguments().getBoolean("favs");
 
         Calendar cal = Calendar.getInstance();
@@ -131,7 +135,10 @@ public class ConfirmPaymentDialog extends DialogFragment {
                 getActivity().finish();
 
                 if(favs){
-                    //TODO upisi u tablicu u bazu favs
+                    DatabaseManager.init(context);
+                    DatabaseManager databaseManager = DatabaseManager.getInstance();
+                    databaseManager.addFavoritePayment(new FavoritePayment(citiyId,parkingZoneId,paymentModeId));
+                    Log.d("UPISANO U BAZU FAVS : ", "CityId :"+String.valueOf(citiyId)+" , "+" parkingZoneId :"+String.valueOf(parkingZoneId)+" paymentModeId :"+String.valueOf(paymentModeId));
                 }
 
             }

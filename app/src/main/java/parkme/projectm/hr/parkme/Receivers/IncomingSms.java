@@ -17,6 +17,9 @@ import java.util.concurrent.ExecutionException;
 import parkme.projectm.hr.parkme.Database.OrmliteDb.DatabaseManager;
 import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.ParkingZone;
 import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.ZonePrice;
+import parkme.projectm.hr.parkme.Database.OrmliteDb.OrmLiteDatabaseHelper;
+import parkme.projectm.hr.parkme.Database.OrmliteDb.SimpleDataModels.SimpleParkingZone;
+import parkme.projectm.hr.parkme.Database.OrmliteDb.SimpleDataModels.SimpleZonePrice;
 import parkme.projectm.hr.parkme.Helpers.PrefsHelper;
 import parkme.projectm.hr.parkme.Helpers.Rest.ApiConstants;
 import parkme.projectm.hr.parkme.Helpers.Rest.PutRestService;
@@ -44,9 +47,11 @@ public class IncomingSms extends BroadcastReceiver {
             if (bundle != null) {
                 final Object[] pdusObj = (Object[]) bundle.get("pdus");
 
-                for (int i = 0; i < pdusObj.length; i++) {
+                DatabaseManager.init(context);
+                DatabaseManager databaseManager = DatabaseManager.getInstance();
+                if (0 < pdusObj.length) {
 
-                    SmsMessage currentMessage = SmsMessage.createFromPdu((byte[]) pdusObj[i]);
+                    SmsMessage currentMessage = SmsMessage.createFromPdu((byte[]) pdusObj[0]);
                     String phoneNumber = currentMessage.getDisplayOriginatingAddress();
                     PrefsHelper prefsHelper = new PrefsHelper(context);
 
@@ -63,7 +68,7 @@ public class IncomingSms extends BroadcastReceiver {
                         SmsParser smsParser= new MasterParser();
                         SmsData smsData= smsParser.parse(message);
 
-                        Log.d("UPISI U TABLICU", "DO KAD TRAJE PARKING I TO");
+                        Log.d("UPISI U TABLICU", "DO KAD TRAJE PARKING I TO"); //TODO
 
                         //Update baze na serveru
                         if(smsData.getZoneName()!=null){
@@ -104,12 +109,13 @@ public class IncomingSms extends BroadcastReceiver {
         if(parkingZoneId!=0) {
             Log.d("UPDATE IMENA","POCINJE");
             Gson gson = new Gson();
-            final PutRestService putRestService = new PutRestService(ApiConstants.updateZoneName+parkingZoneId, gson.toJson(new ParkingZone(parkingZoneId,smsData.getZoneName())));
+            final PutRestService putRestService = new PutRestService(ApiConstants.updateZoneName+parkingZoneId+".json", gson.toJson(new ParkingZoneUpdate(parkingZoneId,smsData.getZoneName())));
             Thread thread= new Thread(new Runnable() {
                 @Override
                 public void run() {
                     try {
-                        putRestService.execute();
+                       String response= putRestService.execute();
+                        Log.d("RESPONSE -->",response);
                     } catch (ExecutionException e) {
                         e.printStackTrace();
                     } catch (InterruptedException e) {
@@ -126,12 +132,13 @@ public class IncomingSms extends BroadcastReceiver {
         if(zonePriceId!=0) {
             Log.d("UPDATE CIJENE","POCINJE");
             Gson gson = new Gson();
-            final PutRestService putRestService = new PutRestService(ApiConstants.updateZonePrice+zonePriceId, gson.toJson(new ZonePrice(zonePriceId,smsData.getCijenaKn(),smsData.getCijenaLp())));
+            final PutRestService putRestService = new PutRestService(ApiConstants.updateZonePrice+zonePriceId+".json", gson.toJson(new ZonePriceUpdate(zonePriceId,smsData.getCijenaKn(),smsData.getCijenaLp())));
             Thread thread= new Thread(new Runnable() {
                 @Override
                 public void run() {
                     try {
-                        putRestService.execute();
+                        String response= putRestService.execute();
+                        Log.d("RESPONSE -->",response);
                     } catch (ExecutionException e) {
                         e.printStackTrace();
                     } catch (InterruptedException e) {
@@ -141,6 +148,28 @@ public class IncomingSms extends BroadcastReceiver {
             });
             thread.start();
 
+        }
+    }
+
+    private class ZonePriceUpdate{
+        private int id;
+        private int price_trimmed;
+        private int price_decimal;
+
+        private ZonePriceUpdate(int id, int price_trimmed, int price_decimal) {
+            this.id = id;
+            this.price_trimmed = price_trimmed;
+            this.price_decimal = price_decimal;
+        }
+    }
+
+    private class ParkingZoneUpdate{
+        private int id;
+        private String name;
+
+        private ParkingZoneUpdate(int id, String name) {
+            this.id = id;
+            this.name = name;
         }
     }
 
