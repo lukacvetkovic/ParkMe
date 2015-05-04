@@ -51,6 +51,8 @@ public class FragmentMenuActivity extends FragmentActivity {
 
     private int pageToTurnTo = 1;
 
+    public static String INTENT_FROM_SERVICE_NOTIFICATION = "intent_from_service_notification";
+
     /**
      * The {@link android.support.v4.view.ViewPager} that will display the object collection.
      */
@@ -64,6 +66,12 @@ public class FragmentMenuActivity extends FragmentActivity {
         prefsHelper = new PrefsHelper(this.context);
 
         mViewPager = (ViewPager) findViewById(R.id.pager);
+
+        if(getIntent() != null){
+            if(getIntent().getBooleanExtra(INTENT_FROM_SERVICE_NOTIFICATION, false) == true){
+                this.pageToTurnTo = 3;
+            }
+        }
 
     }
 
