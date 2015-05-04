@@ -30,8 +30,7 @@ public class FavoritePayment {
     public FavoritePayment() {
     }
 
-    public FavoritePayment(int favoritePaymentId, int gradId, int zoneID, int paymentMethodId) {
-        this.favoritePaymentId = favoritePaymentId;
+    public FavoritePayment(int gradId, int zoneID, int paymentMethodId) {
         this.gradId = gradId;
         this.zoneID = zoneID;
         this.paymentMethodId = paymentMethodId;

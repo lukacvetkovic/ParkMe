@@ -294,11 +294,13 @@ public class ParkingPaymentActivity extends Activity {
 
                 args.putInt("parkingZoneId", parkingZoneId);
                 args.putInt("paymentModeId", paymentModeId);
+                args.putBoolean("favs",favs.isChecked());
 
                 //Spremanje parkingZoneId-a i tonePriceId da mogu update napraviti
                 PrefsHelper prefsHelper= new PrefsHelper(getBaseContext());
                 prefsHelper.putInt("parkingZoneId", parkingZoneId);
                 prefsHelper.putInt("zonePriceId",price.getId());
+                prefsHelper.putInt("citiyId",mapIdCity.get(city));
                 prefsHelper.putString("priceString",String.valueOf(price.getPriceFloat()));
 
                 pay.setArguments(args);

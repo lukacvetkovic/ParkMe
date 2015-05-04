@@ -3,9 +3,12 @@ package parkme.projectm.hr.parkme.Dialogs;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
@@ -17,11 +20,13 @@ import java.util.Calendar;
 import java.util.Date;
 
 import parkme.projectm.hr.parkme.Database.OrmliteDb.DatabaseManager;
+import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.FavoritePayment;
 import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.ParkingZone;
 import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.PaymentMode;
 import parkme.projectm.hr.parkme.Helpers.PrefsHelper;
 import parkme.projectm.hr.parkme.Helpers.SMSHelper;
 import parkme.projectm.hr.parkme.R;
+import parkme.projectm.hr.parkme.Receivers.IncomingSms;
 
 /**
  * Created by Cveki on 29.3.2015..
@@ -45,6 +50,8 @@ public class ConfirmPaymentDialog extends DialogFragment {
     String parkingZoneNumber;
     int parkingZoneId;
     int paymentModeId;
+    int citiyId;
+    boolean favs;
 
     DatabaseManager databaseManager;
 
@@ -66,6 +73,7 @@ public class ConfirmPaymentDialog extends DialogFragment {
         databaseManager= DatabaseManager.getInstance();
         prefsHelper= new PrefsHelper(getActivity());
 
+
         tvTime=(TextView)inflator.findViewById(R.id.tvTime);
         tvCity=(TextView)inflator.findViewById(R.id.tvCity);
         tvParkingZone=(TextView)inflator.findViewById(R.id.tvParkingZone);
@@ -84,6 +92,8 @@ public class ConfirmPaymentDialog extends DialogFragment {
         maxDuarton=getArguments().getString("maxDuration");
         parkingZoneId=getArguments().getInt("parkingZoneId");
         paymentModeId=getArguments().getInt("paymentModeId");
+        citiyId=getArguments().getInt("citiyId");
+        favs=getArguments().getBoolean("favs");
 
         Calendar cal = Calendar.getInstance();
         cal.add(Calendar.DATE, 1);
@@ -127,6 +137,13 @@ public class ConfirmPaymentDialog extends DialogFragment {
 
                 getActivity().finish();
 
+                if(favs){
+                    DatabaseManager.init(context);
+                    DatabaseManager databaseManager = DatabaseManager.getInstance();
+                    databaseManager.addFavoritePayment(new FavoritePayment(citiyId,parkingZoneId,paymentModeId));
+                    Log.d("UPISANO U BAZU FAVS : ", "CityId :"+String.valueOf(citiyId)+" , "+" parkingZoneId :"+String.valueOf(parkingZoneId)+" paymentModeId :"+String.valueOf(paymentModeId));
+                }
+
             }
         })
                 .setNegativeButton("Odustani", new DialogInterface.OnClickListener() {
@@ -136,5 +153,16 @@ public class ConfirmPaymentDialog extends DialogFragment {
                 });
 
         return builder.create();
+    }
+
+    public void enableReciver(){
+        Context context=getActivity().getApplicationContext();
+        ComponentName receiver = new ComponentName(context, IncomingSms.class);
+
+        PackageManager pm = context.getPackageManager();
+
+        pm.setComponentEnabledSetting(receiver,
+                PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
+                PackageManager.DONT_KILL_APP);
     }
 }
