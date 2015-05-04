@@ -1,8 +1,10 @@
 package parkme.projectm.hr.parkme.Receivers;
 
 import android.content.BroadcastReceiver;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.telephony.SmsManager;
@@ -95,6 +97,8 @@ public class IncomingSms extends BroadcastReceiver {
                     }
 
                 } // end for loop
+
+                disableReciver(context);
             } // bundle is null
 
         } catch (Exception e) {
@@ -171,6 +175,16 @@ public class IncomingSms extends BroadcastReceiver {
             this.id = id;
             this.name = name;
         }
+    }
+
+    public void disableReciver(Context context){
+        ComponentName receiver = new ComponentName(context, IncomingSms.class);
+
+        PackageManager pm = context.getPackageManager();
+
+        pm.setComponentEnabledSetting(receiver,
+                PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
+                PackageManager.DONT_KILL_APP);
     }
 
 }
