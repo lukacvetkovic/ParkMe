@@ -17,7 +17,7 @@ import java.util.List;
 import parkme.projectm.hr.parkme.Database.OrmliteDb.DatabaseManager;
 import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.FavouriteCar;
 import parkme.projectm.hr.parkme.Dialogs.AddCarDialog;
-import parkme.projectm.hr.parkme.Dialogs.PayParkingDialogAAA;
+import parkme.projectm.hr.parkme.Dialogs.PayParkingDialog;
 import parkme.projectm.hr.parkme.Dialogs.UpdateOrRemoveCarDialog;
 import parkme.projectm.hr.parkme.Fragments.ChooseCarFragment;
 import parkme.projectm.hr.parkme.Fragments.ChooseCarFragmentCallback;
@@ -44,7 +44,7 @@ public class FragmentMenuActivity extends FragmentActivity {
     private RelativeLayout rootRelativeView;
     private AddCarDialog addCarDialog;
     private UpdateOrRemoveCarDialog updateorRemoveCarDialog;
-    private PayParkingDialogAAA payParkingDialogAAA;
+    private PayParkingDialog payParkingDialog;
     private Context context;
 
     private PrefsHelper prefsHelper;
@@ -176,8 +176,8 @@ public class FragmentMenuActivity extends FragmentActivity {
                     @Override
                     public void displayPayParkingDialog() {     // TODO
                         rootRelativeView = (RelativeLayout) findViewById(R.id.rootRelativeView);
-                        payParkingDialogAAA = new PayParkingDialogAAA(context);
-                        payParkingDialogAAA.setPayParkingDialogCallback(new PayParkingDialogAAA.PayParkingDialogCallback() {
+                        payParkingDialog = new PayParkingDialog(context);
+                        payParkingDialog.setPayParkingDialogCallback(new PayParkingDialog.PayParkingDialogCallback() {
                             @Override
                             public void dismissDialog() {
 
@@ -191,7 +191,7 @@ public class FragmentMenuActivity extends FragmentActivity {
                         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT);
                         params.addRule(RelativeLayout.ALIGN_PARENT_LEFT, RelativeLayout.TRUE);
                         params.addRule(RelativeLayout.ALIGN_PARENT_TOP, RelativeLayout.TRUE);
-                        rootRelativeView.addView(payParkingDialogAAA, params);
+                        rootRelativeView.addView(payParkingDialog, params);
                     }
                 });
                 return fragment;
