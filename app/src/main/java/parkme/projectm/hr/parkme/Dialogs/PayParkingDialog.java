@@ -133,8 +133,6 @@ public class PayParkingDialog extends FrameLayout{
         favs = (CheckBox) findViewById(R.id.cbFavorites);
         carPosition=(CheckBox)findViewById(R.id.cbCurrentLocation);
 
-        carPosition.setVisibility(INVISIBLE);
-
         DatabaseManager.init(context);
         databaseManager = DatabaseManager.getInstance();
 
@@ -341,6 +339,12 @@ public class PayParkingDialog extends FrameLayout{
                     confirmPaymentDialog.initWithData(city, zone, price.getPriceFloat(), duration, maxParkingDuration,
                             parkingZoneId, paymentModeId, mapIdCity.get(city), favs.isChecked(),carPosition.isChecked(),0,0);
 
+                }
+
+                if(carPosition.isChecked()){
+                    PrefsHelper prefsHelper= new PrefsHelper(context);
+                    prefsHelper.putString(PrefsHelper.carLat,String.valueOf(myLocation.getLatitude()));
+                    prefsHelper.putString(PrefsHelper.carLng,String.valueOf(myLocation.getLongitude()));
                 }
 
                 confirmPaymentDialog.setConfirmPaymentDialogCallback(new ConfirmPaymentDialog.ConfirmPaymentDialogCallback() {
