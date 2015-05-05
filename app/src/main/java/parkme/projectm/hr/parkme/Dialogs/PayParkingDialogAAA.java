@@ -50,7 +50,7 @@ import parkme.projectm.hr.parkme.R;
 /**
  * Created by Mihael on 5.5.2015..
  */
-public class PayParkingDialog extends FrameLayout{
+public class PayParkingDialogAAA extends FrameLayout{
 
     private final String TAG = "PayParkingDialog";
     private Context context;
@@ -98,17 +98,17 @@ public class PayParkingDialog extends FrameLayout{
         void showConfirmDialog(DialogFragment dialog);
     }
 
-    public PayParkingDialog(Context context) {
+    public PayParkingDialogAAA(Context context) {
         super(context);
         init(context);
     }
 
-    public PayParkingDialog(Context context, AttributeSet attrs) {
+    public PayParkingDialogAAA(Context context, AttributeSet attrs) {
         super(context, attrs);
         init(context);
     }
 
-    public PayParkingDialog(Context context, AttributeSet attrs, int defStyleAttr) {
+    public PayParkingDialogAAA(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init(context);
     }
