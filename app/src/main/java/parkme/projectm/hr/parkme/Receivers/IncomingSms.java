@@ -145,7 +145,7 @@ public class IncomingSms extends BroadcastReceiver {
         String[]pom=trajanje.split(":");
         int trajanjeMin=Integer.valueOf(pom[0])*60+Integer.valueOf(pom[1]);
         ParkingServiceHelper serviceHelper= new ParkingServiceHelper();
-        serviceHelper.startService(context,trajanjeMin);
+        serviceHelper.startService(context,trajanjeMin); //TODO
         //serviceHelper.setActiveParkingTime(trajanjeMin,context);
         Log.d("Upisivanje gotovo","Servisa");
     }
