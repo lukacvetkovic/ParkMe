@@ -97,6 +97,7 @@ public class PayParkingDialog extends FrameLayout{
     public interface PayParkingDialogCallback {
         void dismissDialog();
         void showConfirmDialog(ConfirmPaymentDialog confirmPaymentDialog);
+        void dismissConfirmDialog(ConfirmPaymentDialog confirmPaymentDialog);
     }
 
     public PayParkingDialog(Context context) {
@@ -285,7 +286,7 @@ public class PayParkingDialog extends FrameLayout{
             @Override
             public void onClick(View v) {
                 int parkingZoneId = mapIdZone.get(zoneSpinner.getSelectedItem().toString());
-                int paymentModeId = mapIdOption.get(paymentModeSpinner.getSelectedItem().toString());
+                final int paymentModeId = mapIdOption.get(paymentModeSpinner.getSelectedItem().toString());
 
                 String city = citySpinner.getSelectedItem().toString();
                 Log.d("Grad->", city);
@@ -307,38 +308,27 @@ public class PayParkingDialog extends FrameLayout{
                 Log.d("Maksimalno trajanje->", String.valueOf(maxDuration.getMaxDuration().getTime()));
                 Log.d("Maksimalno trajanje->", maxDurationFormated);
 
+                confirmPaymentDialog = new ConfirmPaymentDialog(context);
 
-                DialogFragment pay = new ConfirmPaymentDialog_old();
-                // Supply num input as an argument.
-                Bundle args = new Bundle();
-
-                args.putString("city", city);
-                args.putString("zone", zone);
-                args.putFloat("price", price.getPriceFloat());
-                args.putString("duration", duration);
+                String maxParkingDuration;
                 if (maxDurationFormated.equals("00:00:00")) {
-                    args.putString("maxDuration", "Neograniceno");
+                    maxParkingDuration = "Neograniceno";
                 } else {
-                    args.putString("maxDuration", maxDurationFormated);
+                    maxParkingDuration = maxDurationFormated;
                 }
 
-                args.putInt("parkingZoneId", parkingZoneId);
-                args.putInt("paymentModeId", paymentModeId);
-                args.putBoolean("favs", favs.isChecked());
+                confirmPaymentDialog.initWithData(city, zone, price.getPriceFloat(), duration, maxParkingDuration,
+                        parkingZoneId, paymentModeId, mapIdCity.get(city), favs.isChecked());
 
-                //Spremanje parkingZoneId-a i tonePriceId da mogu update napraviti
-                PrefsHelper prefsHelper = new PrefsHelper(context);
-                prefsHelper.putInt("parkingZoneId", parkingZoneId);
-                prefsHelper.putInt("zonePriceId", price.getId());
-                prefsHelper.putInt("citiyId", mapIdCity.get(city));
-                prefsHelper.putString("priceString", String.valueOf(price.getPriceFloat()));
-
-                pay.setArguments(args);
-
-                confirmPaymentDialog = new ConfirmPaymentDialog(context);
                 confirmPaymentDialog.setConfirmPaymentDialogCallback(new ConfirmPaymentDialog.ConfirmPaymentDialogCallback() {
                     @Override
                     public void dismissDialog() {
+                        payParkingDialogCallback.dismissConfirmDialog(confirmPaymentDialog);
+                    }
+
+                    @Override
+                    public void dismissBothDialogs() {
+                        payParkingDialogCallback.dismissConfirmDialog(confirmPaymentDialog);
                         payParkingDialogCallback.dismissDialog();
                     }
                 });

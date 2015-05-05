@@ -86,6 +86,11 @@ public class PayParkingFragment extends Fragment {
                         public void showConfirmDialog(ConfirmPaymentDialog confirmPaymentDialog) {
                             payParkingFragmentCallback.displayConfirmPaymentDialog(confirmPaymentDialog);
                         }
+
+                        @Override
+                        public void dismissConfirmDialog(ConfirmPaymentDialog confirmPaymentDialog) {
+                            payParkingFragmentCallback.dismissConfirmPaymentDialog(confirmPaymentDialog);
+                        }
                     });
                     payParkingFragmentCallback.displayPayParkingDialog(payParkingDialog);
                 }
