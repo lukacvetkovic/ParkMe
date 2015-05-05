@@ -65,7 +65,7 @@ public class ConfirmPaymentDialog extends DialogFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         // Get the layout inflater
         LayoutInflater linf = LayoutInflater.from(getActivity());
-        final View inflator = linf.inflate(R.layout.dialog_confirm_payment, null);
+        final View inflator = linf.inflate(R.layout.dialog_confirm_payment_new, null);
 
         builder.setView(inflator);
 
