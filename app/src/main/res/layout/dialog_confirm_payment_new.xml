@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/parky_shade_gray">
+
+    <FrameLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_gravity="center"
+        android:layout_margin="20dp"
+        android:background="@drawable/custom_dialog_border_and_background">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent">
+
+            <view
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                class="parkme.projectm.hr.parkme.CustomViewModels.HeaderView"
+                android:id="@+id/view2"
+                android:layout_gravity="center_horizontal|top" />
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top">
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:text="Review :"
+                        android:id="@+id/txtWelcome"
+                        android:textColor="@color/parky_green_darker"
+                        android:textStyle="bold"
+                        android:textSize="24sp"
+                        android:paddingLeft="@dimen/parky_text_title_left_and_right_padding"
+                        android:paddingRight="@dimen/parky_text_title_left_and_right_padding"
+                        android:paddingTop="@dimen/parky_custom_linear_layout_vertical_spacing" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/parky_text_dark_gray"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:paddingTop="@dimen/parky_custom_linear_layout_vertical_spacing"
+                        android:paddingLeft="@dimen/parky_text_title_left_and_right_padding"
+                        android:paddingRight="@dimen/parky_text_title_left_and_right_padding"
+                        android:text="@string/Vrijeme"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/parky_text_gray"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:paddingTop="@dimen/parky_custom_linear_layout_vertical_spinner_spacing"
+                        android:paddingLeft="@dimen/parky_text_left_and_right_padding"
+                        android:paddingRight="@dimen/parky_text_title_left_and_right_padding"
+                        android:id="@+id/tvTime"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/parky_text_dark_gray"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:paddingTop="@dimen/parky_custom_linear_layout_vertical_spacing"
+                        android:paddingLeft="@dimen/parky_text_title_left_and_right_padding"
+                        android:paddingRight="@dimen/parky_text_title_left_and_right_padding"
+                        android:text="@string/Grad"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/parky_text_gray"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:paddingTop="@dimen/parky_custom_linear_layout_vertical_spinner_spacing"
+                        android:paddingLeft="@dimen/parky_text_left_and_right_padding"
+                        android:paddingRight="@dimen/parky_text_title_left_and_right_padding"
+                        android:id="@+id/tvCity"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/parky_text_dark_gray"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:paddingTop="@dimen/parky_custom_linear_layout_vertical_spacing"
+                        android:paddingLeft="@dimen/parky_text_title_left_and_right_padding"
+                        android:paddingRight="@dimen/parky_text_title_left_and_right_padding"
+                        android:text="@string/ParkinZona"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/parky_text_gray"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:paddingTop="@dimen/parky_custom_linear_layout_vertical_spinner_spacing"
+                        android:paddingLeft="@dimen/parky_text_left_and_right_padding"
+                        android:paddingRight="@dimen/parky_text_title_left_and_right_padding"
+                        android:id="@+id/tvParkingZone"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/parky_text_dark_gray"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:paddingTop="@dimen/parky_custom_linear_layout_vertical_spacing"
+                        android:paddingLeft="@dimen/parky_text_title_left_and_right_padding"
+                        android:paddingRight="@dimen/parky_text_title_left_and_right_padding"
+                        android:text="@string/Cijena"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/parky_text_gray"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:paddingTop="@dimen/parky_custom_linear_layout_vertical_spinner_spacing"
+                        android:paddingLeft="@dimen/parky_text_left_and_right_padding"
+                        android:paddingRight="@dimen/parky_text_title_left_and_right_padding"
+                        android:id="@+id/tvPrice"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/parky_text_dark_gray"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:paddingTop="@dimen/parky_custom_linear_layout_vertical_spacing"
+                        android:paddingLeft="@dimen/parky_text_title_left_and_right_padding"
+                        android:paddingRight="@dimen/parky_text_title_left_and_right_padding"
+                        android:text="@string/Registracija"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/parky_text_gray"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:paddingTop="@dimen/parky_custom_linear_layout_vertical_spinner_spacing"
+                        android:paddingLeft="@dimen/parky_text_left_and_right_padding"
+                        android:paddingRight="@dimen/parky_text_title_left_and_right_padding"
+                        android:id="@+id/tvCarPlate"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/parky_text_dark_gray"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:paddingTop="@dimen/parky_custom_linear_layout_vertical_spacing"
+                        android:paddingLeft="@dimen/parky_text_title_left_and_right_padding"
+                        android:paddingRight="@dimen/parky_text_title_left_and_right_padding"
+                        android:text="@string/OdabranoTrajanje"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/parky_text_gray"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:paddingTop="@dimen/parky_custom_linear_layout_vertical_spinner_spacing"
+                        android:paddingLeft="@dimen/parky_text_left_and_right_padding"
+                        android:paddingRight="@dimen/parky_text_title_left_and_right_padding"
+                        android:id="@+id/tvDuration"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/parky_text_dark_gray"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:paddingTop="@dimen/parky_custom_linear_layout_vertical_spacing"
+                        android:paddingLeft="@dimen/parky_text_title_left_and_right_padding"
+                        android:paddingRight="@dimen/parky_text_title_left_and_right_padding"
+                        android:text="@string/MaxTrajanje"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/parky_text_gray"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:paddingTop="@dimen/parky_custom_linear_layout_vertical_spinner_spacing"
+                        android:paddingLeft="@dimen/parky_text_left_and_right_padding"
+                        android:paddingRight="@dimen/parky_text_title_left_and_right_padding"
+                        android:id="@+id/tvMaxDuration"/>
+
+                </LinearLayout>
+
+            </ScrollView>
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right|bottom">
+
+            <ImageButton
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:id="@+id/btnCancelPayment"
+                android:layout_gravity="right|bottom"
+                android:layout_marginRight="15dp"
+                android:background="@drawable/parky_novac_icon"
+                android:longClickable="false"
+                android:layout_marginBottom="10dp" />
+
+            <ImageButton
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:id="@+id/btnPayParking"
+                android:layout_gravity="right|bottom"
+                android:layout_marginBottom="15dp"
+                android:layout_marginRight="15dp"
+                android:background="@drawable/parky_novac_icon"/>
+        </LinearLayout>
+
+    </FrameLayout>
+
+</FrameLayout>
