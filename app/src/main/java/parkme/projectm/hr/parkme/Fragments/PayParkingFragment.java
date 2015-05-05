@@ -68,9 +68,9 @@ public class PayParkingFragment extends Fragment {
         payParkingButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(context, ParkingPaymentActivity.class);
-                startActivity(i);
-
+                if(payParkingFragmentCallback != null){
+                    payParkingFragmentCallback.displayPayParkingDialog();
+                }
             }
         });
 

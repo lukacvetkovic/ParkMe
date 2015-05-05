@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/parky_shade_gray">
+
+    <FrameLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_gravity="center"
+        android:layout_margin="20dp"
+        android:background="@drawable/custom_dialog_border_and_background">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent">
+
+            <view
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                class="parkme.projectm.hr.parkme.CustomViewModels.HeaderView"
+                android:id="@+id/view2"
+                android:layout_gravity="center_horizontal|top" />
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top">
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:text="(todo name)"
+                        android:id="@+id/txtWelcome"
+                        android:textColor="@color/parky_green_darker"
+                        android:textStyle="bold"
+                        android:textSize="24sp"
+                        android:paddingLeft="@dimen/parky_text_title_left_and_right_padding"
+                        android:paddingRight="@dimen/parky_text_title_left_and_right_padding"
+                        android:paddingTop="@dimen/parky_custom_linear_layout_vertical_spacing" />
+
+                    <TextView
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:textColor="@color/parky_text_dark_gray"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:paddingTop="@dimen/parky_custom_linear_layout_vertical_spacing"
+                        android:paddingLeft="@dimen/parky_text_title_left_and_right_padding"
+                        android:paddingRight="@dimen/parky_text_title_left_and_right_padding"
+                        android:text="@string/OdabirGrada" />
+
+                    <Spinner
+                        android:id="@+id/spinnerCity"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/parky_text_title_left_and_right_padding"
+                        android:layout_marginRight="@dimen/parky_text_title_left_and_right_padding"
+                        android:paddingTop="@dimen/parky_custom_linear_layout_vertical_spinner_spacing"/>
+
+                    <TextView
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:textColor="@color/parky_text_dark_gray"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:paddingTop="@dimen/parky_custom_linear_layout_vertical_spacing"
+                        android:paddingLeft="@dimen/parky_text_title_left_and_right_padding"
+                        android:paddingRight="@dimen/parky_text_title_left_and_right_padding"
+                        android:text="Odabir zone" />
+
+                    <Spinner
+                        android:id="@+id/spinnerZone"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/parky_text_title_left_and_right_padding"
+                        android:layout_marginRight="@dimen/parky_text_title_left_and_right_padding"
+                        android:paddingTop="@dimen/parky_custom_linear_layout_vertical_spinner_spacing"/>
+
+                    <TextView
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:textColor="@color/parky_text_dark_gray"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:paddingTop="@dimen/parky_custom_linear_layout_vertical_spacing"
+                        android:paddingLeft="@dimen/parky_text_title_left_and_right_padding"
+                        android:paddingRight="@dimen/parky_text_title_left_and_right_padding"
+                        android:text="Odabir opcije" />
+
+                    <Spinner
+                        android:id="@+id/spinnerOption"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/parky_text_title_left_and_right_padding"
+                        android:layout_marginRight="@dimen/parky_text_title_left_and_right_padding"
+                        android:paddingTop="@dimen/parky_custom_linear_layout_vertical_spinner_spacing"/>
+
+                    <CheckBox
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/cbFavorites"
+                        android:layout_marginLeft="@dimen/parky_text_title_left_and_right_padding"
+                        android:layout_marginRight="@dimen/parky_text_title_left_and_right_padding"
+                        android:paddingTop="@dimen/parky_custom_linear_layout_vertical_spacing"
+                        android:text="Dodaj u favorite"/>
+
+                </LinearLayout>
+
+            </ScrollView>
+        </LinearLayout>
+
+        <ImageButton
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:id="@+id/btnPayParking"
+            android:layout_gravity="right|bottom"
+            android:layout_marginBottom="15dp"
+            android:layout_marginRight="15dp"
+            android:background="@drawable/parky_novac_icon"/>
+
+    </FrameLayout>
+
+</FrameLayout>

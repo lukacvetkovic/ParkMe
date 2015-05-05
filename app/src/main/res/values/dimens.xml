@@ -7,6 +7,7 @@
 
     <dimen name="parky_custom_linear_layout_vertical_spacing">10dp</dimen>
     <dimen name="parky_custom_linear_layout_vertical_spacing_plus">15dp</dimen>
+    <dimen name="parky_custom_linear_layout_vertical_spinner_spacing">4dp</dimen>
 
     <dimen name="parky_text_left_and_right_padding">20dp</dimen>
     <dimen name="parky_text_title_left_and_right_padding">15dp</dimen>
