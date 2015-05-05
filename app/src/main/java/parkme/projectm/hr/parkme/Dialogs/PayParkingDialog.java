@@ -13,7 +13,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
@@ -307,7 +306,7 @@ public class PayParkingDialog extends FrameLayout{
                 Log.d("Maksimalno trajanje->", maxDurationFormated);
 
 
-                DialogFragment pay = new ConfirmPaymentDialog();
+                DialogFragment pay = new ConfirmPaymentDialog_old();
                 // Supply num input as an argument.
                 Bundle args = new Bundle();
 
