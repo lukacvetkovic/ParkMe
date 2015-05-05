@@ -34,7 +34,7 @@ import parkme.projectm.hr.parkme.R;
  */
 public class OrmLiteDatabaseHelper extends OrmLiteSqliteOpenHelper {
 
-    public static int DataBaseVersion = 3;
+    public static int DataBaseVersion = 4;
 
     // name of the database file for your application -- change to something appropriate for your app
     private static final String DATABASE_NAME = "parky.db";
