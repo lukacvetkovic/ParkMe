@@ -5,6 +5,7 @@ package parkme.projectm.hr.parkme.Fragments;
  */
 
 import android.app.Activity;
+import android.app.DialogFragment;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -18,6 +19,8 @@ import parkme.projectm.hr.parkme.Activities.FragmentMenuActivity;
 import parkme.projectm.hr.parkme.CustomViewModels.ActiveCarView;
 import parkme.projectm.hr.parkme.Database.OrmliteDb.DatabaseManager;
 import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.FavouriteCar;
+import parkme.projectm.hr.parkme.Dialogs.ConfirmPaymentDialog;
+import parkme.projectm.hr.parkme.Dialogs.PayParkingDialog;
 import parkme.projectm.hr.parkme.Helpers.PrefsHelper;
 import parkme.projectm.hr.parkme.R;
 
@@ -33,6 +36,8 @@ public class PayParkingFragment extends Fragment {
 
     private PrefsHelper prefsHelper;
     private FragmentMenuActivity parentActivity;
+
+    private PayParkingDialog payParkingDialog;
 
     private PayParkingFragmentCallback payParkingFragmentCallback;
 
@@ -68,7 +73,21 @@ public class PayParkingFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if(payParkingFragmentCallback != null){
-                    payParkingFragmentCallback.displayPayParkingDialog();
+                    payParkingDialog = new PayParkingDialog(context);
+                    payParkingDialog.setPayParkingDialogCallback(new PayParkingDialog.PayParkingDialogCallback() {
+                        @Override
+                        public void dismissDialog() {
+                            if(payParkingFragmentCallback != null){
+                                payParkingFragmentCallback.dismissPayParkingDialog(payParkingDialog);
+                            }
+                        }
+
+                        @Override
+                        public void showConfirmDialog(ConfirmPaymentDialog confirmPaymentDialog) {
+                            payParkingFragmentCallback.displayConfirmPaymentDialog(confirmPaymentDialog);
+                        }
+                    });
+                    payParkingFragmentCallback.displayPayParkingDialog(payParkingDialog);
                 }
             }
         });

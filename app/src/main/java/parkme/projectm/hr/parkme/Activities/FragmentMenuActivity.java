@@ -17,6 +17,7 @@ import java.util.List;
 import parkme.projectm.hr.parkme.Database.OrmliteDb.DatabaseManager;
 import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.FavouriteCar;
 import parkme.projectm.hr.parkme.Dialogs.AddCarDialog;
+import parkme.projectm.hr.parkme.Dialogs.ConfirmPaymentDialog;
 import parkme.projectm.hr.parkme.Dialogs.PayParkingDialog;
 import parkme.projectm.hr.parkme.Dialogs.UpdateOrRemoveCarDialog;
 import parkme.projectm.hr.parkme.Fragments.ChooseCarFragment;
@@ -44,7 +45,6 @@ public class FragmentMenuActivity extends FragmentActivity {
     private RelativeLayout rootRelativeView;
     private AddCarDialog addCarDialog;
     private UpdateOrRemoveCarDialog updateorRemoveCarDialog;
-    private PayParkingDialog payParkingDialog;
     private Context context;
 
     private PrefsHelper prefsHelper;
@@ -174,9 +174,9 @@ public class FragmentMenuActivity extends FragmentActivity {
                     }
 
                     @Override
-                    public void displayPayParkingDialog() {     // TODO
+                    public void displayPayParkingDialog(PayParkingDialog payParkingDialog) {     // TODO
                         rootRelativeView = (RelativeLayout) findViewById(R.id.rootRelativeView);
-                        payParkingDialog = new PayParkingDialog(context);
+                        /*payParkingDialog = new PayParkingDialog(context);
                         payParkingDialog.setPayParkingDialogCallback(new PayParkingDialog.PayParkingDialogCallback() {
                             @Override
                             public void dismissDialog() {
@@ -187,11 +187,30 @@ public class FragmentMenuActivity extends FragmentActivity {
                             public void showConfirmDialog(DialogFragment dialog) {
                                 dialog.show(getFragmentManager(), "Plačanje");
                             }
-                        });
+                        });*/
                         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT);
                         params.addRule(RelativeLayout.ALIGN_PARENT_LEFT, RelativeLayout.TRUE);
                         params.addRule(RelativeLayout.ALIGN_PARENT_TOP, RelativeLayout.TRUE);
                         rootRelativeView.addView(payParkingDialog, params);
+                    }
+
+                    @Override
+                    public void dismissPayParkingDialog(PayParkingDialog payParkingDialog) {
+                        // TODO
+                    }
+
+                    @Override
+                    public void displayConfirmPaymentDialog(ConfirmPaymentDialog confirmPaymentDialog) {
+                        rootRelativeView = (RelativeLayout) findViewById(R.id.rootRelativeView);
+                        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT);
+                        params.addRule(RelativeLayout.ALIGN_PARENT_LEFT, RelativeLayout.TRUE);
+                        params.addRule(RelativeLayout.ALIGN_PARENT_TOP, RelativeLayout.TRUE);
+                        rootRelativeView.addView(confirmPaymentDialog, params);
+                    }
+
+                    @Override
+                    public void dismissConfirmPaymentDialog(ConfirmPaymentDialog confirmPaymentDialog) {
+                        // TODO
                     }
                 });
                 return fragment;

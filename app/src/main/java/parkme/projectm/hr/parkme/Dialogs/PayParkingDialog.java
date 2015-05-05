@@ -56,6 +56,8 @@ public class PayParkingDialog extends FrameLayout{
 
     private PayParkingDialogCallback payParkingDialogCallback;
 
+    private ConfirmPaymentDialog confirmPaymentDialog;
+
     GPSTracker gpsTracker;
     Location myLocation;
 
@@ -94,7 +96,7 @@ public class PayParkingDialog extends FrameLayout{
 
     public interface PayParkingDialogCallback {
         void dismissDialog();
-        void showConfirmDialog(DialogFragment dialog);
+        void showConfirmDialog(ConfirmPaymentDialog confirmPaymentDialog);
     }
 
     public PayParkingDialog(Context context) {
@@ -332,10 +334,18 @@ public class PayParkingDialog extends FrameLayout{
                 prefsHelper.putString("priceString", String.valueOf(price.getPriceFloat()));
 
                 pay.setArguments(args);
+
+                confirmPaymentDialog = new ConfirmPaymentDialog(context);
+                confirmPaymentDialog.setConfirmPaymentDialogCallback(new ConfirmPaymentDialog.ConfirmPaymentDialogCallback() {
+                    @Override
+                    public void dismissDialog() {
+                        // TODO
+                    }
+                });
+
                 if(payParkingDialogCallback != null){
-                    payParkingDialogCallback.showConfirmDialog(pay);
+                    payParkingDialogCallback.showConfirmDialog(confirmPaymentDialog);
                 }
-                //pay.show(getFragmentManager(), "Placanje");
 
             }
         });
