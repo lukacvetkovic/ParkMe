@@ -144,7 +144,7 @@ public class PayParkingDialog extends FrameLayout{
 
         cityNames = new String[cityList.size()];
 
-        //Add city names to array and map
+        //Add city names to array and mapp
         for (int i = 0, z = cityList.size(); i < z; ++i) {
             cityNames[i] = cityList.get(i).getName();
             mapIdCity.put(cityNames[i], cityList.get(i).getId());
