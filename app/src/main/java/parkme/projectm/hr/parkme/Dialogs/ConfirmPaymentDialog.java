@@ -155,7 +155,7 @@ public class ConfirmPaymentDialog extends FrameLayout {
 
                 if(updateDb){
 
-                    final MyMarker myMarker = new MyMarker(0,parkingZoneId,lat,lng);
+                    final MyMarker myMarker = new MyMarker(0,/*parkingZoneId*/1,lat,lng); //TODO otkomentirat
                     final Gson gson = new Gson();
 
                     Thread thread= new Thread(new Runnable() {
