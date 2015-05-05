@@ -14,24 +14,21 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 
 import parkme.projectm.hr.parkme.Database.OrmliteDb.DatabaseManager;
 import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.FavoritePayment;
 import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.ParkingZone;
 import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.PaymentMode;
 import parkme.projectm.hr.parkme.Helpers.PrefsHelper;
-import parkme.projectm.hr.parkme.Helpers.SMSHelper;
 import parkme.projectm.hr.parkme.R;
 import parkme.projectm.hr.parkme.Receivers.IncomingSms;
 
 /**
  * Created by Cveki on 29.3.2015..
  */
-public class ConfirmPaymentDialog extends DialogFragment {
+public class ConfirmPaymentDialog_old extends DialogFragment {
 
     TextView tvTime;
     TextView tvCity;
@@ -155,7 +152,7 @@ public class ConfirmPaymentDialog extends DialogFragment {
         })
                 .setNegativeButton("Odustani", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        ConfirmPaymentDialog.this.getDialog().cancel();
+                        ConfirmPaymentDialog_old.this.getDialog().cancel();
                     }
                 });
 
