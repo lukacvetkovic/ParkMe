@@ -8,6 +8,7 @@ public final class ApiConstants {
     public static final String dohvatiOpcijePrekoZone="https://lumipex.me/ParkMe/api/data/payment_mode/zone/id/";
     public static final String updateZoneName="https://lumipex.me/ParkMe/api/data/parking_zone/";
     public static final String updateZonePrice="https://lumipex.me/ParkMe/api/data/zone_price/";
+    public static final String automaticZone="https://lumipex.me/ParkMe/api/aproximate.json/"; //na kraj ide idCity/lat/lng
 
 
 }

@@ -12,12 +12,17 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.concurrent.ExecutionException;
 
 import parkme.projectm.hr.parkme.Database.OrmliteDb.DatabaseManager;
+import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.PastParkingPayment;
 import parkme.projectm.hr.parkme.Helpers.PrefsHelper;
 import parkme.projectm.hr.parkme.Helpers.Rest.ApiConstants;
 import parkme.projectm.hr.parkme.Helpers.Rest.PutRestService;
+import parkme.projectm.hr.parkme.Services.ParkingServiceHelper;
 import parkme.projectm.hr.parkme.SmsParser.MasterParser;
 import parkme.projectm.hr.parkme.SmsParser.SmsData;
 import parkme.projectm.hr.parkme.SmsParser.SmsParser;
@@ -72,7 +77,8 @@ public class IncomingSms extends BroadcastReceiver {
                         SmsParser smsParser= new MasterParser();
                         SmsData smsData= smsParser.parse(message);
 
-                        Log.d("UPISI U TABLICU", "DO KAD TRAJE PARKING I TO"); //TODO
+                        upisiUTablicuPastPayment(context,smsData);
+                        upisiUService(context,smsData);
 
                         //Update baze na serveru
                         if(smsData.getZoneName()!=null){
@@ -94,8 +100,6 @@ public class IncomingSms extends BroadcastReceiver {
                             }
                         }
 
-
-
                     }
 
                 } // end for loop
@@ -107,6 +111,37 @@ public class IncomingSms extends BroadcastReceiver {
             Log.e("SmsReceiver", "Exception smsReceiver" + e);
 
         }
+    }
+
+    private void upisiUTablicuPastPayment(Context context, SmsData smsData) {
+        PrefsHelper prefsHelper= new PrefsHelper(context);
+        int citiyId=prefsHelper.getInt(PrefsHelper.citiyId, 0);
+        int parkingZoneId=prefsHelper.getInt(PrefsHelper.parkingZoneId, 0);
+        int paymentModeId=prefsHelper.getInt(PrefsHelper.paymentModeId, 0);
+        String carPlates= prefsHelper.getString(PrefsHelper.ActiveCarPlates,"NULL");
+
+        DatabaseManager.init(context);
+        DatabaseManager databaseManager= DatabaseManager.getInstance();
+
+        DateFormat dateFormat = new SimpleDateFormat("HH:mm dd/MM");
+        Date date = new Date();
+        System.out.println(dateFormat.format(date)); //2014/08/06 15:59:48
+
+        /*String capPlates, String endOfPayment, int gradId, int pastParkingPaymentId, int paymentMethodId, String startOfPayment, int zoneID*/
+
+        PastParkingPayment pastParkingPayment = new PastParkingPayment(carPlates,dateFormat.format(smsData.getDateTime()),citiyId,0,paymentModeId,dateFormat.format(date),parkingZoneId);
+        databaseManager.addPastparkingPayment(pastParkingPayment);
+
+
+    }
+
+    private void upisiUService(Context context, SmsData smsData) {
+        PrefsHelper prefsHelper= new PrefsHelper(context);
+        String trajanje = prefsHelper.getString(PrefsHelper.trajanje, "NULL");
+        String[]pom=trajanje.split(":");
+        int trajanjeMin=Integer.valueOf(pom[0])+Integer.valueOf(pom[1]);
+        ParkingServiceHelper serviceHelper= new ParkingServiceHelper();
+        serviceHelper.setActiveParkingTime(trajanjeMin,context);
     }
 
     public void updateZoneName(int parkingZoneId, SmsData smsData){
