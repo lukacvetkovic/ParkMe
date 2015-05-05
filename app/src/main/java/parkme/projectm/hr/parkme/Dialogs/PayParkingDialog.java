@@ -85,8 +85,10 @@ public class PayParkingDialog extends FrameLayout{
 
     ImageButton btnPay;
     CheckBox favs;
+    CheckBox carPosition;
 
     boolean firstTime;
+    boolean mjenjano;
 
     ArrayAdapter<String> adapterZone;
     ArrayAdapter<String> adapterCity;
@@ -122,12 +124,16 @@ public class PayParkingDialog extends FrameLayout{
     }
 
     private void reference(){
+        mjenjano=false;
         firstTime = true;
         citySpinner = (Spinner) findViewById(R.id.spinnerCity);
         zoneSpinner = (Spinner) findViewById(R.id.spinnerZone);
         paymentModeSpinner = (Spinner) findViewById(R.id.spinnerOption);
         btnPay = (ImageButton) findViewById(R.id.btnPayParking);
         favs = (CheckBox) findViewById(R.id.cbFavorites);
+        carPosition=(CheckBox)findViewById(R.id.cbCurrentLocation);
+
+        carPosition.setVisibility(INVISIBLE);
 
         DatabaseManager.init(context);
         databaseManager = DatabaseManager.getInstance();
@@ -174,6 +180,7 @@ public class PayParkingDialog extends FrameLayout{
         //If location not null set spinner to city
         if (myLocation != null) {
             if(isOnline()) {
+                carPosition.setVisibility(VISIBLE);
                 Geocoder gcd = new Geocoder(context, Locale.getDefault());
                 List<Address> addresses = new ArrayList<>();
                 try {
@@ -200,6 +207,10 @@ public class PayParkingDialog extends FrameLayout{
         citySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                if(!firstTime){
+                    mjenjano=true;
+                }
 
                 //Get selected city
                 String city=cityNames[position];
@@ -232,6 +243,10 @@ public class PayParkingDialog extends FrameLayout{
 
                     @Override
                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                        if(!firstTime){
+                            mjenjano=true;
+                        }
 
                         //Get selected city
                         selectedZone = zoneNames[position];
@@ -317,8 +332,16 @@ public class PayParkingDialog extends FrameLayout{
                     maxParkingDuration = maxDurationFormated;
                 }
 
-                confirmPaymentDialog.initWithData(city, zone, price.getPriceFloat(), duration, maxParkingDuration,
-                        parkingZoneId, paymentModeId, mapIdCity.get(city), favs.isChecked());
+                if(carPosition.isChecked() && mjenjano) {
+
+                    confirmPaymentDialog.initWithData(city, zone, price.getPriceFloat(), duration, maxParkingDuration,
+                            parkingZoneId, paymentModeId, mapIdCity.get(city), favs.isChecked(),carPosition.isChecked(),myLocation.getLatitude(),myLocation.getLatitude());
+                }
+                else{
+                    confirmPaymentDialog.initWithData(city, zone, price.getPriceFloat(), duration, maxParkingDuration,
+                            parkingZoneId, paymentModeId, mapIdCity.get(city), favs.isChecked(),carPosition.isChecked(),0,0);
+
+                }
 
                 confirmPaymentDialog.setConfirmPaymentDialogCallback(new ConfirmPaymentDialog.ConfirmPaymentDialogCallback() {
                     @Override
