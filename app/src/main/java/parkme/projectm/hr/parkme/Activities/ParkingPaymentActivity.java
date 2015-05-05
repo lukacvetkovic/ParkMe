@@ -14,6 +14,8 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.Spinner;
 
+import com.google.gson.Gson;
+
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -24,6 +26,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.concurrent.ExecutionException;
 
 import parkme.projectm.hr.parkme.Database.OrmliteDb.DatabaseManager;
 import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.City;
@@ -37,14 +40,15 @@ import parkme.projectm.hr.parkme.Helpers.LocationHelper.GPSTracker;
 import parkme.projectm.hr.parkme.Helpers.PrefsHelper;
 import parkme.projectm.hr.parkme.Helpers.Rest.ApiConstants;
 import parkme.projectm.hr.parkme.Helpers.Rest.GetRestService;
+import parkme.projectm.hr.parkme.Models.AutomaticZone;
 import parkme.projectm.hr.parkme.R;
 
 
 public class ParkingPaymentActivity extends Activity {
 
     GPSTracker gpsTracker;
+    Location mylocation;
 
-    GetRestService getRestService;
     String response;
     List<City> cityList;
     List<ParkingZone> parkingZoneList;
@@ -74,6 +78,8 @@ public class ParkingPaymentActivity extends Activity {
     ArrayAdapter<String> adapterCity;
     ArrayAdapter<String> adapterOption;
 
+    boolean firstTime;
+
     DatabaseManager databaseManager;
 
     /**
@@ -87,6 +93,7 @@ public class ParkingPaymentActivity extends Activity {
         //Init
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_parking_payment);
+        firstTime = true;
         citySpinner = (Spinner) findViewById(R.id.spinnerCity);
         zoneSpinner = (Spinner) findViewById(R.id.spinnerZone);
         paymentModeSpinner = (Spinner) findViewById(R.id.spinnerOption);
@@ -97,7 +104,6 @@ public class ParkingPaymentActivity extends Activity {
         databaseManager = DatabaseManager.getInstance();
 
         mapIdCity = new HashMap<>();
-        getRestService = new GetRestService(ApiConstants.dohvatiSveGradove + ".json");
         parkingZoneList = new ArrayList<>();
 
         //Gps
@@ -129,7 +135,7 @@ public class ParkingPaymentActivity extends Activity {
         citySpinner.setAdapter(adapterCity);
 
         //Get location
-        Location mylocation = null;
+        mylocation = null;
 
         mylocation = fallbackLocationTracker.getLocation();
         if (mylocation == null) {
@@ -155,8 +161,6 @@ public class ParkingPaymentActivity extends Activity {
             if (cityName != null) {
                 citySpinner.setSelection(Arrays.asList(cityNames).indexOf(cityName));
             }
-
-
         }
 
 
@@ -166,10 +170,10 @@ public class ParkingPaymentActivity extends Activity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
                 //Get selected city
-                selectedCityPostCode = cityNames[position];
-                Log.d("IZABRAN------>", selectedCityPostCode);
+                String city=cityNames[position];
+                Log.d("IZABRAN------>", city);
 
-                parkingZoneList = databaseManager.getAllParkingZonesFromCity(mapIdCity.get(selectedCityPostCode));
+                parkingZoneList = databaseManager.getAllParkingZonesFromCity(mapIdCity.get(city));
 
                 zoneNames = new String[parkingZoneList.size()];
                 mapIdZone = new HashMap<String, Integer>();
@@ -187,6 +191,10 @@ public class ParkingPaymentActivity extends Activity {
 
                 zoneSpinner.setAdapter(adapterZone);
 
+                if (firstTime) {
+                    findMyZoneIfPossible();
+                    firstTime = false;
+                }
 
                 zoneSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
@@ -286,20 +294,44 @@ public class ParkingPaymentActivity extends Activity {
 
                 args.putInt("parkingZoneId", parkingZoneId);
                 args.putInt("paymentModeId", paymentModeId);
-                args.putBoolean("favs",favs.isChecked());
+                args.putBoolean("favs", favs.isChecked());
 
                 //Spremanje parkingZoneId-a i tonePriceId da mogu update napraviti
-                PrefsHelper prefsHelper= new PrefsHelper(getBaseContext());
+                PrefsHelper prefsHelper = new PrefsHelper(getBaseContext());
                 prefsHelper.putInt("parkingZoneId", parkingZoneId);
-                prefsHelper.putInt("zonePriceId",price.getId());
-                prefsHelper.putInt("citiyId",mapIdCity.get(city));
-                prefsHelper.putString("priceString",String.valueOf(price.getPriceFloat()));
+                prefsHelper.putInt("zonePriceId", price.getId());
+                prefsHelper.putInt("citiyId", mapIdCity.get(city));
+                prefsHelper.putString("priceString", String.valueOf(price.getPriceFloat()));
 
                 pay.setArguments(args);
                 pay.show(getFragmentManager(), "Plačanje");
 
             }
         });
+
+
+    }
+
+    public void findMyZoneIfPossible() {
+        if (this.mylocation != null) {
+            GetRestService get = new GetRestService(ApiConstants.automaticZone + databaseManager.getCityFromPostCode(this.selectedCityPostCode).getId() + "/" + mylocation.getLatitude() + "/" + mylocation.getLongitude());
+
+            try {
+                Gson gson = new Gson();
+                response = get.execute();
+                AutomaticZone automaticZone = gson.fromJson(response, AutomaticZone.class);
+                if (automaticZone.getId_zone() != null) {
+                    ParkingZone automatic = databaseManager.getParkingZoneFromId(automaticZone.getId_zone());
+                    zoneSpinner.setSelection(Arrays.asList(zoneNames).indexOf(automatic.getName()));
+                }
+
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+
 
     }
 
