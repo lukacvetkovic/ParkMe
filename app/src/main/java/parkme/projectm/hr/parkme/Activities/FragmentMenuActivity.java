@@ -196,7 +196,8 @@ public class FragmentMenuActivity extends FragmentActivity {
 
                     @Override
                     public void dismissPayParkingDialog(PayParkingDialog payParkingDialog) {
-                        // TODO
+                        rootRelativeView = (RelativeLayout) findViewById(R.id.rootRelativeView);
+                        rootRelativeView.removeView(payParkingDialog);
                     }
 
                     @Override
@@ -210,7 +211,8 @@ public class FragmentMenuActivity extends FragmentActivity {
 
                     @Override
                     public void dismissConfirmPaymentDialog(ConfirmPaymentDialog confirmPaymentDialog) {
-                        // TODO
+                        rootRelativeView = (RelativeLayout) findViewById(R.id.rootRelativeView);
+                        rootRelativeView.removeView(confirmPaymentDialog);
                     }
                 });
                 return fragment;

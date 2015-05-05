@@ -339,7 +339,7 @@ public class PayParkingDialog extends FrameLayout{
                 confirmPaymentDialog.setConfirmPaymentDialogCallback(new ConfirmPaymentDialog.ConfirmPaymentDialogCallback() {
                     @Override
                     public void dismissDialog() {
-                        // TODO
+                        payParkingDialogCallback.dismissDialog();
                     }
                 });
 
