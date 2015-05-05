@@ -5,6 +5,8 @@ import android.content.Context;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -169,25 +171,26 @@ public class PayParkingDialog extends FrameLayout{
 
         //If location not null set spinner to city
         if (myLocation != null) {
-            Geocoder gcd = new Geocoder(context, Locale.getDefault());
-            List<Address> addresses = new ArrayList<>();
-            try {
-                addresses = gcd.getFromLocation(myLocation.getLatitude(), myLocation.getLongitude(), 1);
-            } catch (IOException e) {
-                e.printStackTrace();
+            if(isOnline()) {
+                Geocoder gcd = new Geocoder(context, Locale.getDefault());
+                List<Address> addresses = new ArrayList<>();
+                try {
+                    addresses = gcd.getFromLocation(myLocation.getLatitude(), myLocation.getLongitude(), 1);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                if (addresses.size() > 0) {
+                    selectedCityPostCode = addresses.get(0).getPostalCode();
+
+                    Log.d("MOJ GRAD--->", selectedCityPostCode);
+
+                    String cityName = databaseManager.getCityNameFromPostCode(selectedCityPostCode);
+                    if (cityName != null) {
+                        citySpinner.setSelection(Arrays.asList(cityNames).indexOf(cityName));
+                    }
+                }
+
             }
-            if (addresses.size() > 0) {
-                selectedCityPostCode = addresses.get(0).getPostalCode();
-
-                Log.d("MOJ GRAD--->", selectedCityPostCode);
-            }
-
-            String cityName = databaseManager.getCityNameFromPostCode(selectedCityPostCode);
-            if (cityName != null) {
-                citySpinner.setSelection(Arrays.asList(cityNames).indexOf(cityName));
-            }
-
-
         }
 
 
@@ -341,21 +344,23 @@ public class PayParkingDialog extends FrameLayout{
 
     public void findMyZoneIfPossible() {
         if (this.myLocation != null) {
-            GetRestService get = new GetRestService(ApiConstants.automaticZone + databaseManager.getCityFromPostCode(this.selectedCityPostCode).getId() + "/" + myLocation.getLatitude() + "/" + myLocation.getLongitude());
 
             try {
-                Gson gson = new Gson();
-                response = get.execute();
-                AutomaticZone automaticZone = gson.fromJson(response, AutomaticZone.class);
-                if (automaticZone.getId_zone() != null) {
-                    ParkingZone automatic = databaseManager.getParkingZoneFromId(automaticZone.getId_zone());
-                    zoneSpinner.setSelection(Arrays.asList(zoneNames).indexOf(automatic.getName()));
+                if(this.selectedCityPostCode!=null) {
+                    GetRestService get = new GetRestService(ApiConstants.automaticZone + databaseManager.getCityFromPostCode(this.selectedCityPostCode).getId() + "/" + myLocation.getLatitude() + "/" + myLocation.getLongitude());
+                    Gson gson = new Gson();
+                    response = get.execute();
+                    AutomaticZone automaticZone = gson.fromJson(response, AutomaticZone.class);
+                    if (automaticZone.getId_zone() != null) {
+                        ParkingZone automatic = databaseManager.getParkingZoneFromId(automaticZone.getId_zone());
+                        zoneSpinner.setSelection(Arrays.asList(zoneNames).indexOf(automatic.getName()));
+                    }
                 }
 
             } catch (ExecutionException e) {
-                e.printStackTrace();
+                Log.d("NO CONNECTION","INTERNET");
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                Log.d("INTERRUPTED","INTERNET");
             }
         }
 
@@ -368,5 +373,12 @@ public class PayParkingDialog extends FrameLayout{
 
     public void setPayParkingDialogCallback(PayParkingDialogCallback payParkingDialogCallback) {
         this.payParkingDialogCallback = payParkingDialogCallback;
+    }
+
+    public boolean isOnline() {
+        ConnectivityManager cm =
+                (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = cm.getActiveNetworkInfo();
+        return netInfo != null && netInfo.isConnectedOrConnecting();
     }
 }
