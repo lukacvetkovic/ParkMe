@@ -8,4 +8,6 @@ public interface PayParkingFragmentCallback {
     public void refreshActivity();
 
     public void swipeToChooseCarFragment();
+
+    public void displayPayParkingDialog();
 }

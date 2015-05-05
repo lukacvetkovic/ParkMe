@@ -1,17 +1,20 @@
-package parkme.projectm.hr.parkme.Activities;
+package parkme.projectm.hr.parkme.Dialogs;
 
-import android.app.Activity;
 import android.app.DialogFragment;
+import android.content.Context;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
+import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.Spinner;
 
 import com.google.gson.Gson;
@@ -34,7 +37,6 @@ import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.MaxDuration;
 import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.ParkingZone;
 import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.PaymentMode;
 import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.ZonePrice;
-import parkme.projectm.hr.parkme.Dialogs.ConfirmPaymentDialog;
 import parkme.projectm.hr.parkme.Helpers.LocationHelper.FallbackLocationTracker;
 import parkme.projectm.hr.parkme.Helpers.LocationHelper.GPSTracker;
 import parkme.projectm.hr.parkme.Helpers.PrefsHelper;
@@ -43,11 +45,18 @@ import parkme.projectm.hr.parkme.Helpers.Rest.GetRestService;
 import parkme.projectm.hr.parkme.Models.AutomaticZone;
 import parkme.projectm.hr.parkme.R;
 
+/**
+ * Created by Mihael on 5.5.2015..
+ */
+public class PayParkingDialog extends FrameLayout{
 
-public class ParkingPaymentActivity extends Activity {
+    private final String TAG = "PayParkingDialog";
+    private Context context;
+
+    private PayParkingDialogCallback payParkingDialogCallback;
 
     GPSTracker gpsTracker;
-    Location mylocation;
+    Location myLocation;
 
     String response;
     List<City> cityList;
@@ -71,44 +80,60 @@ public class ParkingPaymentActivity extends Activity {
     String selectedCityPostCode;
     String selectedOption;
 
-    Button btnPay;
+    ImageButton btnPay;
     CheckBox favs;
+
+    boolean firstTime;
 
     ArrayAdapter<String> adapterZone;
     ArrayAdapter<String> adapterCity;
     ArrayAdapter<String> adapterOption;
 
-    boolean firstTime;
-
     DatabaseManager databaseManager;
 
-    /**
-     * On create method, starts with layout
-     *
-     * @param savedInstanceState
-     */
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public interface PayParkingDialogCallback {
+        void dismissDialog();
+        void showConfirmDialog(DialogFragment dialog);
+    }
 
-        //Init
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_parking_payment);
+    public PayParkingDialog(Context context) {
+        super(context);
+        init(context);
+    }
+
+    public PayParkingDialog(Context context, AttributeSet attrs) {
+        super(context, attrs);
+        init(context);
+    }
+
+    public PayParkingDialog(Context context, AttributeSet attrs, int defStyleAttr) {
+        super(context, attrs, defStyleAttr);
+        init(context);
+    }
+
+    private void init(Context context){
+        this.context = context;
+        inflate(getContext(), R.layout.dialog_pay_parking, this);
+        reference();
+    }
+
+    private void reference(){
         firstTime = true;
         citySpinner = (Spinner) findViewById(R.id.spinnerCity);
         zoneSpinner = (Spinner) findViewById(R.id.spinnerZone);
         paymentModeSpinner = (Spinner) findViewById(R.id.spinnerOption);
-        btnPay = (Button) findViewById(R.id.btnPayParking);
+        btnPay = (ImageButton) findViewById(R.id.btnPayParking);
         favs = (CheckBox) findViewById(R.id.cbFavorites);
 
-        DatabaseManager.init(this);
+        DatabaseManager.init(context);
         databaseManager = DatabaseManager.getInstance();
 
         mapIdCity = new HashMap<>();
         parkingZoneList = new ArrayList<>();
 
         //Gps
-        gpsTracker = new GPSTracker(this);
-        FallbackLocationTracker fallbackLocationTracker = new FallbackLocationTracker(this);
+        gpsTracker = new GPSTracker(context);
+        FallbackLocationTracker fallbackLocationTracker = new FallbackLocationTracker(context);
         fallbackLocationTracker.start();
 
         selectedCityPostCode = null;
@@ -124,30 +149,30 @@ public class ParkingPaymentActivity extends Activity {
         }
 
         //Init Set addapter to citySpinner
-        adapterCity = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, cityNames);
+        adapterCity = new ArrayAdapter<>(context, android.R.layout.simple_spinner_item, cityNames);
         //Init adapterZone
-        adapterZone = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item);
+        adapterZone = new ArrayAdapter<>(context, android.R.layout.simple_spinner_item);
         //Init adapterPaymentMode
-        adapterOption = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item);
+        adapterOption = new ArrayAdapter<>(context, android.R.layout.simple_spinner_item);
         // Specify the layout to use when the list of choices appears
         adapterCity.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         // Apply the adapter to the spinner
         citySpinner.setAdapter(adapterCity);
 
         //Get location
-        mylocation = null;
+        myLocation = null;
 
-        mylocation = fallbackLocationTracker.getLocation();
-        if (mylocation == null) {
-            mylocation = gpsTracker.getLocation();
+        myLocation = fallbackLocationTracker.getLocation();
+        if (myLocation == null) {
+            myLocation = gpsTracker.getLocation();
         }
 
         //If location not null set spinner to city
-        if (mylocation != null) {
-            Geocoder gcd = new Geocoder(this, Locale.getDefault());
+        if (myLocation != null) {
+            Geocoder gcd = new Geocoder(context, Locale.getDefault());
             List<Address> addresses = new ArrayList<>();
             try {
-                addresses = gcd.getFromLocation(mylocation.getLatitude(), mylocation.getLongitude(), 1);
+                addresses = gcd.getFromLocation(myLocation.getLatitude(), myLocation.getLongitude(), 1);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -161,6 +186,8 @@ public class ParkingPaymentActivity extends Activity {
             if (cityName != null) {
                 citySpinner.setSelection(Arrays.asList(cityNames).indexOf(cityName));
             }
+
+
         }
 
 
@@ -250,8 +277,7 @@ public class ParkingPaymentActivity extends Activity {
             }
         });
 
-
-        btnPay.setOnClickListener(new View.OnClickListener() {
+        btnPay.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 int parkingZoneId = mapIdZone.get(zoneSpinner.getSelectedItem().toString());
@@ -287,7 +313,7 @@ public class ParkingPaymentActivity extends Activity {
                 args.putFloat("price", price.getPriceFloat());
                 args.putString("duration", duration);
                 if (maxDurationFormated.equals("00:00:00")) {
-                    args.putString("maxDuration", "Neograničeno");
+                    args.putString("maxDuration", "Neograniceno");
                 } else {
                     args.putString("maxDuration", maxDurationFormated);
                 }
@@ -297,24 +323,25 @@ public class ParkingPaymentActivity extends Activity {
                 args.putBoolean("favs", favs.isChecked());
 
                 //Spremanje parkingZoneId-a i tonePriceId da mogu update napraviti
-                PrefsHelper prefsHelper = new PrefsHelper(getBaseContext());
+                PrefsHelper prefsHelper = new PrefsHelper(context);
                 prefsHelper.putInt("parkingZoneId", parkingZoneId);
                 prefsHelper.putInt("zonePriceId", price.getId());
                 prefsHelper.putInt("citiyId", mapIdCity.get(city));
                 prefsHelper.putString("priceString", String.valueOf(price.getPriceFloat()));
 
                 pay.setArguments(args);
-                pay.show(getFragmentManager(), "Plačanje");
+                if(payParkingDialogCallback != null){
+                    payParkingDialogCallback.showConfirmDialog(pay);
+                }
+                //pay.show(getFragmentManager(), "Placanje");
 
             }
         });
-
-
     }
 
     public void findMyZoneIfPossible() {
-        if (this.mylocation != null) {
-            GetRestService get = new GetRestService(ApiConstants.automaticZone + databaseManager.getCityFromPostCode(this.selectedCityPostCode).getId() + "/" + mylocation.getLatitude() + "/" + mylocation.getLongitude());
+        if (this.myLocation != null) {
+            GetRestService get = new GetRestService(ApiConstants.automaticZone + databaseManager.getCityFromPostCode(this.selectedCityPostCode).getId() + "/" + myLocation.getLatitude() + "/" + myLocation.getLongitude());
 
             try {
                 Gson gson = new Gson();
@@ -335,4 +362,11 @@ public class ParkingPaymentActivity extends Activity {
 
     }
 
+    public PayParkingDialogCallback getPayParkingDialogCallback() {
+        return payParkingDialogCallback;
+    }
+
+    public void setPayParkingDialogCallback(PayParkingDialogCallback payParkingDialogCallback) {
+        this.payParkingDialogCallback = payParkingDialogCallback;
+    }
 }

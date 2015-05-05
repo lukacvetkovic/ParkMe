@@ -14,7 +14,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 
-import parkme.projectm.hr.parkme.Activities.ParkingPaymentActivity;
 import parkme.projectm.hr.parkme.Activities.FragmentMenuActivity;
 import parkme.projectm.hr.parkme.CustomViewModels.ActiveCarView;
 import parkme.projectm.hr.parkme.Database.OrmliteDb.DatabaseManager;
@@ -68,9 +67,9 @@ public class PayParkingFragment extends Fragment {
         payParkingButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(context, ParkingPaymentActivity.class);
-                startActivity(i);
-
+                if(payParkingFragmentCallback != null){
+                    payParkingFragmentCallback.displayPayParkingDialog();
+                }
             }
         });
 
