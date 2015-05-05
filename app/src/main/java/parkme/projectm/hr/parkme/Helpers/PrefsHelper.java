@@ -15,13 +15,19 @@ import java.util.Set;
 public class PrefsHelper {
     private final String TAG = "PrefsHelper";
 
-    private final String prefsName = "hr.cvim.hzzo.pamZdravlje";
+    private final String prefsName = "hr.lumipex.parkMe";
+
 
     private Context context;
 
     public static String ActiveCarPlates = "ActiveCarPlates";
     public static String LastUpdate = "LastUpdate";
     public static String PhoneNumber = "PhoneNumber";
+    public static String parkingZoneId = "parkingZoneId";
+    public static String zonePriceId = "zonePriceId";
+    public static String citiyId = "citiyId";
+    public static String paymentModeId = "paymentModeId";
+    public static String trajanje = "trajanje";
 
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;

@@ -119,8 +119,12 @@ public class ConfirmPaymentDialog extends DialogFragment {
             @Override
             public void onClick(DialogInterface dialog, int id) {
 
-                PaymentMode  paymentMode = databaseManager.getPaymentModeFromId(paymentModeId);
+                prefsHelper.putInt(PrefsHelper.citiyId, citiyId);
+                prefsHelper.putInt(PrefsHelper.parkingZoneId, parkingZoneId);
+                prefsHelper.putInt(PrefsHelper.paymentModeId, paymentModeId);
+                prefsHelper.putString(PrefsHelper.trajanje, duration);
 
+                PaymentMode  paymentMode = databaseManager.getPaymentModeFromId(paymentModeId);
 
                 String message = paymentMode.getSmsPrefix()+carPlate+paymentMode.getSmsSufix();
 
@@ -135,7 +139,10 @@ public class ConfirmPaymentDialog extends DialogFragment {
                 Toast toast = Toast.makeText(context, text, duration);
                 toast.show();
 
+
                 getActivity().finish();
+
+                enableReciver();
 
                 if(favs){
                     DatabaseManager.init(context);
@@ -158,7 +165,6 @@ public class ConfirmPaymentDialog extends DialogFragment {
     public void enableReciver(){
         Context context=getActivity().getApplicationContext();
         ComponentName receiver = new ComponentName(context, IncomingSms.class);
-
         PackageManager pm = context.getPackageManager();
 
         pm.setComponentEnabledSetting(receiver,

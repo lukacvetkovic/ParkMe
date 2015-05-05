@@ -6,22 +6,15 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.telephony.SmsManager;
 import android.telephony.SmsMessage;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
 
 import java.util.concurrent.ExecutionException;
 
 import parkme.projectm.hr.parkme.Database.OrmliteDb.DatabaseManager;
-import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.ParkingZone;
-import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.ZonePrice;
-import parkme.projectm.hr.parkme.Database.OrmliteDb.OrmLiteDatabaseHelper;
-import parkme.projectm.hr.parkme.Database.OrmliteDb.SimpleDataModels.SimpleParkingZone;
-import parkme.projectm.hr.parkme.Database.OrmliteDb.SimpleDataModels.SimpleZonePrice;
 import parkme.projectm.hr.parkme.Helpers.PrefsHelper;
 import parkme.projectm.hr.parkme.Helpers.Rest.ApiConstants;
 import parkme.projectm.hr.parkme.Helpers.Rest.PutRestService;
@@ -37,6 +30,15 @@ public class IncomingSms extends BroadcastReceiver {
     // Get the object of SmsManager
     final SmsManager sms = SmsManager.getDefault();
 
+    private int mojParametar;
+
+    public int getMojParametar() {
+        return mojParametar;
+    }
+
+    public void setMojParametar(int mojParametar) {
+        this.mojParametar = mojParametar;
+    }
 
     public void onReceive(Context context, Intent intent) {
 
@@ -74,7 +76,7 @@ public class IncomingSms extends BroadcastReceiver {
 
                         //Update baze na serveru
                         if(smsData.getZoneName()!=null){
-                            int parkingZoneId=prefsHelper.getInt("parkingZoneId",0);
+                            int parkingZoneId=prefsHelper.getInt(PrefsHelper.parkingZoneId,0);
                             updateZoneName(parkingZoneId, smsData);
 
                         }
@@ -85,7 +87,7 @@ public class IncomingSms extends BroadcastReceiver {
                             float price=Float.valueOf(priceString);
                             float priceSMS=Float.valueOf(String.valueOf(smsData.getCijenaKn()) + "." + String.valueOf(smsData.getCijenaLp()));
                             if(price!=priceSMS){
-                                int zonePriceId=prefsHelper.getInt("zonePriceId",0);
+                                int zonePriceId=prefsHelper.getInt(PrefsHelper.zonePriceId,0);
                                 if(zonePriceId!=0) {
                                     updateZonePrice(zonePriceId,smsData);
                                 }

@@ -2,8 +2,6 @@ package parkme.projectm.hr.parkme.Activities;
 
 import android.app.Activity;
 import android.app.DialogFragment;
-import android.content.ComponentName;
-import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -15,9 +13,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.Spinner;
-import android.widget.Toast;
-
-import org.json.JSONException;
 
 import java.io.IOException;
 import java.text.DateFormat;
@@ -37,15 +32,12 @@ import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.ParkingZone;
 import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.PaymentMode;
 import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.ZonePrice;
 import parkme.projectm.hr.parkme.Dialogs.ConfirmPaymentDialog;
+import parkme.projectm.hr.parkme.Helpers.LocationHelper.FallbackLocationTracker;
+import parkme.projectm.hr.parkme.Helpers.LocationHelper.GPSTracker;
 import parkme.projectm.hr.parkme.Helpers.PrefsHelper;
 import parkme.projectm.hr.parkme.Helpers.Rest.ApiConstants;
 import parkme.projectm.hr.parkme.Helpers.Rest.GetRestService;
-import parkme.projectm.hr.parkme.Helpers.LocationHelper.FallbackLocationTracker;
-import parkme.projectm.hr.parkme.Helpers.LocationHelper.GPSTracker;
 import parkme.projectm.hr.parkme.R;
-import parkme.projectm.hr.parkme.Receivers.IncomingSms;
-
-import static android.widget.Toast.makeText;
 
 
 public class ParkingPaymentActivity extends Activity {
@@ -109,9 +101,9 @@ public class ParkingPaymentActivity extends Activity {
         parkingZoneList = new ArrayList<>();
 
         //Gps
-        /*gpsTracker = new GPSTracker(this);
+        gpsTracker = new GPSTracker(this);
         FallbackLocationTracker fallbackLocationTracker = new FallbackLocationTracker(this);
-        fallbackLocationTracker.start()*/
+        fallbackLocationTracker.start();
 
         selectedCityPostCode = null;
 
@@ -138,10 +130,11 @@ public class ParkingPaymentActivity extends Activity {
 
         //Get location
         Location mylocation = null;
-       /* mylocation = fallbackLocationTracker.getLocation();
+
+        mylocation = fallbackLocationTracker.getLocation();
         if (mylocation == null) {
             mylocation = gpsTracker.getLocation();
-        }*/
+        }
 
         //If location not null set spinner to city
         if (mylocation != null) {
@@ -286,8 +279,7 @@ public class ParkingPaymentActivity extends Activity {
                 args.putFloat("price", price.getPriceFloat());
                 args.putString("duration", duration);
                 if (maxDurationFormated.equals("00:00:00")) {
-                    //TODO ne znam sta stavit ako je beskonacno trajanje
-                    args.putString("maxDuration", "-");
+                    args.putString("maxDuration", "Neograničeno");
                 } else {
                     args.putString("maxDuration", maxDurationFormated);
                 }
