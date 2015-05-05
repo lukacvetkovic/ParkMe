@@ -17,6 +17,8 @@ import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.Spinner;
 
+import com.google.gson.Gson;
+
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -27,6 +29,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.concurrent.ExecutionException;
 
 import parkme.projectm.hr.parkme.Database.OrmliteDb.DatabaseManager;
 import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.City;
@@ -39,6 +42,7 @@ import parkme.projectm.hr.parkme.Helpers.LocationHelper.GPSTracker;
 import parkme.projectm.hr.parkme.Helpers.PrefsHelper;
 import parkme.projectm.hr.parkme.Helpers.Rest.ApiConstants;
 import parkme.projectm.hr.parkme.Helpers.Rest.GetRestService;
+import parkme.projectm.hr.parkme.Models.AutomaticZone;
 import parkme.projectm.hr.parkme.R;
 
 /**
@@ -52,8 +56,8 @@ public class PayParkingDialog extends FrameLayout{
     private PayParkingDialogCallback payParkingDialogCallback;
 
     GPSTracker gpsTracker;
+    Location myLocation;
 
-    GetRestService getRestService;
     String response;
     List<City> cityList;
     List<ParkingZone> parkingZoneList;
@@ -78,6 +82,8 @@ public class PayParkingDialog extends FrameLayout{
 
     ImageButton btnPay;
     CheckBox favs;
+
+    boolean firstTime;
 
     ArrayAdapter<String> adapterZone;
     ArrayAdapter<String> adapterCity;
@@ -112,6 +118,7 @@ public class PayParkingDialog extends FrameLayout{
     }
 
     private void reference(){
+        firstTime = true;
         citySpinner = (Spinner) findViewById(R.id.spinnerCity);
         zoneSpinner = (Spinner) findViewById(R.id.spinnerZone);
         paymentModeSpinner = (Spinner) findViewById(R.id.spinnerOption);
@@ -122,7 +129,6 @@ public class PayParkingDialog extends FrameLayout{
         databaseManager = DatabaseManager.getInstance();
 
         mapIdCity = new HashMap<>();
-        getRestService = new GetRestService(ApiConstants.dohvatiSveGradove + ".json");
         parkingZoneList = new ArrayList<>();
 
         //Gps
@@ -154,19 +160,19 @@ public class PayParkingDialog extends FrameLayout{
         citySpinner.setAdapter(adapterCity);
 
         //Get location
-        Location mylocation = null;
+        myLocation = null;
 
-        mylocation = fallbackLocationTracker.getLocation();
-        if (mylocation == null) {
-            mylocation = gpsTracker.getLocation();
+        myLocation = fallbackLocationTracker.getLocation();
+        if (myLocation == null) {
+            myLocation = gpsTracker.getLocation();
         }
 
         //If location not null set spinner to city
-        if (mylocation != null) {
+        if (myLocation != null) {
             Geocoder gcd = new Geocoder(context, Locale.getDefault());
             List<Address> addresses = new ArrayList<>();
             try {
-                addresses = gcd.getFromLocation(mylocation.getLatitude(), mylocation.getLongitude(), 1);
+                addresses = gcd.getFromLocation(myLocation.getLatitude(), myLocation.getLongitude(), 1);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -191,10 +197,10 @@ public class PayParkingDialog extends FrameLayout{
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
                 //Get selected city
-                selectedCityPostCode = cityNames[position];
-                Log.d("IZABRAN------>", selectedCityPostCode);
+                String city=cityNames[position];
+                Log.d("IZABRAN------>", city);
 
-                parkingZoneList = databaseManager.getAllParkingZonesFromCity(mapIdCity.get(selectedCityPostCode));
+                parkingZoneList = databaseManager.getAllParkingZonesFromCity(mapIdCity.get(city));
 
                 zoneNames = new String[parkingZoneList.size()];
                 mapIdZone = new HashMap<String, Integer>();
@@ -212,6 +218,10 @@ public class PayParkingDialog extends FrameLayout{
 
                 zoneSpinner.setAdapter(adapterZone);
 
+                if (firstTime) {
+                    findMyZoneIfPossible();
+                    firstTime = false;
+                }
 
                 zoneSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
@@ -267,7 +277,7 @@ public class PayParkingDialog extends FrameLayout{
             }
         });
 
-        btnPay.setOnClickListener(new View.OnClickListener() {
+        btnPay.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 int parkingZoneId = mapIdZone.get(zoneSpinner.getSelectedItem().toString());
@@ -303,7 +313,7 @@ public class PayParkingDialog extends FrameLayout{
                 args.putFloat("price", price.getPriceFloat());
                 args.putString("duration", duration);
                 if (maxDurationFormated.equals("00:00:00")) {
-                    args.putString("maxDuration", "Neogranièeno");
+                    args.putString("maxDuration", "Neograniceno");
                 } else {
                     args.putString("maxDuration", maxDurationFormated);
                 }
@@ -327,6 +337,29 @@ public class PayParkingDialog extends FrameLayout{
 
             }
         });
+    }
+
+    public void findMyZoneIfPossible() {
+        if (this.myLocation != null) {
+            GetRestService get = new GetRestService(ApiConstants.automaticZone + databaseManager.getCityFromPostCode(this.selectedCityPostCode).getId() + "/" + myLocation.getLatitude() + "/" + myLocation.getLongitude());
+
+            try {
+                Gson gson = new Gson();
+                response = get.execute();
+                AutomaticZone automaticZone = gson.fromJson(response, AutomaticZone.class);
+                if (automaticZone.getId_zone() != null) {
+                    ParkingZone automatic = databaseManager.getParkingZoneFromId(automaticZone.getId_zone());
+                    zoneSpinner.setSelection(Arrays.asList(zoneNames).indexOf(automatic.getName()));
+                }
+
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+
+
     }
 
     public PayParkingDialogCallback getPayParkingDialogCallback() {
