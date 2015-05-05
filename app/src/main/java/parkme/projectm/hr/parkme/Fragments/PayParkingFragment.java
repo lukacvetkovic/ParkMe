@@ -14,7 +14,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 
-import parkme.projectm.hr.parkme.Activities.ParkingPaymentActivity;
 import parkme.projectm.hr.parkme.Activities.FragmentMenuActivity;
 import parkme.projectm.hr.parkme.CustomViewModels.ActiveCarView;
 import parkme.projectm.hr.parkme.Database.OrmliteDb.DatabaseManager;

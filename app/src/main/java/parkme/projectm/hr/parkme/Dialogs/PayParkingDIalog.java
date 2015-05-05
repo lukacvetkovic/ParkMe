@@ -333,7 +333,7 @@ public class PayParkingDialog extends FrameLayout{
                 if(payParkingDialogCallback != null){
                     payParkingDialogCallback.showConfirmDialog(pay);
                 }
-                //pay.show(getFragmentManager(), "Plaèanje");
+                //pay.show(getFragmentManager(), "Placanje");
 
             }
         });
