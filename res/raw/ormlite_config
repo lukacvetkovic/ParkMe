@@ -1,5 +1,5 @@
 #
-# generated on 2015/04/13 09:40:02
+# generated on 2015/05/05 09:59:58
 #
 # --table-start--
 dataClass=parkme.projectm.hr.parkme.Database.OrmliteDb.Models.City
@@ -230,7 +230,7 @@ columnName=zone_id
 # --field-end--
 # --field-start--
 fieldName=paymentMethodId
-columnName=payment_method_id
+columnName=payment_mode_id
 # --field-end--
 # --table-fields-end--
 # --table-end--
@@ -253,11 +253,19 @@ columnName=zone_id
 # --field-end--
 # --field-start--
 fieldName=paymentMethodId
-columnName=payment_method_id
+columnName=payment_mode_id
 # --field-end--
 # --field-start--
-fieldName=dateOfPayment
-columnName=date_of_payment
+fieldName=startOfPayment
+columnName=start_of_payment
+# --field-end--
+# --field-start--
+fieldName=endOfPayment
+columnName=end_of_payment
+# --field-end--
+# --field-start--
+fieldName=capPlates
+columnName=car_tables
 # --field-end--
 # --table-fields-end--
 # --table-end--

@@ -18,9 +18,10 @@ public interface SMSParkingApi {
 
     /**
      * Gets all cities.
+     * @param sort - returned list is sorted alphabetically if true
      * @return List of all cities in table city.
      */
-    public List<City> getAllCities();
+    public List<City> getAllCities(boolean sort);
 
     /**
      * Return zones of a single city.

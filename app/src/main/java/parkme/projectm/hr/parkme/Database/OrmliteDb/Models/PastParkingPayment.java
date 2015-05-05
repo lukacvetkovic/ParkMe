@@ -14,8 +14,10 @@ public class PastParkingPayment {
 
     public final static String columnGradId = "grad_id";
     public final static String columnZoneId = "zone_id";
-    public final static String columnPaymentMethodId = "payment_method_id";
-    public final static String columnDateOfPayment = "date_of_payment";
+    public final static String columnPaymentModeId = "payment_mode_id";
+    public final static String columnStartOfPayment = "start_of_payment";
+    public final static String columnEndOfPayment = "end_of_payment";
+    public final static String columnCarTables = "car_tables";
 
 
     @DatabaseField(generatedId = true)
@@ -27,21 +29,53 @@ public class PastParkingPayment {
     @DatabaseField(columnName = columnZoneId)
     private int zoneID;
 
-    @DatabaseField(columnName = columnPaymentMethodId)
+    @DatabaseField(columnName = columnPaymentModeId)
     private int paymentMethodId;
 
-    @DatabaseField(columnName = columnDateOfPayment)
-    private String dateOfPayment;
+    @DatabaseField(columnName = columnStartOfPayment)
+    private String startOfPayment;
+
+    @DatabaseField(columnName = columnEndOfPayment)
+    private String endOfPayment;
+
+    @DatabaseField(columnName = columnCarTables)
+    private String capPlates;
 
     public PastParkingPayment() {
     }
 
-    public PastParkingPayment(int pastParkingPaymentId, int gradId, int zoneID, int paymentMethodId, String dateOfPayment) {
-        this.pastParkingPaymentId = pastParkingPaymentId;
+    public PastParkingPayment(String capPlates, String endOfPayment, int gradId, int pastParkingPaymentId, int paymentMethodId, String startOfPayment, int zoneID) {
+        this.capPlates = capPlates;
+        this.endOfPayment = endOfPayment;
         this.gradId = gradId;
-        this.zoneID = zoneID;
+        this.pastParkingPaymentId = pastParkingPaymentId;
         this.paymentMethodId = paymentMethodId;
-        this.dateOfPayment = dateOfPayment;
+        this.startOfPayment = startOfPayment;
+        this.zoneID = zoneID;
+    }
+
+    public int getZoneID() {
+        return zoneID;
+    }
+
+    public void setZoneID(int zoneID) {
+        this.zoneID = zoneID;
+    }
+
+    public String getStartOfPayment() {
+        return startOfPayment;
+    }
+
+    public void setStartOfPayment(String startOfPayment) {
+        this.startOfPayment = startOfPayment;
+    }
+
+    public int getPaymentMethodId() {
+        return paymentMethodId;
+    }
+
+    public void setPaymentMethodId(int paymentMethodId) {
+        this.paymentMethodId = paymentMethodId;
     }
 
     public int getPastParkingPaymentId() {
@@ -60,28 +94,19 @@ public class PastParkingPayment {
         this.gradId = gradId;
     }
 
-    public int getZoneID() {
-        return zoneID;
+    public String getEndOfPayment() {
+        return endOfPayment;
     }
 
-    public void setZoneID(int zoneID) {
-        this.zoneID = zoneID;
+    public void setEndOfPayment(String endOfPayment) {
+        this.endOfPayment = endOfPayment;
     }
 
-    public int getPaymentMethodId() {
-        return paymentMethodId;
+    public String getCapPlates() {
+        return capPlates;
     }
 
-    public void setPaymentMethodId(int paymentMethodId) {
-        this.paymentMethodId = paymentMethodId;
+    public void setCapPlates(String capPlates) {
+        this.capPlates = capPlates;
     }
-
-    public String getDateOfPayment() {
-        return dateOfPayment;
-    }
-
-    public void setDateOfPayment(String dateOfPayment) {
-        this.dateOfPayment = dateOfPayment;
-    }
-
 }

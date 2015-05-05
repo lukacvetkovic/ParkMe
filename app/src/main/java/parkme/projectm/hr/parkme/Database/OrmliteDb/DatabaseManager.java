@@ -9,7 +9,10 @@ import android.content.Context;
 import android.util.Log;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
@@ -71,7 +74,17 @@ public class DatabaseManager implements SMSParkingApi, Updater{
     }
 
     @Override
-    public List<City> getAllCities() {
+    public List<City> getAllCities(boolean sort) {
+        if(sort){
+            List<City> sortedCities = helper.getRuntimeCityDao().queryForAll();
+            Collections.sort(sortedCities, new Comparator<City>() {
+                @Override
+                public int compare(City city1, City city2) {
+                    return city1.getName().compareTo(city2.getName());
+                }
+            });
+            return sortedCities;
+        }
         return helper.getRuntimeCityDao().queryForAll();
     }
 

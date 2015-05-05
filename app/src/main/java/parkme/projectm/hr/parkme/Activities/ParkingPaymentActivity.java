@@ -107,7 +107,7 @@ public class ParkingPaymentActivity extends Activity {
 
         selectedCityPostCode = null;
 
-        cityList = databaseManager.getAllCities();
+        cityList = databaseManager.getAllCities(true);
 
         cityNames = new String[cityList.size()];
 

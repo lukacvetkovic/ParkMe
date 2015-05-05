@@ -13,7 +13,7 @@ public class FavoritePayment {
 
     public final static String columnGradId = "grad_id";
     public final static String columnZoneId = "zone_id";
-    public final static String columnPaymentMethodId = "payment_method_id";
+    public final static String columnPaymentModeId = "payment_mode_id";
 
     @DatabaseField(generatedId = true)
     private int favoritePaymentId;
@@ -24,7 +24,7 @@ public class FavoritePayment {
     @DatabaseField(columnName = columnZoneId)
     private int zoneID;
 
-    @DatabaseField(columnName = columnPaymentMethodId)
+    @DatabaseField(columnName = columnPaymentModeId)
     private int paymentMethodId;
 
     public FavoritePayment() {
