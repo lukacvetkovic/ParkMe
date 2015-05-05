@@ -203,7 +203,7 @@
                 android:id="@+id/btnCancelPayment"
                 android:layout_gravity="right|bottom"
                 android:layout_marginRight="15dp"
-                android:background="@drawable/parky_novac_icon"
+                android:background="@drawable/parky_cancel_icon"
                 android:longClickable="false"
                 android:layout_marginBottom="10dp" />
 
