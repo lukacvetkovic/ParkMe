@@ -72,7 +72,6 @@ public class FragmentMenuActivity extends FragmentActivity {
                 this.pageToTurnTo = 3;
             }
         }
-
     }
 
     @Override
