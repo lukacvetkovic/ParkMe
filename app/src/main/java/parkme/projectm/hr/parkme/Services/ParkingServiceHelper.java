@@ -69,6 +69,14 @@ public class ParkingServiceHelper {
         staticContext.startService(i);
     }
 
+    public void startService(Context context,int trajanje){
+        staticContext = context;    // TODO
+        Intent i = new Intent(staticContext, ActiveParkingService.class);
+        i.setAction(ActiveParkingService.SERVICE_ACTION_START);
+        staticContext.startService(i);
+        timeToSet=trajanje;
+    }
+
     public void stopService(Context context){
         staticContext = context;
         Intent i = new Intent(staticContext, ActiveParkingService.class);

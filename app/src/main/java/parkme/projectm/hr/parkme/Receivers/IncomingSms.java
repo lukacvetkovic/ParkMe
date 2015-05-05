@@ -114,6 +114,7 @@ public class IncomingSms extends BroadcastReceiver {
     }
 
     private void upisiUTablicuPastPayment(Context context, SmsData smsData) {
+        Log.d("Upisivanje","Tablice past payment");
         PrefsHelper prefsHelper= new PrefsHelper(context);
         int citiyId=prefsHelper.getInt(PrefsHelper.citiyId, 0);
         int parkingZoneId=prefsHelper.getInt(PrefsHelper.parkingZoneId, 0);
@@ -132,16 +133,21 @@ public class IncomingSms extends BroadcastReceiver {
         PastParkingPayment pastParkingPayment = new PastParkingPayment(carPlates,dateFormat.format(smsData.getDateTime()),citiyId,0,paymentModeId,dateFormat.format(date),parkingZoneId);
         databaseManager.addPastparkingPayment(pastParkingPayment);
 
+        Log.d("Upisivanje gotovo","Tablice past payment");
+
 
     }
 
     private void upisiUService(Context context, SmsData smsData) {
+        Log.d("Upisivanje","Servisa");
         PrefsHelper prefsHelper= new PrefsHelper(context);
         String trajanje = prefsHelper.getString(PrefsHelper.trajanje, "NULL");
         String[]pom=trajanje.split(":");
-        int trajanjeMin=Integer.valueOf(pom[0])+Integer.valueOf(pom[1]);
+        int trajanjeMin=Integer.valueOf(pom[0])*60+Integer.valueOf(pom[1]);
         ParkingServiceHelper serviceHelper= new ParkingServiceHelper();
-        serviceHelper.setActiveParkingTime(trajanjeMin,context);
+        serviceHelper.startService(context,trajanjeMin);
+        //serviceHelper.setActiveParkingTime(trajanjeMin,context);
+        Log.d("Upisivanje gotovo","Servisa");
     }
 
     public void updateZoneName(int parkingZoneId, SmsData smsData){
