@@ -155,7 +155,7 @@ public class ConfirmPaymentDialog extends FrameLayout {
 
                 if(updateDb){
 
-                    final MyMarker myMarker = new MyMarker(0,/*parkingZoneId*/1,lat,lng); //TODO otkomentirat
+                    final MyMarker myMarker = new MyMarker(/*parkingZoneId*/1,lat,lng); //TODO otkomentirat
                     final Gson gson = new Gson();
 
                     Thread thread= new Thread(new Runnable() {
@@ -237,7 +237,6 @@ public class ConfirmPaymentDialog extends FrameLayout {
 
     private class MyMarker
     {
-        private Integer id;
 
         private Integer id_zone;
 
@@ -246,8 +245,8 @@ public class ConfirmPaymentDialog extends FrameLayout {
         private double lat;
 
 
-        private MyMarker(Integer id, Integer id_zone, double lng, double lat) {
-            this.id = id;
+        private MyMarker( Integer id_zone, double lng, double lat) {
+
             this.id_zone = id_zone;
             this.lng = lng;
             this.lat = lat;
@@ -256,7 +255,7 @@ public class ConfirmPaymentDialog extends FrameLayout {
         @Override
         public String toString()
         {
-            return "Marker [id = "+id+", id_zone = "+id_zone+", lng = "+lng+", lat = "+lat+"]";
+            return "Marker [id_zone = "+id_zone+", lng = "+lng+", lat = "+lat+"]";
         }
     }
 
