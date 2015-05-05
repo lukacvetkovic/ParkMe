@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.IBinder;
 import android.util.Log;
+import android.widget.Toast;
 
 /**
  * Created by Mihael on 4.5.2015..
@@ -23,8 +24,6 @@ public class ParkingServiceHelper {
     private static Context staticContext;
 
     private static ActiveParkingService parkingService;
-
-    private boolean isRunning;
 
     private static long timeToSet;
 
@@ -49,34 +48,24 @@ public class ParkingServiceHelper {
     public void getServiceStatus(Context context) {
         staticContext = context;
         serviceRequestStatus = REQUEST_GET_STATS;
-        if(isRunning){
-            Log.i(TAG, "Binding service");
-            Intent i1 = new Intent(staticContext, ActiveParkingService.class);
-            context.bindService(i1, serviceConnection, Context.BIND_AUTO_CREATE);
-        }
-        else{
-            if(serviceListener != null){
-                serviceListener.serviceStatus(new ServiceStatus(SERVICE_IS_NOT_RUNNING));
-            }
-        }
+        Log.i(TAG, "Binding service");
+        Intent i1 = new Intent(staticContext, ActiveParkingService.class);
+        context.bindService(i1, serviceConnection, Context.BIND_AUTO_CREATE);
     }
 
     public void setActiveParkingTime(long time, Context context){
         staticContext = context;
         serviceRequestStatus = REQUEST_SET_PARKING_TIME;
-        if(isRunning){
-            Log.i(TAG, "Binding service");
-            timeToSet = time;
-            Intent i1 = new Intent(staticContext, ActiveParkingService.class);
-            context.bindService(i1, serviceConnection, Context.BIND_AUTO_CREATE);
-        }
+        Log.i(TAG, "Binding service");
+        timeToSet = time;
+        Intent i1 = new Intent(staticContext, ActiveParkingService.class);
+        context.bindService(i1, serviceConnection, Context.BIND_AUTO_CREATE);
     }
 
     public void startService(Context context){
         staticContext = context;    // TODO
         Intent i = new Intent(staticContext, ActiveParkingService.class);
         i.setAction(ActiveParkingService.SERVICE_ACTION_START);
-        isRunning = true;
         staticContext.startService(i);
     }
 
@@ -84,7 +73,6 @@ public class ParkingServiceHelper {
         staticContext = context;
         Intent i = new Intent(staticContext, ActiveParkingService.class);
         i.setAction(ActiveParkingService.SERVICE_ACTION_STOP);
-        isRunning = false;
         staticContext.startService(i);
     }
 
@@ -113,7 +101,14 @@ public class ParkingServiceHelper {
                     case REQUEST_SET_PARKING_TIME:
                         Log.i(TAG, "Service request - SET_PARKING_TIME");
                         serviceRequestStatus = REQUEST_NONE;
-                        parkingService.setRemainingTimeCounter(timeToSet);
+                        try {
+                            parkingService.setRemainingTimeCounter(timeToSet);
+                        }
+                        catch (Exception e){
+                            Log.e(TAG, "Service is not running");
+                            Toast toast = Toast.makeText(staticContext, "Service is not running", Toast.LENGTH_SHORT);
+                            toast.show();
+                        }
                         Log.i(TAG, "unbinding service");
                         try {
                             staticContext.unbindService(serviceConnection);
