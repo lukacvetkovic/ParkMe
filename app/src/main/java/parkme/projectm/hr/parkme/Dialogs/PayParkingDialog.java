@@ -195,6 +195,9 @@ public class PayParkingDialog extends FrameLayout{
                     if (cityName != null) {
                         citySpinner.setSelection(Arrays.asList(cityNames).indexOf(cityName));
                     }
+                    else{
+                        firstTime=false;
+                    }
                 }
 
             }
