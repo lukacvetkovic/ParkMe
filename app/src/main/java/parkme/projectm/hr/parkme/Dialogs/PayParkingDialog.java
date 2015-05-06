@@ -178,7 +178,6 @@ public class PayParkingDialog extends FrameLayout{
         //If location not null set spinner to city
         if (myLocation != null) {
             if(isOnline()) {
-                carPosition.setVisibility(VISIBLE);
                 Geocoder gcd = new Geocoder(context, Locale.getDefault());
                 List<Address> addresses = new ArrayList<>();
                 try {
@@ -193,6 +192,7 @@ public class PayParkingDialog extends FrameLayout{
 
                     String cityName = databaseManager.getCityNameFromPostCode(selectedCityPostCode);
                     if (cityName != null) {
+                        carPosition.setVisibility(VISIBLE);
                         citySpinner.setSelection(Arrays.asList(cityNames).indexOf(cityName));
                     }
                     else{
@@ -337,7 +337,7 @@ public class PayParkingDialog extends FrameLayout{
                 if(carPosition.isChecked() && mjenjano) {
 
                     confirmPaymentDialog.initWithData(city, zone, price.getPriceFloat(), duration, maxParkingDuration,
-                            parkingZoneId, paymentModeId, mapIdCity.get(city), favs.isChecked(),carPosition.isChecked(),myLocation.getLatitude(),myLocation.getLatitude());
+                            parkingZoneId, paymentModeId, mapIdCity.get(city), favs.isChecked(),carPosition.isChecked(),myLocation.getLatitude(),myLocation.getLongitude());
                 }
                 else{
                     confirmPaymentDialog.initWithData(city, zone, price.getPriceFloat(), duration, maxParkingDuration,

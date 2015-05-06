@@ -1,5 +1,5 @@
 #
-# generated on 2015/05/06 06:08:03
+# generated on 2015/05/06 08:41:49
 #
 # --table-start--
 dataClass=parkme.projectm.hr.parkme.Database.OrmliteDb.Models.City
@@ -270,6 +270,45 @@ columnName=car_tables
 # --field-start--
 fieldName=carIcon
 columnName=payment_car_icon
+# --field-end--
+# --table-fields-end--
+# --table-end--
+#################################
+# --table-start--
+dataClass=parkme.projectm.hr.parkme.Database.OrmliteDb.Models.ParkingLot
+tableName=parking_lot
+# --table-fields-start--
+# --field-start--
+fieldName=id
+id=true
+# --field-end--
+# --field-start--
+fieldName=name
+columnName=name
+# --field-end--
+# --field-start--
+fieldName=description
+columnName=description
+# --field-end--
+# --field-start--
+fieldName=adress
+columnName=adress
+# --field-end--
+# --field-start--
+fieldName=googlePlaceId
+columnName=google_place_id
+# --field-end--
+# --field-start--
+fieldName=relativity
+columnName=relativity
+# --field-end--
+# --field-start--
+fieldName=lat
+columnName=lat
+# --field-end--
+# --field-start--
+fieldName=lng
+columnName=lng
 # --field-end--
 # --table-fields-end--
 # --table-end--

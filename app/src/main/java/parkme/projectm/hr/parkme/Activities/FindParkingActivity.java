@@ -2,8 +2,13 @@ package parkme.projectm.hr.parkme.Activities;
 
 import android.content.ComponentName;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.LevelListDrawable;
 import android.location.Location;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.View;
@@ -17,10 +22,17 @@ import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import parkme.projectm.hr.parkme.Database.OrmliteDb.DatabaseManager;
+import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.ParkingLot;
 import parkme.projectm.hr.parkme.R;
 import parkme.projectm.hr.parkme.Receivers.IncomingSms;
 
@@ -41,6 +53,12 @@ public class FindParkingActivity extends FragmentActivity implements GooglePlayS
 
     private LocationRequest mLocationRequest;
 
+    private List<ParkingLot> parkingLots;
+
+    private Map<Marker, Integer> mapParkingLotId;
+
+    DatabaseManager databaseManager;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,9 +71,10 @@ public class FindParkingActivity extends FragmentActivity implements GooglePlayS
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this)
                 .build();
+        DatabaseManager.init(getBaseContext());
+        databaseManager = DatabaseManager.getInstance();
 
-        Log.d("DOSO SAM NA KRAJ ON CR", "DOSO");
-
+        mapParkingLotId = new HashMap<>();
 
         mMap.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
 
@@ -67,6 +86,30 @@ public class FindParkingActivity extends FragmentActivity implements GooglePlayS
                 mMap.addMarker(newMarker);
             }
         });
+
+        getAllMarkers();
+
+        putMarkersToMap(parkingLots);
+    }
+
+    private void putMarkersToMap(final List<ParkingLot> parkingLots) {
+
+        for (ParkingLot parkingLot : parkingLots) {
+            Marker marker = mMap.addMarker(new MarkerOptions()
+                    .position(new LatLng(parkingLot.getLat(), parkingLot.getLng()))
+                    .title(parkingLot.getName())
+                    .snippet(parkingLot.getAdress())
+                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.logo_small)));
+
+            mapParkingLotId.put(marker, parkingLot.getId());
+
+        }
+
+    }
+
+    private void getAllMarkers() {
+        Log.d("Pokupio sam", "parkiralista");
+        parkingLots = databaseManager.getAllParkingLots();
     }
 
     @Override

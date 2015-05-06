@@ -5,6 +5,7 @@ import java.util.Objects;
 
 import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.City;
 import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.MaxDuration;
+import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.ParkingLot;
 import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.ParkingZone;
 import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.PaymentMode;
 import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.PostCode;
@@ -26,7 +27,14 @@ public interface Updater {
      *
      * @param cities List of changed or added rows.
      */
-    public void updateCity(List<City> cities);
+    public void updateCity(List<City> cities);/**
+
+     * Updates parking lot table with new rows.
+     * If row exists changes values, inserts new row otherwise.
+     *
+     * @param parkingLots List of changed or added rows.
+     */
+    public void updateParkingLot(List<ParkingLot> parkingLots);
 
     /**
      * Updates parking zone table with new rows.
