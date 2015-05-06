@@ -104,7 +104,7 @@ public class DatabaseManager implements SMSParkingApi, Updater{
     public List<ParkingLot> getAllParkingLots(){
         return helper.getRuntimeParkingLotDao().queryForAll();
     }
-    
+
     public City getCityFromPostCode(String postCode) {
         try {
             int cityId = helper.getRuntimePostcodeDao().queryBuilder()
