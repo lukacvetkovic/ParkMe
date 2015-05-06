@@ -5,6 +5,7 @@
     <color name="parky_green_darker">#6bad3e</color>
     <color name="parky_green_transparent">#667dba32</color>
 
+    <color name="parky_spacer_light_gray">#C0C8B1</color>
     <color name="parky_text_gray">#999999</color>
     <color name="parky_text_dark_gray">#555555</color>
     <color name="parky_text_darker_gray_almost_black">#222222</color>

@@ -79,6 +79,7 @@ public class PayParkingFragment extends Fragment {
                         public void dismissDialog() {
                             if(payParkingFragmentCallback != null){
                                 payParkingFragmentCallback.dismissPayParkingDialog(payParkingDialog);
+                                payParkingFragmentCallback.refreshActivity();
                             }
                         }
 
