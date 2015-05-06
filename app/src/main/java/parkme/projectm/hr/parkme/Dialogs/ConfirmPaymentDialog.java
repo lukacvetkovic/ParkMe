@@ -264,7 +264,7 @@ public class ConfirmPaymentDialog extends FrameLayout {
         private double lat;
 
 
-        private MyMarker( Integer id_zone, double lng, double lat) {
+        private MyMarker( Integer id_zone, double lat, double lng) {
 
             this.id_zone = id_zone;
             this.lng = lng;
