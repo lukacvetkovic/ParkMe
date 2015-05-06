@@ -233,7 +233,7 @@ public class PayParkingDialog extends FrameLayout{
                 zoneSpinner.setAdapter(adapterZone);
 
                 if (firstTime) {
-                    findMyZoneIfPossible();
+                    //findMyZoneIfPossible();
                     firstTime = false;
                 }
                 btnPay.setVisibility(VISIBLE);

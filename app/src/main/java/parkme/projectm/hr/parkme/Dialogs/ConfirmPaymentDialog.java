@@ -15,13 +15,17 @@ import android.widget.Toast;
 import com.google.android.gms.maps.model.Marker;
 import com.google.gson.Gson;
 
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.concurrent.ExecutionException;
 
 import parkme.projectm.hr.parkme.Database.OrmliteDb.DatabaseManager;
 import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.FavoritePayment;
+import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.FavouriteCar;
 import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.ParkingZone;
+import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.PastParkingPayment;
 import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.PaymentMode;
 import parkme.projectm.hr.parkme.Helpers.PrefsHelper;
 import parkme.projectm.hr.parkme.Helpers.Rest.ApiConstants;
@@ -146,9 +150,24 @@ public class ConfirmPaymentDialog extends FrameLayout {
 
                 enableReciver();
 
+                // TODO _ MOCKANJE UPISA U BAZU KOJI SE DOVIJA U RECEIVERU ZAPRAVO
+
+                DatabaseManager.init(context);
+                DatabaseManager databaseManager = DatabaseManager.getInstance();
+
+                FavouriteCar favouriteCar = databaseManager.getFavoriteCarFromPlates(carPlate);
+                DateFormat dateFormat = new SimpleDateFormat("HH:mm dd/MM");
+                Date date = new Date();
+
+                PastParkingPayment pastParkingPayment = new PastParkingPayment(carPlate, favouriteCar.getCarIcon(), dateFormat.format(date),citiyId,0,paymentModeId,dateFormat.format(date),parkingZoneId);
+                databaseManager.addPastparkingPayment(pastParkingPayment);
+
+                // TODO _ MOCKANJE UPISA U BAZU KOJI SE DOVIJA U RECEIVERU ZAPRAVO - maknut ovo
+
+
                 if(favs){
-                    DatabaseManager.init(context);
-                    DatabaseManager databaseManager = DatabaseManager.getInstance();
+                    //DatabaseManager.init(context);
+                    //DatabaseManager databaseManager = DatabaseManager.getInstance();
                     databaseManager.addFavoritePayment(new FavoritePayment(citiyId,parkingZoneId,paymentModeId));
                     Log.d("UPISANO U BAZU FAVS : ", "CityId :" + String.valueOf(citiyId) + " , " + " parkingZoneId :" + String.valueOf(parkingZoneId) + " paymentModeId :" + String.valueOf(paymentModeId));
                 }
