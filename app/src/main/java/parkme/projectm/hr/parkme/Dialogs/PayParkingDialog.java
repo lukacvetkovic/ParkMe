@@ -337,7 +337,7 @@ public class PayParkingDialog extends FrameLayout{
                 if(carPosition.isChecked() && mjenjano) {
 
                     confirmPaymentDialog.initWithData(city, zone, price.getPriceFloat(), duration, maxParkingDuration,
-                            parkingZoneId, paymentModeId, mapIdCity.get(city), favs.isChecked(),carPosition.isChecked(),myLocation.getLatitude(),myLocation.getLatitude());
+                            parkingZoneId, paymentModeId, mapIdCity.get(city), favs.isChecked(),carPosition.isChecked(),myLocation.getLatitude(),myLocation.getLongitude());
                 }
                 else{
                     confirmPaymentDialog.initWithData(city, zone, price.getPriceFloat(), duration, maxParkingDuration,
