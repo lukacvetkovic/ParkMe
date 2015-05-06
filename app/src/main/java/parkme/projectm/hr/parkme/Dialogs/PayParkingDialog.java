@@ -236,6 +236,7 @@ public class PayParkingDialog extends FrameLayout{
                     findMyZoneIfPossible();
                     firstTime = false;
                 }
+                btnPay.setVisibility(VISIBLE);
 
                 zoneSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
