@@ -18,7 +18,7 @@ public class PastParkingPayment {
     public final static String columnStartOfPayment = "start_of_payment";
     public final static String columnEndOfPayment = "end_of_payment";
     public final static String columnCarTables = "car_tables";
-
+    public final static String columnPaymentCarIcon = "payment_car_icon";
 
     @DatabaseField(generatedId = true)
     private int pastParkingPaymentId;
@@ -41,17 +41,29 @@ public class PastParkingPayment {
     @DatabaseField(columnName = columnCarTables)
     private String capPlates;
 
+    @DatabaseField(columnName = columnPaymentCarIcon)
+    private int carIcon;
+
     public PastParkingPayment() {
     }
 
-    public PastParkingPayment(String capPlates, String endOfPayment, int gradId, int pastParkingPaymentId, int paymentMethodId, String startOfPayment, int zoneID) {
+    public String getCapPlates() {
+        return capPlates;
+    }
+
+    public PastParkingPayment(String capPlates, int carIcon, String endOfPayment, int gradId, int pastParkingPaymentId, int paymentMethodId, String startOfPayment, int zoneID) {
         this.capPlates = capPlates;
+        this.carIcon = carIcon;
         this.endOfPayment = endOfPayment;
         this.gradId = gradId;
         this.pastParkingPaymentId = pastParkingPaymentId;
         this.paymentMethodId = paymentMethodId;
         this.startOfPayment = startOfPayment;
         this.zoneID = zoneID;
+    }
+
+    public void setCapPlates(String capPlates) {
+        this.capPlates = capPlates;
     }
 
     public int getZoneID() {
@@ -102,11 +114,11 @@ public class PastParkingPayment {
         this.endOfPayment = endOfPayment;
     }
 
-    public String getCapPlates() {
-        return capPlates;
+    public int getCarIcon() {
+        return carIcon;
     }
 
-    public void setCapPlates(String capPlates) {
-        this.capPlates = capPlates;
+    public void setCarIcon(int carIcon) {
+        this.carIcon = carIcon;
     }
 }

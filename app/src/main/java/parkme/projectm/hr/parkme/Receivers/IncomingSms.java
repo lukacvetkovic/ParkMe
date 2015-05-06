@@ -18,6 +18,7 @@ import java.util.Date;
 import java.util.concurrent.ExecutionException;
 
 import parkme.projectm.hr.parkme.Database.OrmliteDb.DatabaseManager;
+import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.FavouriteCar;
 import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.PastParkingPayment;
 import parkme.projectm.hr.parkme.Helpers.PrefsHelper;
 import parkme.projectm.hr.parkme.Helpers.Rest.ApiConstants;
@@ -128,9 +129,11 @@ public class IncomingSms extends BroadcastReceiver {
         Date date = new Date();
         System.out.println(dateFormat.format(date)); //2014/08/06 15:59:48
 
-        /*String capPlates, String endOfPayment, int gradId, int pastParkingPaymentId, int paymentMethodId, String startOfPayment, int zoneID*/
+        FavouriteCar favouriteCar = databaseManager.getFavoriteCarFromPlates(carPlates);
 
-        PastParkingPayment pastParkingPayment = new PastParkingPayment(carPlates,dateFormat.format(smsData.getDateTime()),citiyId,0,paymentModeId,dateFormat.format(date),parkingZoneId);
+        /*String capPlates, int carIcon, String endOfPayment, int gradId, int pastParkingPaymentId, int paymentMethodId, String startOfPayment, int zoneID*/
+
+        PastParkingPayment pastParkingPayment = new PastParkingPayment(carPlates, favouriteCar.getCarIcon(), dateFormat.format(smsData.getDateTime()),citiyId,0,paymentModeId,dateFormat.format(date),parkingZoneId);
         databaseManager.addPastparkingPayment(pastParkingPayment);
 
         Log.d("Upisivanje gotovo","Tablice past payment");

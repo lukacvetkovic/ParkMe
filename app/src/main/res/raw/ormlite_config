@@ -1,5 +1,5 @@
 #
-# generated on 2015/05/05 05:20:47
+# generated on 2015/05/06 05:38:22
 #
 # --table-start--
 dataClass=parkme.projectm.hr.parkme.Database.OrmliteDb.Models.City
@@ -266,6 +266,10 @@ columnName=end_of_payment
 # --field-start--
 fieldName=capPlates
 columnName=car_tables
+# --field-end--
+# --field-start--
+fieldName=carIcon
+columnName=payment_car_icon
 # --field-end--
 # --table-fields-end--
 # --table-end--

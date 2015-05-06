@@ -78,4 +78,10 @@ public class PaymentHistoryFragment extends Fragment {
         });
         return rootView;
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        // TODO popunit activeTicketView ako imamo aktivnu kartu, ako ne ne - hideat ga ili nesto
+    }
 }
