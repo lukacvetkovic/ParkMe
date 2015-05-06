@@ -9,13 +9,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import parkme.projectm.hr.parkme.Activities.FragmentMenuActivity;
-import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.FavouriteCar;
 import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.PastParkingPayment;
 import parkme.projectm.hr.parkme.R;
 
-/**
- * Created by Mihael on 6.5.2015..
- */
 public class PastPaymentsArrayAdapter extends ArrayAdapter<PastParkingPayment> {
     private final FragmentMenuActivity context;
     private final PastParkingPayment[] values;
