@@ -116,8 +116,8 @@
                         android:layout_marginLeft="@dimen/parky_text_title_left_and_right_padding"
                         android:layout_marginRight="@dimen/parky_text_title_left_and_right_padding"
                         android:paddingTop="@dimen/parky_custom_linear_layout_vertical_spacing"
-                        android:visibility="invisible"
-                        android:text="Postavi moju lokaciju kao lokaciju auta"/>
+                        android:text="Postavi moju lokaciju kao lokaciju auta"
+                        android:visibility="invisible" />
 
                 </LinearLayout>
 
