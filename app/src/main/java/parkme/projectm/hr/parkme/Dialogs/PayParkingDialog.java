@@ -178,7 +178,6 @@ public class PayParkingDialog extends FrameLayout{
         //If location not null set spinner to city
         if (myLocation != null) {
             if(isOnline()) {
-                carPosition.setVisibility(VISIBLE);
                 Geocoder gcd = new Geocoder(context, Locale.getDefault());
                 List<Address> addresses = new ArrayList<>();
                 try {
@@ -193,6 +192,7 @@ public class PayParkingDialog extends FrameLayout{
 
                     String cityName = databaseManager.getCityNameFromPostCode(selectedCityPostCode);
                     if (cityName != null) {
+                        carPosition.setVisibility(VISIBLE);
                         citySpinner.setSelection(Arrays.asList(cityNames).indexOf(cityName));
                     }
                     else{
