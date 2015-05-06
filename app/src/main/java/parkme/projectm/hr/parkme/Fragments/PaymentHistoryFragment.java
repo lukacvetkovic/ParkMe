@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import parkme.projectm.hr.parkme.CustomViewModels.ActiveTicketView;
 import parkme.projectm.hr.parkme.R;
 import parkme.projectm.hr.parkme.Services.ParkingServiceHelper;
 
@@ -24,6 +25,8 @@ public class PaymentHistoryFragment extends Fragment {
     private Button setRemainingTimeButton;
     private TextView remainingTimeTextView;
 
+    private ActiveTicketView activeTicketView;
+
     private ParkingServiceHelper parkingServiceHelper = new ParkingServiceHelper();
 
     @Override
@@ -35,6 +38,7 @@ public class PaymentHistoryFragment extends Fragment {
         remainingTimeTextView = (TextView) rootView.findViewById(R.id.txtRemainingTime);
         getRemainingTimeButton = (Button) rootView.findViewById(R.id.btnGetTime);
         setRemainingTimeButton = (Button) rootView.findViewById(R.id.btnSetTime);
+        activeTicketView = (ActiveTicketView) rootView.findViewById(R.id.activeTicketView);
 
         parkingServiceHelper.setServiceListener(new ParkingServiceHelper.ParkingServiceListener() {
             @Override

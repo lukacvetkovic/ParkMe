@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="120dp"
+    android:background="@color/parky_green_transparent">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center">
+
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:id="@+id/imgActiveTicketCar"
+            android:src="@drawable/car_icon_blue_s"
+            android:layout_gravity="center"
+            android:layout_marginLeft="10dp" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="9">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="ZG####AB"
+                android:id="@+id/txtActiveTicketCarTables"
+                android:layout_gravity="center_horizontal"
+                android:textColor="@color/parky_text_darker_gray_almost_black"
+                android:textSize="34sp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_gravity="center_horizontal"
+                android:id="@+id/lowText">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="do isteka: "
+                    android:id="@+id/txtActiveTicketRemainingTime"
+                    android:layout_gravity="center_vertical"
+                    android:textColor="@color/parky_text_darker_gray_almost_black"
+                    android:textSize="@dimen/parky_car_tables_text_size"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="##"
+                    android:id="@+id/txtActiveTicketRemainingTimeMinutes"
+                    android:layout_gravity="center_vertical"
+                    android:textColor="@color/parky_error_red"
+                    android:textSize="@dimen/parky_car_tables_text_size"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text=" min"
+                    android:id="@+id/txtActiveTicketRemainingTimeMins"
+                    android:layout_gravity="center_vertical"
+                    android:textColor="@color/parky_error_red"
+                    android:textSize="@dimen/parky_car_tables_text_size"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+</FrameLayout>

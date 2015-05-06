@@ -108,7 +108,7 @@ public class UpdateOrRemoveCarDialog extends FrameLayout {
                 selectedCar = SelectedCar.RED;
                 selectedRedCar.setVisibility(VISIBLE);
                 break;
-            case R.drawable.car_icon_yellow_s:
+            case R.drawable.car_icon_orange_s:
                 selectedCar = SelectedCar.YELLOW;
                 selectedYellowCar.setVisibility(VISIBLE);
                 break;
@@ -145,7 +145,7 @@ public class UpdateOrRemoveCarDialog extends FrameLayout {
                             carIconResId = R.drawable.car_icon_red_s;
                             break;
                         case YELLOW:
-                            carIconResId = R.drawable.car_icon_yellow_s;
+                            carIconResId = R.drawable.car_icon_orange_s;
                             break;
                         default:
                             carIconResId = R.drawable.car_icon_green_s;

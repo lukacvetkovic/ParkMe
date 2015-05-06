@@ -165,7 +165,7 @@
                                 android:layout_height="70dp"
                                 android:id="@+id/imgBtnYellowCar"
                                 android:layout_gravity="center_horizontal"
-                                android:background="@drawable/car_icon_yellow_s"/>
+                                android:background="@drawable/car_icon_orange_s"/>
 
                             <ImageView
                                 android:layout_width="20dp"

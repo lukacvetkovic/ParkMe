@@ -1,9 +1,7 @@
 package parkme.projectm.hr.parkme.Dialogs;
 
-import android.app.DialogFragment;
 import android.content.Context;
 import android.text.InputFilter;
-import android.text.Layout;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.Button;
@@ -117,7 +115,7 @@ public class AddCarDialog extends FrameLayout{
                             carIconResId = R.drawable.car_icon_red_s;
                             break;
                         case YELLOW:
-                            carIconResId = R.drawable.car_icon_yellow_s;
+                            carIconResId = R.drawable.car_icon_orange_s;
                             break;
                         default:
                             carIconResId = R.drawable.car_icon_green_s;
