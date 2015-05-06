@@ -12,14 +12,20 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.maps.model.Marker;
+import com.google.gson.Gson;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.concurrent.ExecutionException;
 
 import parkme.projectm.hr.parkme.Database.OrmliteDb.DatabaseManager;
 import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.FavoritePayment;
 import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.ParkingZone;
 import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.PaymentMode;
 import parkme.projectm.hr.parkme.Helpers.PrefsHelper;
+import parkme.projectm.hr.parkme.Helpers.Rest.ApiConstants;
+import parkme.projectm.hr.parkme.Helpers.Rest.PostRestService;
 import parkme.projectm.hr.parkme.R;
 import parkme.projectm.hr.parkme.Receivers.IncomingSms;
 
@@ -50,6 +56,9 @@ public class ConfirmPaymentDialog extends FrameLayout {
     int paymentModeId;
     int citiyId;
     boolean favs;
+    boolean updateDb;
+    double lat;
+    double lng;
 
     private ImageButton cancelPaymentButton;
     private ImageButton confirmpaymentButton;
@@ -144,6 +153,33 @@ public class ConfirmPaymentDialog extends FrameLayout {
                     Log.d("UPISANO U BAZU FAVS : ", "CityId :" + String.valueOf(citiyId) + " , " + " parkingZoneId :" + String.valueOf(parkingZoneId) + " paymentModeId :" + String.valueOf(paymentModeId));
                 }
 
+                if(updateDb){
+
+                    final MyMarker myMarker = new MyMarker(/*parkingZoneId*/1,lat,lng); //TODO otkomentirat
+                    final Gson gson = new Gson();
+
+                    Thread thread= new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Log.d("POSTANJE","MARKERA");
+                            PostRestService postRestService= new PostRestService(ApiConstants.postNewMarker, gson.toJson(myMarker));
+                            String response="";
+                            try {
+                                response=postRestService.execute();
+                            } catch (ExecutionException e) {
+                                e.printStackTrace();
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+
+                            Log.d("POSTANJE RESPONSE",response);
+                        }
+                    });
+
+                    thread.start();
+
+                }
+
                 if(confirmPaymentDialogCallback != null){
                     confirmPaymentDialogCallback.dismissBothDialogs();
                 }
@@ -152,7 +188,7 @@ public class ConfirmPaymentDialog extends FrameLayout {
     }
 
     public void initWithData(String city, String zone, float price, String duration, String maxDuration,
-                      int parkingZoneId, int paymentModeId, int cityId, boolean favs){
+                      int parkingZoneId, int paymentModeId, int cityId, boolean favs,boolean updateDb, double lat, double lng){
         carPlate = prefsHelper.getString(PrefsHelper.ActiveCarPlates,"NULL");
         this.city = city;
         this.parkingZone = zone;
@@ -163,6 +199,9 @@ public class ConfirmPaymentDialog extends FrameLayout {
         this.paymentModeId = paymentModeId;
         this.citiyId = cityId;
         this.favs = favs;
+        this.updateDb=updateDb;
+        this.lat=lat;
+        this.lng=lng;
 
         Calendar cal = Calendar.getInstance();
         cal.add(Calendar.DATE, 1);
@@ -194,4 +233,31 @@ public class ConfirmPaymentDialog extends FrameLayout {
                 PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
                 PackageManager.DONT_KILL_APP);
     }
+
+
+    private class MyMarker
+    {
+
+        private Integer id_zone;
+
+        private double lng;
+
+        private double lat;
+
+
+        private MyMarker( Integer id_zone, double lng, double lat) {
+
+            this.id_zone = id_zone;
+            this.lng = lng;
+            this.lat = lat;
+        }
+
+        @Override
+        public String toString()
+        {
+            return "Marker [id_zone = "+id_zone+", lng = "+lng+", lat = "+lat+"]";
+        }
+    }
+
+
 }

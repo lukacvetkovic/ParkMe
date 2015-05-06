@@ -236,7 +236,7 @@ public class FragmentMenuActivity extends FragmentActivity {
                 case 1:
                     return "Plati parking";
                 case 2:
-                    return "Povijest plačanja";
+                    return "Povijest plaćanja";
                 default:
                     return "Undefined";
 

@@ -28,6 +28,9 @@ public class PrefsHelper {
     public static String citiyId = "citiyId";
     public static String paymentModeId = "paymentModeId";
     public static String trajanje = "trajanje";
+    public static String carLat="carLat";
+    public static String carLng="carLng";
+
 
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
