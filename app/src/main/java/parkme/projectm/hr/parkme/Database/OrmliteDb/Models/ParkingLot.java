@@ -18,7 +18,7 @@ public class ParkingLot {
     private String name;
     @DatabaseField(columnName = "description")
     private String description;
-    @DatabaseField(columnName = "adress")
+    @DatabaseField(columnName = "address")
     private String adress;
     @DatabaseField(columnName = "google_place_id")
     private String googlePlaceId;
@@ -29,6 +29,9 @@ public class ParkingLot {
     @DatabaseField(columnName = "lng")
     private double lng;
 
+    public ParkingLot(){
+
+    }
 
     public ParkingLot(SimpleParkingLot p) {
         this.id = p.getId();
