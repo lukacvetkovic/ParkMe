@@ -6,6 +6,7 @@ import com.j256.ormlite.android.apptools.OrmLiteConfigUtil;
 import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.City;
 import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.FavoritePayment;
 import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.MaxDuration;
+import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.ParkingLot;
 import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.ParkingZone;
 import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.PastParkingPayment;
 import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.PaymentMode;
@@ -30,7 +31,8 @@ public class DatabaseConfigUtil extends OrmLiteConfigUtil {
             MaxDuration.class,
             FavouriteCar.class,
             FavoritePayment.class,
-            PastParkingPayment.class
+            PastParkingPayment.class,
+            ParkingLot.class
     };
     public static void main(String[] args) throws Exception {
         writeConfigFile("ormlite_config", classes);

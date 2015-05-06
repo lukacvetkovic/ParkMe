@@ -39,6 +39,8 @@ public class UpdateManager {
             Log.d("Gotov update "," ZonePrice");
             updater.updateMaxDuration(source.getMaxDurationRows(lastUpdate));
             Log.d("Gotov update "," MaxDuration");
+            updater.updateParkingLot(source.getNewParkingLotRows(lastUpdate));
+            Log.d("Gotov update "," ParkingLot");
         }catch (NullPointerException e){
             throw new Exception("Update error"); // TODO promjeni lanac exceptiona, ovo bi trebao bit neki UpdateException
         }

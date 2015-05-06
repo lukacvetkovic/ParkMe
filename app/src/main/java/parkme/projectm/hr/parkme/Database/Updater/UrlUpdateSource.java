@@ -12,6 +12,7 @@ import java.util.concurrent.ExecutionException;
 import parkme.projectm.hr.parkme.Database.OrmliteDb.DatabaseManager;
 import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.City;
 import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.MaxDuration;
+import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.ParkingLot;
 import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.ParkingZone;
 import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.PaymentMode;
 import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.PostCode;
@@ -20,6 +21,7 @@ import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.ZonePrice;
 import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.ZoneWorkTime;
 import parkme.projectm.hr.parkme.Database.OrmliteDb.SimpleDataModels.SimpleCity;
 import parkme.projectm.hr.parkme.Database.OrmliteDb.SimpleDataModels.SimpleMaxDuration;
+import parkme.projectm.hr.parkme.Database.OrmliteDb.SimpleDataModels.SimpleParkingLot;
 import parkme.projectm.hr.parkme.Database.OrmliteDb.SimpleDataModels.SimpleParkingZone;
 import parkme.projectm.hr.parkme.Database.OrmliteDb.SimpleDataModels.SimplePaymentMode;
 import parkme.projectm.hr.parkme.Database.OrmliteDb.SimpleDataModels.SimplePostCode;
@@ -71,6 +73,16 @@ public class UrlUpdateSource implements UpdateSource{
         List<ParkingZone> rows = new ArrayList<>();
         for (SimpleParkingZone simpleRow : simpleRows){
             rows.add(new ParkingZone(simpleRow));
+        }
+        return rows;
+    }
+
+    @Override
+    public List<ParkingLot> getNewParkingLotRows(Date lastUpdate) {
+        List<SimpleParkingLot> simpleRows =  getNewTableRows(urlBuilder("parking_lot", lastUpdate), SimpleParkingLot.class);
+        List<ParkingLot> rows = new ArrayList<>();
+        for (SimpleParkingLot simpleRow : simpleRows){
+            rows.add(new ParkingLot(simpleRow));
         }
         return rows;
     }

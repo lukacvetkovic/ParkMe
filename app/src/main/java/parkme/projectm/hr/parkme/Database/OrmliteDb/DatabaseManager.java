@@ -24,6 +24,7 @@ import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.City;
 import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.FavoritePayment;
 import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.FavouriteCar;
 import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.MaxDuration;
+import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.ParkingLot;
 import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.ParkingZone;
 import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.PastParkingPayment;
 import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.PaymentMode;
@@ -100,6 +101,10 @@ public class DatabaseManager implements SMSParkingApi, Updater{
         }
     }
 
+    public List<ParkingLot> getAllParkingLots(){
+        return helper.getRuntimeParkingLotDao().queryForAll();
+    }
+    
     public City getCityFromPostCode(String postCode) {
         try {
             int cityId = helper.getRuntimePostcodeDao().queryBuilder()
@@ -365,6 +370,12 @@ public class DatabaseManager implements SMSParkingApi, Updater{
         for (City city: cities) {
             helper.getRuntimeCityDao().createOrUpdate(city);
         }
+    }
+
+    @Override
+    public void updateParkingLot(List<ParkingLot> parkingLots) {
+        for(ParkingLot parkingLot: parkingLots)
+        helper.getRuntimeParkingLotDao().createOrUpdate(parkingLot);
     }
 
     @Override

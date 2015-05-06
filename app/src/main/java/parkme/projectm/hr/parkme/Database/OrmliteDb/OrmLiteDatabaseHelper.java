@@ -19,6 +19,7 @@ import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.City;
 import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.FavoritePayment;
 import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.FavouriteCar;
 import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.MaxDuration;
+import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.ParkingLot;
 import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.ParkingZone;
 import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.PastParkingPayment;
 import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.PaymentMode;
@@ -64,6 +65,7 @@ public class OrmLiteDatabaseHelper extends OrmLiteSqliteOpenHelper {
             TableUtils.createTable(connectionSource, FavouriteCar.class);
             TableUtils.createTable(connectionSource, FavoritePayment.class);
             TableUtils.createTable(connectionSource, PastParkingPayment.class);
+            TableUtils.createTable(connectionSource, ParkingLot.class);
         } catch (SQLException e) {
             Log.e(OrmLiteDatabaseHelper.class.getName(), "Can't create database", e);
             throw new RuntimeException(e);
@@ -89,6 +91,7 @@ public class OrmLiteDatabaseHelper extends OrmLiteSqliteOpenHelper {
             TableUtils.dropTable(connectionSource, FavouriteCar.class, true);
             TableUtils.dropTable(connectionSource, FavoritePayment.class, true);
             TableUtils.dropTable(connectionSource, PastParkingPayment.class, true);
+            TableUtils.dropTable(connectionSource, ParkingLot.class, true);
             // after we drop the old databases, we create the new ones
             onCreate(db, connectionSource);
         } catch (SQLException e) {
@@ -138,6 +141,33 @@ public class OrmLiteDatabaseHelper extends OrmLiteSqliteOpenHelper {
         }
         return parkingZoneDao;
     }
+
+    // the DAO object we use to access the payment_mode table
+    private Dao<ParkingLot, Integer> parkingLotDao = null;
+    private RuntimeExceptionDao<ParkingLot, Integer> parkingLotRuntimeDao = null;
+
+    /**
+     * Returns the Database Access Object (DAO) for our ParkingLot class. It will create it or just give the cached
+     * value.
+     */
+    public Dao<ParkingLot, Integer> getparkingLotDao() throws SQLException {
+        if (parkingLotDao == null) {
+            parkingLotDao = getDao(ParkingLot.class);
+        }
+        return parkingLotDao;
+    }
+
+    /**
+     * Returns the RuntimeExceptionDao (Database Access Object) version of a Dao for our ParkingLot class. It will
+     * create it or just give the cached value. RuntimeExceptionDao only through RuntimeExceptions.
+     */
+    public RuntimeExceptionDao<ParkingLot, Integer> getRuntimeParkingLotDao() {
+        if (parkingLotRuntimeDao == null) {
+            parkingLotRuntimeDao = getRuntimeExceptionDao(ParkingLot.class);
+        }
+        return parkingLotRuntimeDao;
+    }
+
 
     /**
      * Returns the RuntimeExceptionDao (Database Access Object) version of a Dao for our ParkingZone class. It will
