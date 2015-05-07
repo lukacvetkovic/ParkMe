@@ -56,7 +56,7 @@ public class PayParkingFragment extends Fragment {
     private PayParkingFragmentCallback payParkingFragmentCallback;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(LayoutInflater inflater, final ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_parking_pay, container, false);
         this.context = getActivity();
@@ -95,6 +95,16 @@ public class PayParkingFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
                 FavoritePayment favoritePayment = favoritePaymentArrayAdapter.getItem(position);
+
+                // TODO ovdje placanje
+
+                payParkingDialog = new PayParkingDialog(context);
+
+
+                if(payParkingFragmentCallback != null){
+                    payParkingFragmentCallback.displayPayParkingDialog(payParkingDialog);
+                }
+                payParkingDialog.showConfirmPaymentDialogForFavoritepayment(favoritePayment);
 
                 Toast toast = Toast.makeText(context, "" + favoritePayment.getGradId() + " - " + favoritePayment.getZoneID(), Toast.LENGTH_SHORT);
                 toast.show();

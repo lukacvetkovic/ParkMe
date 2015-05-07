@@ -36,6 +36,7 @@ import java.util.concurrent.ExecutionException;
 
 import parkme.projectm.hr.parkme.Database.OrmliteDb.DatabaseManager;
 import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.City;
+import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.FavoritePayment;
 import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.MaxDuration;
 import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.ParkingZone;
 import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.PaymentMode;
@@ -374,6 +375,49 @@ public class PayParkingDialog extends FrameLayout{
 
             }
         });
+    }
+
+    public void showConfirmPaymentDialogForFavoritepayment(FavoritePayment favoritePayment){
+        confirmPaymentDialog = new ConfirmPaymentDialog(context);
+        DatabaseManager dbManager = DatabaseManager.getInstance();
+        /*String city, String zone, float price, String duration, String maxDuration,
+        int parkingZoneId, int paymentModeId, int cityId, boolean favs,boolean updateDb, double lat, double lng*/
+        ParkingZone parkingZone = dbManager.getParkingZoneFromId(favoritePayment.getZoneID());
+        String cityName = dbManager.getCityNameFromId(favoritePayment.getGradId());
+        PaymentMode paymentMode = dbManager.getPaymentModeFromId(favoritePayment.getPaymentMethodId());
+        ZonePrice zonePrice = dbManager.getPrice(new Date(), paymentMode.getId());
+
+        MaxDuration maxDuration = databaseManager.getMaxDuration(new Date(), parkingZone.getId());
+        DateFormat formatter = new SimpleDateFormat("HH:mm:ss");
+        String maxDurationFormated = formatter.format(maxDuration.getMaxDuration().getTime());
+
+        String maxParkingDuration;
+        if (maxDurationFormated.equals("00:00:00")) {
+            maxParkingDuration = "Neograniceno";
+        } else {
+            maxParkingDuration = maxDurationFormated;
+        }
+
+        confirmPaymentDialog.initWithData(cityName, parkingZone.getName(), zonePrice.getPriceFloat(), paymentMode.getDuration().toString(),
+                maxParkingDuration, parkingZone.getId(), paymentMode.getId(), favoritePayment.getGradId(), false, false, 0, 0);
+
+        confirmPaymentDialog.setConfirmPaymentDialogCallback(new ConfirmPaymentDialog.ConfirmPaymentDialogCallback() {
+            @Override
+            public void dismissDialog() {
+                payParkingDialogCallback.dismissConfirmDialog(confirmPaymentDialog);
+            }
+
+            @Override
+            public void dismissBothDialogs() {
+                payParkingDialogCallback.dismissConfirmDialog(confirmPaymentDialog);
+                payParkingDialogCallback.dismissDialog();
+            }
+        });
+
+        if(payParkingDialogCallback != null){
+            payParkingDialogCallback.showConfirmDialog(confirmPaymentDialog);
+        }
+
     }
 
     public void findMyZoneIfPossible() {
