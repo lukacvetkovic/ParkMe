@@ -55,7 +55,7 @@ public class FavoritePaymentView extends FrameLayout {
         this.favoritePaymentCity.setText(favCity);
     }
 
-    public void setpaymentZoneText(String zone){
+    public void setPaymentZoneText(String zone){
         this.favoritePaymentZone.setText(zone);
     }
 }

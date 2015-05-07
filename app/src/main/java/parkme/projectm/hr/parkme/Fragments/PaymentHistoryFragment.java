@@ -48,6 +48,8 @@ public class PaymentHistoryFragment extends Fragment {
     private PastPaymentsArrayAdapter pastPaymentsArrayAdapter;
     private ListView pastParkingListView;
 
+    private PaymentHistoryFragmentCallback paymentHistoryFragmentCallback;
+
     private ParkingServiceHelper parkingServiceHelper = new ParkingServiceHelper();
 
     @Override
@@ -75,6 +77,15 @@ public class PaymentHistoryFragment extends Fragment {
             Log.w("PaymentFragment", "pastParkingList je null - nema past paymenta");
             pastPaymentsArrayAdapter = new PastPaymentsArrayAdapter(parentActivity, new PastParkingPayment[0]);
         }
+
+        pastPaymentsArrayAdapter.setCallback(new PastPaymentsArrayAdapter.PastPaymentArrayAdapterCallback() {
+            @Override
+            public void refreshFragment() {
+                if(paymentHistoryFragmentCallback != null){
+                    paymentHistoryFragmentCallback.refreshActivity();
+                }
+            }
+        });
 
         pastParkingListView.setAdapter(pastPaymentsArrayAdapter);
 
@@ -139,5 +150,9 @@ public class PaymentHistoryFragment extends Fragment {
         super.onResume();
         // TODO popunit activeTicketView ako imamo aktivnu kartu, ako ne ne - hideat ga ili nesto
         // TODO refreshati adapter za past parking payment ako treba
+    }
+
+    public void setPaymentHistoryFragmentCallback(PaymentHistoryFragmentCallback paymentHistoryFragmentCallback) {
+        this.paymentHistoryFragmentCallback = paymentHistoryFragmentCallback;
     }
 }

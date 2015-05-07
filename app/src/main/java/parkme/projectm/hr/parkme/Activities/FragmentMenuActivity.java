@@ -25,6 +25,7 @@ import parkme.projectm.hr.parkme.Fragments.ChooseCarFragmentCallback;
 import parkme.projectm.hr.parkme.Fragments.PayParkingFragment;
 import parkme.projectm.hr.parkme.Fragments.PayParkingFragmentCallback;
 import parkme.projectm.hr.parkme.Fragments.PaymentHistoryFragment;
+import parkme.projectm.hr.parkme.Fragments.PaymentHistoryFragmentCallback;
 import parkme.projectm.hr.parkme.Helpers.PrefsHelper;
 import parkme.projectm.hr.parkme.R;
 
@@ -218,6 +219,13 @@ public class FragmentMenuActivity extends FragmentActivity {
                 return fragment;
             } else {
                 PaymentHistoryFragment fragment = new PaymentHistoryFragment();
+                fragment.setPaymentHistoryFragmentCallback(new PaymentHistoryFragmentCallback() {
+                    @Override
+                    public void refreshActivity() {
+                        pageToTurnTo = 3;
+                        onResume();
+                    }
+                });
                 return fragment;
             }
         }

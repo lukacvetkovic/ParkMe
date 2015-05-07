@@ -16,4 +16,6 @@
     <dimen name="parky_car_tables_text_size">28sp</dimen>
 
     <dimen name="parky_title_text_size">32sp</dimen>
+
+    <dimen name="parky_delete_view_button_size">20dp</dimen>
 </resources>

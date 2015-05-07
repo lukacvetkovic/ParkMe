@@ -13,13 +13,17 @@
             android:layout_height="0dp"
             android:layout_gravity="center_horizontal"
             android:layout_weight="0.02"
-            android:background="@color/parky_spacer_light_gray"></FrameLayout>
+            android:background="@color/parky_spacer_light_gray"/>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.98">
 
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="0.98">
+            android:layout_height="match_parent">
 
             <ImageView
                 android:layout_width="80dp"
@@ -61,5 +65,17 @@
             </LinearLayout>
 
         </LinearLayout>
+
+            <ImageView
+                android:layout_width="@dimen/parky_delete_view_button_size"
+                android:layout_height="@dimen/parky_delete_view_button_size"
+                android:id="@+id/imgDelete"
+                android:layout_gravity="top|right"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
+                android:src="@drawable/parky_cancel_icon" />
+
+        </FrameLayout>
     </LinearLayout>
+
 </FrameLayout>
