@@ -107,7 +107,7 @@
                         android:layout_marginLeft="@dimen/parky_text_title_left_and_right_padding"
                         android:layout_marginRight="@dimen/parky_text_title_left_and_right_padding"
                         android:paddingTop="@dimen/parky_custom_linear_layout_vertical_spacing"
-                        android:text="Dodaj u favorite"/>
+                        android:text="Dodaj u favorite" />
 
                     <CheckBox
                         android:layout_width="wrap_content"

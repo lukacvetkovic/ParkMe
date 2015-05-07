@@ -2,6 +2,10 @@ package parkme.projectm.hr.parkme.Dialogs;
 
 import android.app.DialogFragment;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -53,6 +57,9 @@ public class PayParkingDialog extends FrameLayout{
 
     private final String TAG = "PayParkingDialog";
     private Context context;
+
+    private Drawable favoritesCheckboxOn;
+    private Drawable favoritesCheckBoxOff;
 
     private PayParkingDialogCallback payParkingDialogCallback;
 
@@ -132,6 +139,13 @@ public class PayParkingDialog extends FrameLayout{
         btnPay = (ImageButton) findViewById(R.id.btnPayParking);
         favs = (CheckBox) findViewById(R.id.cbFavorites);
         carPosition=(CheckBox)findViewById(R.id.cbCurrentLocation);
+
+        favs.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                updateFavsCheckboxIcon();
+            }
+        });
 
         DatabaseManager.init(context);
         databaseManager = DatabaseManager.getInstance();
@@ -410,5 +424,24 @@ public class PayParkingDialog extends FrameLayout{
                 (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo netInfo = cm.getActiveNetworkInfo();
         return netInfo != null && netInfo.isConnectedOrConnecting();
+    }
+
+    private void initCheckboxBitmaps(){
+        int gg = (int) (this.getResources().getDisplayMetrics().density * favs.getCompoundPaddingLeft());
+        Bitmap favoritesCheckboxOnBitmap  = BitmapFactory.decodeResource(getResources(), R.drawable.add_to_favs_checked);
+        int scalex = gg;
+        int scaley = (favoritesCheckboxOnBitmap.getHeight() * gg  )/ favoritesCheckboxOnBitmap.getWidth();
+
+        favoritesCheckboxOn  = new BitmapDrawable(Bitmap.createScaledBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.add_to_favs_checked ), scalex, scaley, true));
+        favoritesCheckBoxOff = new BitmapDrawable(Bitmap.createScaledBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.add_to_favs_unchecked), scalex, scaley, true));
+    }
+
+    private void updateFavsCheckboxIcon(){
+        if(favs.isChecked()){
+            favs.setButtonDrawable(favoritesCheckboxOn);
+        }
+        else{
+            favs.setButtonDrawable(favoritesCheckBoxOff);
+        }
     }
 }

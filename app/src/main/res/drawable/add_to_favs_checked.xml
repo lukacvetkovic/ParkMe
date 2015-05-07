@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:drawable="@drawable/add_to_favs_checked_img">
+        <shape android:shape="oval" android:padding="10dp"/>
+    </item>
+
+    <size
+        android:height="15dp"
+        android:width="15dp" />
+
+</layer-list>
