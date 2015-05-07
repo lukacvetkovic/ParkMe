@@ -2,6 +2,8 @@ package parkme.projectm.hr.parkme.Database.OrmliteDb;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.util.Log;
 
 import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
@@ -12,6 +14,14 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
+import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.City;
+import parkme.projectm.hr.parkme.Database.Updater.UpdateManager;
+import parkme.projectm.hr.parkme.Database.Updater.UrlUpdateSource;
+import parkme.projectm.hr.parkme.Helpers.PrefsHelper;
+import parkme.projectm.hr.parkme.Helpers.Rest.GetRestService;
 
 public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 
@@ -49,7 +59,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
                 myinput.close();
                 Log.d("Premjestio sam","bazu");
             } catch (IOException e) {
-                e.printStackTrace();
+                DatabaseManager.init(context);
             }
         }
     }
@@ -77,5 +87,65 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase database, ConnectionSource connectionSource, int oldVersion, int newVersion) {
 
+    }
+
+    private void updateDb(final Context context) {
+
+        if (isOnline(context)) {
+
+            Thread thread = new Thread(new Runnable() {
+                public void run() {
+                    try {
+                        PrefsHelper prefsHelper= new PrefsHelper(context);
+                        //EXTRA "update" svega sa neta
+                        DatabaseManager.init(context);
+                        UpdateManager um = new UpdateManager(
+                                DatabaseManager.getInstance(),
+                                new UrlUpdateSource(new GetRestService(""))
+                        );
+
+
+                        Calendar cal = Calendar.getInstance();
+                        SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
+                        String formatted = format1.format(cal.getTime());
+
+
+                        String lastUpdate = prefsHelper.getString(PrefsHelper.LastUpdate, "NULL");
+
+                        Log.d(lastUpdate, "---> last update");
+                        if (lastUpdate == "NULL") {
+                            lastUpdate = "2000-01-01";
+                        }
+
+
+                        Log.d("UPDATE FROM", lastUpdate);
+                        boolean updated = true;
+
+                        try {
+                            um.updateAll(DatabaseManager.dateFormatter.parse(lastUpdate));
+                            Log.d("Update", " done");
+                        } catch (Exception e) {
+                            updated = false;
+                        }
+                        if (updated) {
+                            prefsHelper.putString(PrefsHelper.LastUpdate, formatted);
+                            Log.d("LAST UPDATE -->", " " + formatted);
+                        }
+
+                    } catch (Exception e) {
+                    }
+
+                }
+            });
+
+            thread.start();
+        }
+    }
+
+    public boolean isOnline(Context context) {
+        ConnectivityManager cm =
+                (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = cm.getActiveNetworkInfo();
+        return netInfo != null && netInfo.isConnectedOrConnecting();
     }
 }
