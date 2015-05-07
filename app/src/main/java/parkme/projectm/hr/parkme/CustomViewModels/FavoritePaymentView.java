@@ -20,7 +20,7 @@ public class FavoritePaymentView extends FrameLayout {
     private final String TAG = "FavoritePaymentView";
     private Context context;
 
-    private TextView favoritePaymentCarPlates;
+    private TextView favoritePaymentCity;
     private TextView favoritePaymentZone;
     private ImageView favoritePaymentDeleteButton;
 
@@ -46,13 +46,13 @@ public class FavoritePaymentView extends FrameLayout {
     }
 
     private void reference(){
-        favoritePaymentCarPlates = (TextView) findViewById(R.id.txtCarTables);
+        favoritePaymentCity = (TextView) findViewById(R.id.txtFavPaymentCity);
         favoritePaymentZone = (TextView) findViewById(R.id.txtZone);
         favoritePaymentDeleteButton = (ImageView) findViewById(R.id.imgDelete);
     }
 
-    public void setCarTablesText(String carTablesText) {
-        this.favoritePaymentCarPlates.setText(carTablesText);
+    public void setCarTablesText(String favCity) {
+        this.favoritePaymentCity.setText(favCity);
     }
 
     public void setpaymentZoneText(String zone){

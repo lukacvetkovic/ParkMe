@@ -10,14 +10,23 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageButton;
+import android.widget.ListView;
+import android.widget.Toast;
+
+import java.util.List;
 
 import parkme.projectm.hr.parkme.Activities.FragmentMenuActivity;
 import parkme.projectm.hr.parkme.CustomViewModels.ActiveCarView;
+import parkme.projectm.hr.parkme.CustomViewModels.FavoritePaymentArrayAdapter;
+import parkme.projectm.hr.parkme.CustomViewModels.FavoritePaymentView;
 import parkme.projectm.hr.parkme.Database.OrmliteDb.DatabaseManager;
+import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.FavoritePayment;
 import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.FavouriteCar;
 import parkme.projectm.hr.parkme.Dialogs.ConfirmPaymentDialog;
 import parkme.projectm.hr.parkme.Dialogs.PayParkingDialog;
@@ -37,6 +46,11 @@ public class PayParkingFragment extends Fragment {
     private PrefsHelper prefsHelper;
     private FragmentMenuActivity parentActivity;
 
+    private DatabaseManager dbManager;
+    private List<FavoritePayment> favoritePaymentList;
+    private FavoritePaymentArrayAdapter favoritePaymentArrayAdapter;
+    private ListView favoritePaymentListView;
+
     private PayParkingDialog payParkingDialog;
 
     private PayParkingFragmentCallback payParkingFragmentCallback;
@@ -52,7 +66,32 @@ public class PayParkingFragment extends Fragment {
 
         activeCarView = (ActiveCarView) rootView.findViewById(R.id.activeCarView);
 
-        DatabaseManager dbManager = DatabaseManager.getInstance();
+        favoritePaymentListView = (ListView) rootView.findViewById(R.id.favoritePaymentsList);
+
+        dbManager = DatabaseManager.getInstance();
+        favoritePaymentList = dbManager.getAllFavoritePayments();
+
+        if(favoritePaymentList != null){
+            Log.w("PRESS", "favoritePaymentList nije null - number of values : " + favoritePaymentList.size());
+            favoritePaymentArrayAdapter = new FavoritePaymentArrayAdapter(parentActivity,
+                    favoritePaymentList.toArray(new FavoritePayment[favoritePaymentList.size()]));
+        }
+        else{
+            Log.w("PRESS", "favoritePaymentList je null - nema favs paymenta");
+            favoritePaymentArrayAdapter = new FavoritePaymentArrayAdapter(parentActivity, new FavoritePayment[0]);
+        }
+
+        favoritePaymentListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+                FavoritePayment favoritePayment = favoritePaymentArrayAdapter.getItem(position);
+
+                Toast toast = Toast.makeText(context, "" + favoritePayment.getGradId() + " - " + favoritePayment.getZoneID(), Toast.LENGTH_SHORT);
+                toast.show();
+            }
+        });
+
+        favoritePaymentListView.setAdapter(favoritePaymentArrayAdapter);
 
         FavouriteCar activeCar = dbManager.getFavoriteCarFromPlates(activeCarPlates);
         activeCarView.setCarTablesText(activeCarPlates);

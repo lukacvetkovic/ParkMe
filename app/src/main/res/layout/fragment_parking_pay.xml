@@ -4,22 +4,23 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <ScrollView
+    <LinearLayout
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent">
-        <LinearLayout
-            android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <view
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            class="parkme.projectm.hr.parkme.CustomViewModels.ActiveCarView"
+            android:id="@+id/activeCarView" />
 
-            <view
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                class="parkme.projectm.hr.parkme.CustomViewModels.ActiveCarView"
-                android:id="@+id/activeCarView" />
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/favoritePaymentsList"/>
 
-            </LinearLayout>
-        </ScrollView>
+    </LinearLayout>
 
     <ImageButton
         android:layout_width="70dp"

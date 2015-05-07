@@ -116,6 +116,15 @@ public class DatabaseManager implements SMSParkingApi, Updater{
         }
     }
 
+    public String getCityNameFromId(int cityId){
+        try{
+            return helper.getRuntimeCityDao().queryForId(cityId).getName();
+        }
+        catch (Exception e){
+            return "Grad";
+        }
+    }
+
     // ## Favoritepayment methods
     public List<FavoritePayment> getAllFavoritePayments(){
         return helper.getRuntimeFavouritePaymentDao().queryForAll();
@@ -180,6 +189,15 @@ public class DatabaseManager implements SMSParkingApi, Updater{
     @Override
     public ParkingZone getParkingZoneFromId(int idParkingZone) {
         return helper.getRuntimeParkingZoneDao().queryForId(idParkingZone);
+    }
+
+    public String getZoneNameFromId(int idParkingZone){
+        try{
+            return helper.getRuntimeParkingZoneDao().queryForId(idParkingZone).getName();
+        }
+        catch (Exception e){
+            return "Zona";
+        }
     }
 
     @Override

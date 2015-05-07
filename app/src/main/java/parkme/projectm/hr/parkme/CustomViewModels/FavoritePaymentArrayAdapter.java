@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import parkme.projectm.hr.parkme.Activities.FragmentMenuActivity;
+import parkme.projectm.hr.parkme.Database.OrmliteDb.DatabaseManager;
 import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.FavoritePayment;
 import parkme.projectm.hr.parkme.R;
 
@@ -18,25 +19,34 @@ import parkme.projectm.hr.parkme.R;
 public class FavoritePaymentArrayAdapter extends ArrayAdapter<FavoritePayment> {
     private final FragmentMenuActivity context;
     private final FavoritePayment[] values;
+    private DatabaseManager dbManager;
 
     public FavoritePaymentArrayAdapter(FragmentMenuActivity context, FavoritePayment[] values) {
         super(context, R.layout.layout_favorite_payment, values);
         this.context = context;
         this.values = values;
+        dbManager = DatabaseManager.getInstance();
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         LayoutInflater inflater = (LayoutInflater)
                 context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View favoritePayment = inflater.inflate(R.layout.layout_favorite_payment, parent, false);
 
-        TextView favoritePaymentCarPlates = (TextView) favoritePayment.findViewById(R.id.txtCarTables);
+        TextView favoritePaymentCity = (TextView) favoritePayment.findViewById(R.id.txtFavPaymentCity);
         TextView favoritePaymentZone = (TextView) favoritePayment.findViewById(R.id.txtZone);
         ImageView favoritePaymentDeleteButton = (ImageView) favoritePayment.findViewById(R.id.imgDelete);
 
-        // TODO - f*** it.. napravit ovo ujutro jer za favPayment ne trebaju tablice..
-        favoritePaymentCarPlates.setText(values[position].getFavoritePaymentId());
+        favoritePaymentCity.setText(dbManager.getCityNameFromId(values[position].getGradId()));
+        favoritePaymentZone.setText(dbManager.getZoneNameFromId(values[position].getZoneID()));
+
+        favoritePaymentDeleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dbManager.removeFavoritePayment(values[position]);
+            }
+        });
 
         return favoritePayment;
     }
