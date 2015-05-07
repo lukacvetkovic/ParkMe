@@ -52,7 +52,7 @@ public class PastPaymentsArrayAdapter extends ArrayAdapter<PastParkingPayment> {
             }
         });
 
-        pastPaymentCarIcon.setImageResource(values[position].getCarIcon());
+        pastPaymentCarIcon.setImageResource(values[position].getGreenBackgroundCarIcon());
         pastPaymentCarTables.setText(values[position].getCapPlates());
         pastpaymentDate.setText(values[position].getStartOfPayment());
 

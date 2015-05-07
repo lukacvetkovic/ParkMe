@@ -20,48 +20,5 @@
             android:layout_height="wrap_content"
             android:id="@+id/pastPaymentListView" />
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Start Service"
-            android:id="@+id/btnStartService"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="20dp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="#####"
-            android:id="@+id/txtRemainingTime"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="40dp"
-            android:textStyle="bold" />
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="GetRemainingTime"
-            android:id="@+id/btnGetTime"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="20dp" />
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="SetRemainingTime - 60"
-            android:id="@+id/btnSetTime"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="20dp" />
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Stop Service"
-            android:id="@+id/btnStopService"
-            android:layout_below="@+id/btnStartService"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="100dp" />
     </LinearLayout>
 </RelativeLayout>
