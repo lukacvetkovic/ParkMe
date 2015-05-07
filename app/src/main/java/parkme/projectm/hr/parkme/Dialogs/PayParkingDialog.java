@@ -1,13 +1,11 @@
 package parkme.projectm.hr.parkme.Dialogs;
 
-import android.app.DialogFragment;
 import android.content.Context;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.os.Bundle;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
@@ -89,6 +87,7 @@ public class PayParkingDialog extends FrameLayout{
 
     boolean firstTime;
     boolean mjenjano;
+    boolean imaGrada;
 
     ArrayAdapter<String> adapterZone;
     ArrayAdapter<String> adapterCity;
@@ -126,6 +125,7 @@ public class PayParkingDialog extends FrameLayout{
     private void reference(){
         mjenjano=false;
         firstTime = true;
+        imaGrada=true;
         citySpinner = (Spinner) findViewById(R.id.spinnerCity);
         zoneSpinner = (Spinner) findViewById(R.id.spinnerZone);
         paymentModeSpinner = (Spinner) findViewById(R.id.spinnerOption);
@@ -196,7 +196,7 @@ public class PayParkingDialog extends FrameLayout{
                         citySpinner.setSelection(Arrays.asList(cityNames).indexOf(cityName));
                     }
                     else{
-                        firstTime=false;
+                        imaGrada =false;
                     }
                 }
 
@@ -235,7 +235,7 @@ public class PayParkingDialog extends FrameLayout{
 
                 zoneSpinner.setAdapter(adapterZone);
 
-                if (firstTime) {
+                if (firstTime && imaGrada) {
                     findMyZoneIfPossible();
                     firstTime = false;
                 }
