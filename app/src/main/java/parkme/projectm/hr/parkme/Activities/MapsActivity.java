@@ -5,6 +5,7 @@ import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -15,10 +16,12 @@ import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import parkme.projectm.hr.parkme.Helpers.PrefsHelper;
 import parkme.projectm.hr.parkme.R;
 
 public class MapsActivity extends FragmentActivity implements GooglePlayServicesClient.ConnectionCallbacks,
@@ -35,8 +38,6 @@ public class MapsActivity extends FragmentActivity implements GooglePlayServices
 
     private LocationRequest mLocationRequest;
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,8 +52,7 @@ public class MapsActivity extends FragmentActivity implements GooglePlayServices
 
         Log.d("DOSO SAM NA KRAJ ON CR", "DOSO");
 
-
-        mMap.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
+        /*mMap.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
 
             @Override
             public void onMapLongClick(LatLng point) {
@@ -61,7 +61,7 @@ public class MapsActivity extends FragmentActivity implements GooglePlayServices
                         .position(new LatLng(point.latitude, point.longitude)).title("Novi");
                 mMap.addMarker(newMarker);
             }
-        });
+        });*/
     }
 
     @Override

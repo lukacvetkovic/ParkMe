@@ -5,7 +5,9 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesClient;
@@ -15,7 +17,9 @@ import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -26,6 +30,7 @@ import java.util.Map;
 
 import parkme.projectm.hr.parkme.Database.OrmliteDb.DatabaseManager;
 import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.ParkingLot;
+import parkme.projectm.hr.parkme.Helpers.PrefsHelper;
 import parkme.projectm.hr.parkme.R;
 
 /**
@@ -44,6 +49,13 @@ public class FindParkingActivity extends FragmentActivity implements GooglePlayS
     private GoogleApiClient mGoogleApiClient;
 
     private LocationRequest mLocationRequest;
+
+    private PrefsHelper prefsHelper;
+    private double myCarLat;
+    private double myCarLng;
+
+    private ImageButton showMyCarLocationButton;
+    private LatLng myCarPosition = null;
 
     private List<ParkingLot> parkingLots;
 
@@ -66,9 +78,23 @@ public class FindParkingActivity extends FragmentActivity implements GooglePlayS
         DatabaseManager.init(getBaseContext());
         databaseManager = DatabaseManager.getInstance();
 
+        showMyCarLocationButton = (ImageButton) findViewById(R.id.btnShowMeMyCar);
+        showMyCarLocationButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(myCarPosition != null){
+                    CameraPosition cameraPosition = new CameraPosition.Builder()
+                            .target(myCarPosition)
+                            .zoom(15)
+                            .build();
+                    mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+                }
+            }
+        });
+
         mapParkingLotId = new HashMap<>();
 
-        mMap.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
+        /*mMap.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
 
             @Override
             public void onMapLongClick(LatLng point) {
@@ -77,7 +103,29 @@ public class FindParkingActivity extends FragmentActivity implements GooglePlayS
                         .position(new LatLng(point.latitude, point.longitude)).title("Novi");
                 mMap.addMarker(newMarker);
             }
-        });
+        });*/
+
+        prefsHelper = new PrefsHelper(this);
+        String carLatString = prefsHelper.getString(PrefsHelper.carLat, null);
+        String carLngString = prefsHelper.getString(PrefsHelper.carLng, null);
+
+        try {
+            if (carLatString != null && carLngString != null) {
+                myCarLat = Double.valueOf(carLatString);
+                myCarLng = Double.valueOf(carLngString);
+
+                myCarPosition = new LatLng(myCarLat, myCarLng);
+
+                MarkerOptions newMarker = new MarkerOptions()
+                        .position(myCarPosition)
+                        .title("Auto")
+                        .icon(BitmapDescriptorFactory.fromResource(R.drawable.car_location_icon));
+                mMap.addMarker(newMarker);
+            }
+        }
+        catch (Exception e){
+            Log.w(TAG, "E nema auta");
+        }
 
         getAllMarkers();
 
@@ -86,12 +134,14 @@ public class FindParkingActivity extends FragmentActivity implements GooglePlayS
 
     private void putMarkersToMap(final List<ParkingLot> parkingLots) {
 
+        BitmapDescriptor markerIcon = BitmapDescriptorFactory.fromResource(R.drawable.parking_maps_icon);
+
         for (ParkingLot parkingLot : parkingLots) {
             Marker marker = mMap.addMarker(new MarkerOptions()
                     .position(new LatLng(parkingLot.getLat(), parkingLot.getLng()))
                     .title(parkingLot.getName())
                     .snippet(parkingLot.getAdress())
-                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.logo_small)));
+                    .icon(markerIcon));
 
             mapParkingLotId.put(marker, parkingLot.getId());
 
