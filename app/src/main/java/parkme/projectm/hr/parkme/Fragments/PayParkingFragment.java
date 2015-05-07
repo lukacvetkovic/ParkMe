@@ -100,10 +100,26 @@ public class PayParkingFragment extends Fragment {
 
                 payParkingDialog = new PayParkingDialog(context);
 
+                payParkingDialog.setPayParkingDialogCallback(new PayParkingDialog.PayParkingDialogCallback() {
+                    @Override
+                    public void dismissDialog() {
+                        if(payParkingFragmentCallback != null){
+                            payParkingFragmentCallback.dismissPayParkingDialog(payParkingDialog);
+                            payParkingFragmentCallback.refreshActivity();
+                        }
+                    }
 
-                if(payParkingFragmentCallback != null){
-                    payParkingFragmentCallback.displayPayParkingDialog(payParkingDialog);
-                }
+                    @Override
+                    public void showConfirmDialog(ConfirmPaymentDialog confirmPaymentDialog) {
+                        payParkingFragmentCallback.displayConfirmPaymentDialog(confirmPaymentDialog);
+                    }
+
+                    @Override
+                    public void dismissConfirmDialog(ConfirmPaymentDialog confirmPaymentDialog) {
+                        payParkingFragmentCallback.dismissConfirmPaymentDialog(confirmPaymentDialog);
+                    }
+                });
+
                 payParkingDialog.showConfirmPaymentDialogForFavoritepayment(favoritePayment);
 
                 Toast toast = Toast.makeText(context, "" + favoritePayment.getGradId() + " - " + favoritePayment.getZoneID(), Toast.LENGTH_SHORT);

@@ -415,7 +415,11 @@ public class PayParkingDialog extends FrameLayout{
         });
 
         if(payParkingDialogCallback != null){
+            Log.w("TAAG", "payParkingDialog");
             payParkingDialogCallback.showConfirmDialog(confirmPaymentDialog);
+        }
+        else{
+            Log.w("TAAG", "payParkingDialog je null");
         }
 
     }
