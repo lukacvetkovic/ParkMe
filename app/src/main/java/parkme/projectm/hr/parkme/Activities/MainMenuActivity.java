@@ -15,6 +15,7 @@ import android.widget.RelativeLayout;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
+import parkme.projectm.hr.parkme.Database.OrmliteDb.DatabaseHelper;
 import parkme.projectm.hr.parkme.Database.OrmliteDb.DatabaseManager;
 import parkme.projectm.hr.parkme.Database.Updater.UpdateManager;
 import parkme.projectm.hr.parkme.Database.Updater.UrlUpdateSource;
@@ -47,7 +48,7 @@ public class MainMenuActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_menu);
-        DatabaseManager.init(getApplicationContext());
+        DatabaseHelper helper= new DatabaseHelper(getBaseContext());
         updateDb();
 
 
@@ -143,8 +144,9 @@ public class MainMenuActivity extends Activity {
 
                         Log.d(lastUpdate, "---> last update");
                         if (lastUpdate == "NULL") {
-                            lastUpdate = "2010-01-01";
+                            lastUpdate = "2015-05-05";
                         }
+
 
                         Log.d("UPDATE FROM", lastUpdate);
                         boolean updated = true;
