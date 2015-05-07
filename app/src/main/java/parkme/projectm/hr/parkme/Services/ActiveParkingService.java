@@ -5,6 +5,7 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Binder;
@@ -15,6 +16,7 @@ import android.util.Log;
 
 import parkme.projectm.hr.parkme.Activities.FragmentMenuActivity;
 import parkme.projectm.hr.parkme.R;
+import parkme.projectm.hr.parkme.Receivers.IncomingSmsReceiver;
 
 public class ActiveParkingService extends Service {
 
@@ -34,6 +36,9 @@ public class ActiveParkingService extends Service {
 
     private boolean didTicketExpire;
     // TODO dodat jos koji action ako se sjetis
+
+    private IncomingSmsReceiver smsReceiver = null;
+    private IntentFilter intentFilter;
 
     private boolean isRunning = false;
     private long remainingParkingMinutes = SERVICE_IS_NOT_RUNNING;
@@ -188,6 +193,19 @@ public class ActiveParkingService extends Service {
     public void onCreate() {
         Log.i(TAG, "onCreate");
         super.onCreate();
+        smsReceiver = new IncomingSmsReceiver();
+
+        smsReceiver.setSmsReceiverCallback(new IncomingSmsReceiver.SmsReceiverCallback() {
+            @Override
+            public void updateTicketCounter(int remainingTime) {
+                setRemainingTimeCounter(remainingTime);
+            }
+        });
+
+        intentFilter = new IntentFilter();
+        intentFilter.addAction("android.provider.Telephony.SMS_RECEIVED");
+        registerReceiver(smsReceiver, intentFilter);
+
     }
 
     @Override
@@ -241,6 +259,9 @@ public class ActiveParkingService extends Service {
     public void onDestroy() {
         Log.i(TAG, "onDestroy");
         super.onDestroy();
+        if(smsReceiver != null){
+            unregisterReceiver(smsReceiver);
+        }
     }
 
     public class LocalBinder extends Binder {

@@ -3,7 +3,6 @@ package parkme.projectm.hr.parkme.Dialogs;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.pm.PackageManager;
-import android.media.Image;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
@@ -12,7 +11,6 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.maps.model.Marker;
 import com.google.gson.Gson;
 
 import java.text.DateFormat;
@@ -32,7 +30,7 @@ import parkme.projectm.hr.parkme.Helpers.PrefsHelper;
 import parkme.projectm.hr.parkme.Helpers.Rest.ApiConstants;
 import parkme.projectm.hr.parkme.Helpers.Rest.PostRestService;
 import parkme.projectm.hr.parkme.R;
-import parkme.projectm.hr.parkme.Receivers.IncomingSms;
+import parkme.projectm.hr.parkme.Receivers.IncomingSmsReceiver;
 
 /**
  * Created by Mihael on 5.5.2015..
@@ -258,7 +256,7 @@ public class ConfirmPaymentDialog extends FrameLayout {
     }
 
     public void enableReciver(){
-        ComponentName receiver = new ComponentName(context, IncomingSms.class);
+        ComponentName receiver = new ComponentName(context, IncomingSmsReceiver.class);
         PackageManager pm = context.getPackageManager();
 
         pm.setComponentEnabledSetting(receiver,

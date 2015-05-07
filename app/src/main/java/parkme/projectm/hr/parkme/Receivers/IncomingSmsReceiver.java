@@ -31,19 +31,18 @@ import parkme.projectm.hr.parkme.SmsParser.SmsParser;
 /**
  * Created by Cveki on 29.3.2015..
  */
-public class IncomingSms extends BroadcastReceiver {
+public class IncomingSmsReceiver extends BroadcastReceiver {
 
     // Get the object of SmsManager
     final SmsManager sms = SmsManager.getDefault();
 
-    private int mojParametar;
+    private SmsReceiverCallback smsReceiverCallback;
 
-    public int getMojParametar() {
-        return mojParametar;
+    public interface SmsReceiverCallback{
+        void updateTicketCounter(int remainingTime);
     }
 
-    public void setMojParametar(int mojParametar) {
-        this.mojParametar = mojParametar;
+    public IncomingSmsReceiver() {
     }
 
     public void onReceive(Context context, Intent intent) {
@@ -78,14 +77,15 @@ public class IncomingSms extends BroadcastReceiver {
                         SmsParser smsParser= new MasterParser();
                         SmsData smsData= smsParser.parse(message);
 
+                        // Upis u bazu pastPayment
                         upisiUTablicuPastPayment(context,smsData);
+                        // Setupanje countera u serviceu
                         upisiUService(context,smsData);
 
                         //Update baze na serveru
                         if(smsData.getZoneName()!=null){
                             int parkingZoneId=prefsHelper.getInt(PrefsHelper.parkingZoneId,0);
                             updateZoneName(parkingZoneId, smsData);
-
                         }
 
                         //Update cijene ako je potrebno
@@ -105,12 +105,10 @@ public class IncomingSms extends BroadcastReceiver {
 
                 } // end for loop
 
-                disableReciver(context);
             } // bundle is null
 
         } catch (Exception e) {
             Log.e("SmsReceiver", "Exception smsReceiver" + e);
-
         }
     }
 
@@ -147,9 +145,10 @@ public class IncomingSms extends BroadcastReceiver {
         String trajanje = prefsHelper.getString(PrefsHelper.trajanje, "NULL");
         String[]pom=trajanje.split(":");
         int trajanjeMin=Integer.valueOf(pom[0])*60+Integer.valueOf(pom[1]);
-        ParkingServiceHelper serviceHelper= new ParkingServiceHelper();
-        serviceHelper.startService(context,trajanjeMin); //TODO
-        //serviceHelper.setActiveParkingTime(trajanjeMin,context);
+
+        if(smsReceiverCallback != null){
+            smsReceiverCallback.updateTicketCounter(trajanjeMin);
+        }
         Log.d("Upisivanje gotovo","Servisa");
     }
 
@@ -223,14 +222,7 @@ public class IncomingSms extends BroadcastReceiver {
         }
     }
 
-    public void disableReciver(Context context){
-        ComponentName receiver = new ComponentName(context, IncomingSms.class);
-
-        PackageManager pm = context.getPackageManager();
-
-        pm.setComponentEnabledSetting(receiver,
-                PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
-                PackageManager.DONT_KILL_APP);
+    public void setSmsReceiverCallback(SmsReceiverCallback smsReceiverCallback) {
+        this.smsReceiverCallback = smsReceiverCallback;
     }
-
 }

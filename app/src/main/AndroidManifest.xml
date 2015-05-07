@@ -52,12 +52,6 @@
             android:name=".Activities.FragmentMenuActivity"
             android:label="@string/title_activity_maps" />
 
-        <receiver android:name=".Receivers.IncomingSms" >
-            <intent-filter>
-                <action android:name="android.provider.Telephony.SMS_RECEIVED" />
-            </intent-filter>
-        </receiver>
-
         <service
             android:name=".Services.ActiveParkingService"
             android:enabled="true"
