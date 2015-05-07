@@ -96,8 +96,6 @@ public class PayParkingFragment extends Fragment {
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
                 FavoritePayment favoritePayment = favoritePaymentArrayAdapter.getItem(position);
 
-                // TODO ovdje placanje
-
                 payParkingDialog = new PayParkingDialog(context);
 
                 payParkingDialog.setPayParkingDialogCallback(new PayParkingDialog.PayParkingDialogCallback() {

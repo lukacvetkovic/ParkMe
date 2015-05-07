@@ -109,6 +109,7 @@ public class IncomingSmsReceiver extends BroadcastReceiver {
 
         } catch (Exception e) {
             Log.e("SmsReceiver", "Exception smsReceiver" + e);
+            e.printStackTrace();
         }
     }
 
@@ -118,7 +119,7 @@ public class IncomingSmsReceiver extends BroadcastReceiver {
         int citiyId=prefsHelper.getInt(PrefsHelper.citiyId, 0);
         int parkingZoneId=prefsHelper.getInt(PrefsHelper.parkingZoneId, 0);
         int paymentModeId=prefsHelper.getInt(PrefsHelper.paymentModeId, 0);
-        String carPlates= prefsHelper.getString(PrefsHelper.ActiveCarPlates,"NULL");
+        String carPlates= prefsHelper.getString(PrefsHelper.ActiveCarPlates, "NULL");
 
         DatabaseManager.init(context);
         DatabaseManager databaseManager= DatabaseManager.getInstance();
@@ -129,9 +130,18 @@ public class IncomingSmsReceiver extends BroadcastReceiver {
 
         FavouriteCar favouriteCar = databaseManager.getFavoriteCarFromPlates(carPlates);
 
+        Date dateOfEndOfpayment = smsData.getDateTime();
+        String endOfPaymnet;
+        if(dateOfEndOfpayment == null){
+            endOfPaymnet = dateFormat.format(new Date());
+        }
+        else{
+            endOfPaymnet = dateFormat.format(smsData.getDateTime());
+        }
+
         /*String capPlates, int carIcon, String endOfPayment, int gradId, int pastParkingPaymentId, int paymentMethodId, String startOfPayment, int zoneID*/
 
-        PastParkingPayment pastParkingPayment = new PastParkingPayment(carPlates, favouriteCar.getCarIcon(), dateFormat.format(smsData.getDateTime()),citiyId,0,paymentModeId,dateFormat.format(date),parkingZoneId);
+        PastParkingPayment pastParkingPayment = new PastParkingPayment(carPlates, favouriteCar.getCarIcon(), endOfPaymnet, citiyId,0,paymentModeId,dateFormat.format(date),parkingZoneId);
         databaseManager.addPastparkingPayment(pastParkingPayment);
 
         Log.d("Upisivanje gotovo","Tablice past payment");
