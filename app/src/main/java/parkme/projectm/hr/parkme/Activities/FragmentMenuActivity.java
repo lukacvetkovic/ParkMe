@@ -82,7 +82,7 @@ public class FragmentMenuActivity extends FragmentActivity {
 
         // Set up the ViewPager, attaching the adapter.
         mViewPager.setAdapter(mDemoCollectionPagerAdapter);
-        mViewPager.setCurrentItem(pageToTurnTo, true);     // postavlja inicijalno na srednji, TODO - ovisno o tome dal postoji parkirna karta
+        mViewPager.setCurrentItem(pageToTurnTo, true);
 
         String activeCarPlates = prefsHelper.getString(PrefsHelper.ActiveCarPlates, null);
         if(activeCarPlates == null){
@@ -178,7 +178,7 @@ public class FragmentMenuActivity extends FragmentActivity {
                     }
 
                     @Override
-                    public void displayPayParkingDialog(PayParkingDialog payParkingDialog) {     // TODO
+                    public void displayPayParkingDialog(PayParkingDialog payParkingDialog) {
                         rootRelativeView = (RelativeLayout) findViewById(R.id.rootRelativeView);
                         /*payParkingDialog = new PayParkingDialog(context);
                         payParkingDialog.setPayParkingDialogCallback(new PayParkingDialog.PayParkingDialogCallback() {

@@ -63,14 +63,14 @@ public class ParkingServiceHelper {
     }
 
     public void startService(Context context){
-        staticContext = context;    // TODO
+        staticContext = context;
         Intent i = new Intent(staticContext, ActiveParkingService.class);
         i.setAction(ActiveParkingService.SERVICE_ACTION_START);
         staticContext.startService(i);
     }
 
     public void startService(Context context,int trajanje){
-        staticContext = context;    // TODO
+        staticContext = context;
         Intent i = new Intent(staticContext, ActiveParkingService.class);
         i.setAction(ActiveParkingService.SERVICE_ACTION_START);
         staticContext.startService(i);

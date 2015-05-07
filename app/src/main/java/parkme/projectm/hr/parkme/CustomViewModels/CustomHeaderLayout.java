@@ -57,7 +57,7 @@ public class CustomHeaderLayout extends ViewGroup {
     }
 
     @Override
-    protected void onLayout(boolean changed, int left, int top, int right, int bottom) {     // TODO
+    protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
         final int childCount = getChildCount();
         final int leftPos = getPaddingLeft();
         final int rightPos = right - left - getPaddingRight();

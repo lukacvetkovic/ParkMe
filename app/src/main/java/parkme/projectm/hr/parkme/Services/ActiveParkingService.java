@@ -38,7 +38,6 @@ public class ActiveParkingService extends Service {
     private static Notification foregroundNotification;
 
     private boolean didTicketExpire;
-    // TODO dodat jos koji action ako se sjetis
 
     private IncomingSmsReceiver smsReceiver = null;
     private IntentFilter intentFilter;
@@ -68,19 +67,31 @@ public class ActiveParkingService extends Service {
             remainingParkingMinutes = time;
             long parkingMiliseconds = time * 60 * 1000;
             didTicketExpire = false;
-        /*remainigTimeCounter = new CountDownTimer(parkingMiliseconds, 60 * 1000) {      // TODO - ova je da svaku minutu otkuca i radi kak se spada
-            @Override
-            public void onTick(long l) {
-                remainingParkingMinutes -= 1;
-                // todo provjera dal je ostalo jos 5-10 min da se baci notifikacija neka ;)
-            }
+            remainigTimeCounter = new CountDownTimer(parkingMiliseconds, 60 * 1000) {
+                @Override
+                public void onTick(long l) {
+                    remainingParkingMinutes = remainingParkingMinutes - 1;
+                    Log.i(TAG, "TICK");
+                    if (remainingParkingMinutes == 0) {
+                        remainigTimeCounter.onFinish();
+                    } else if (remainingParkingMinutes == 5) {
+                        buildNotification(false);
+                    }
+                    Intent updateNotificationTextIntent = new Intent(ActiveParkingService.this, ActiveParkingService.class);
+                    updateNotificationTextIntent.setAction(SERVICE_UPDATE_FOREGROUND_NOTIFICATION_TEXT);
+                    startService(updateNotificationTextIntent);
+                }
 
-            @Override
-            public void onFinish() {
-                // TODO napravit alarm da je istekla parkirna karta ako nije muteana notifikacija :D
-            }
-        }.start();*/
+                @Override
+                public void onFinish() {
+                    didTicketExpire = true;
+                    remainingParkingMinutes = SERVICE_IS_NOT_RUNNING;
+                    buildNotification(true);
+                    stopForegroundService();
+                }
+            }.start();
 
+            /*  parkingMiliseconds, 60 * 1000
             remainigTimeCounter = new CountDownTimer(time * 1000, 1000) {        // todo - debug da otkucava svaku sekundu i postavlja sekunde a ne minute
                 @Override
                 public void onTick(long l) {
@@ -102,9 +113,8 @@ public class ActiveParkingService extends Service {
                     remainingParkingMinutes = SERVICE_IS_NOT_RUNNING;
                     buildNotification(true);
                     stopForegroundService();
-                    // TODO napravit alarm da je istekla parkirna karta ako nije muteana notifikacija :D
                 }
-            }.start();
+            }.start();*/
         }
         else{
             throw new UnsupportedOperationException("Service is not running, start service first !");
@@ -167,7 +177,7 @@ public class ActiveParkingService extends Service {
         Bitmap icon = BitmapFactory.decodeResource(getResources(),
                 R.drawable.white_logo_s);
         NotificationCompat.Builder notBuilder = new NotificationCompat.Builder(this);
-        notBuilder.setContentTitle("Active parking ticket")        // todo - odhardkodat ovo tu
+        notBuilder.setContentTitle("Active parking ticket")
                 .setTicker("Parking ticket started")
                 .setSmallIcon(R.drawable.white_logo_s)
                 .setLargeIcon(
@@ -217,8 +227,8 @@ public class ActiveParkingService extends Service {
                 Log.w("TIMER", "run");
                 if (remainingParkingMinutes > 0) {
                     Log.w("TIMER", "remaining > 0");
-                    //timeOutTimer.schedule(timerTask, 300000);     // TODO - odkomentirat
-                    timeOutTimer.schedule(timerTask, 6000);
+                    timeOutTimer.schedule(timerTask, 300000);
+                    //timeOutTimer.schedule(timerTask, 6000);       // debug
                 }
                 else{
                     Log.w("TIMER", "gotovo");
@@ -246,8 +256,8 @@ public class ActiveParkingService extends Service {
                 startForeground(SERVICE_ID, foregroundNotification);
                 this.isRunning = true;
                 this.firstTimeTask = true;
-                //timeOutTimer.schedule(timerTask, 3900000);        // TODO - pravi za odkomentirat
-                timeOutTimer.schedule(timerTask, 60000);
+                timeOutTimer.schedule(timerTask, 3900000);
+                //timeOutTimer.schedule(timerTask, 60000);      // debug
 
             }
             else if(isRunning && SERVICE_UPDATE_FOREGROUND_NOTIFICATION_TEXT.equals(intent.getAction())){

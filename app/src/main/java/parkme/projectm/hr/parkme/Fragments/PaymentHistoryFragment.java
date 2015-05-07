@@ -87,8 +87,6 @@ public class PaymentHistoryFragment extends Fragment {
             activeTicketView.hideStuff();
         }
 
-        // TODO - provjera dal imamo aktivnu kartu
-
         parkingServiceHelper.setServiceListener(new ParkingServiceHelper.ParkingServiceListener() {
             @Override
             public void serviceStatus(ParkingServiceHelper.ServiceStatus status) {
@@ -122,8 +120,6 @@ public class PaymentHistoryFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        // TODO popunit activeTicketView ako imamo aktivnu kartu, ako ne ne - hideat ga ili nesto
-        // TODO refreshati adapter za past parking payment ako treba
     }
 
     public void setPaymentHistoryFragmentCallback(PaymentHistoryFragmentCallback paymentHistoryFragmentCallback) {

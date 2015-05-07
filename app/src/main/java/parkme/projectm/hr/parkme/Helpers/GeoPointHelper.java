@@ -29,7 +29,7 @@ public class GeoPointHelper {
                 pos = new LatLng(addresses.get(0).getLatitude(), addresses.get(0).getLongitude());
             }
 
-        } catch (IOException e) { // TODO Auto-generated catch block
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
