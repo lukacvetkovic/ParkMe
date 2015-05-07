@@ -29,6 +29,7 @@ import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.PaymentMode;
 import parkme.projectm.hr.parkme.Helpers.PrefsHelper;
 import parkme.projectm.hr.parkme.Helpers.Rest.ApiConstants;
 import parkme.projectm.hr.parkme.Helpers.Rest.PostRestService;
+import parkme.projectm.hr.parkme.Helpers.SMSHelper;
 import parkme.projectm.hr.parkme.R;
 import parkme.projectm.hr.parkme.Receivers.IncomingSmsReceiver;
 import parkme.projectm.hr.parkme.Services.ParkingServiceHelper;
@@ -140,18 +141,16 @@ public class ConfirmPaymentDialog extends FrameLayout {
                 ParkingServiceHelper parkingServiceHelper= new ParkingServiceHelper();
                 parkingServiceHelper.startService(context);
 
-                //SMSHelper.sendSMS(parkingZoneNumber, message);
+
                 ParkingZone parkingZone = databaseManager.getParkingZoneFromId(parkingZoneId);
 
                 parkingZoneNumber = parkingZone.getPhoneNumber();
                 prefsHelper.putString(PrefsHelper.PhoneNumber,parkingZoneNumber);
-                CharSequence text = "Broj : "+parkingZoneNumber+" Poruka:"+ message;
-                int duration = Toast.LENGTH_LONG;
+                SMSHelper.sendSMS(parkingZoneNumber, message);
 
-                Toast toast = Toast.makeText(context, text, duration);
-                toast.show();
 
-                // TODO _ MOCKANJE UPISA U BAZU KOJI SE DOVIJA U RECEIVERU ZAPRAVO
+
+               /* // TODO _ MOCKANJE UPISA U BAZU KOJI SE DOVIJA U RECEIVERU ZAPRAVO
 
                 DatabaseManager.init(context);
                 DatabaseManager databaseManager = DatabaseManager.getInstance();
@@ -164,7 +163,7 @@ public class ConfirmPaymentDialog extends FrameLayout {
                 databaseManager.addPastparkingPayment(pastParkingPayment);
 
                 // TODO _ MOCKANJE UPISA U BAZU KOJI SE DOVIJA U RECEIVERU ZAPRAVO - maknut ovo
-
+                */
 
                 if(favs){
                     boolean contains = false;
@@ -187,7 +186,7 @@ public class ConfirmPaymentDialog extends FrameLayout {
 
                 if(updateDb){
 
-                    final MyMarker myMarker = new MyMarker(/*parkingZoneId*/1,lat,lng); //TODO otkomentirat
+                    final MyMarker myMarker = new MyMarker(parkingZoneId,lat,lng);
                     final Gson gson = new Gson();
 
                     Thread thread= new Thread(new Runnable() {
