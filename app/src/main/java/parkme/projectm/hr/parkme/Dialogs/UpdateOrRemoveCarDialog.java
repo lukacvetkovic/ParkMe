@@ -237,4 +237,13 @@ public class UpdateOrRemoveCarDialog extends FrameLayout {
     public void setDialogActive(boolean isDialogActive) {
         this.isDialogActive = isDialogActive;
     }
+
+    public void disableDeleteButton(boolean disable){
+        if(disable){
+            deleteCar.setVisibility(INVISIBLE);
+        }
+        else{
+            deleteCar.setVisibility(VISIBLE);
+        }
+    }
 }

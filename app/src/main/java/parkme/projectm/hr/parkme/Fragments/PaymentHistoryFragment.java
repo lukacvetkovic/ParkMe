@@ -15,6 +15,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import parkme.projectm.hr.parkme.Activities.FragmentMenuActivity;
 import parkme.projectm.hr.parkme.Activities.MainMenuActivity;
@@ -40,6 +42,8 @@ public class PaymentHistoryFragment extends Fragment {
     private List<PastParkingPayment> pastParkingPaymentList;
     private PastPaymentsArrayAdapter pastPaymentsArrayAdapter;
     private ListView pastParkingListView;
+
+    private Timer activeTicketTimer;
 
     private PaymentHistoryFragmentCallback paymentHistoryFragmentCallback;
 
@@ -87,6 +91,22 @@ public class PaymentHistoryFragment extends Fragment {
                 toast.show();
             }
         });
+
+        // TODO - provjera dal imamo aktivnu kartu
+        boolean hasActiveTicket = false;
+        if(hasActiveTicket){
+            activeTicketTimer = new Timer();
+            activeTicketTimer.scheduleAtFixedRate(new TimerTask() {
+                @Override
+                public void run() {
+
+                }
+            }, 0, 3000);
+            activeTicketView.showStuff();
+        }
+        else{
+            activeTicketView.hideStuff();
+        }
 
         return rootView;
     }

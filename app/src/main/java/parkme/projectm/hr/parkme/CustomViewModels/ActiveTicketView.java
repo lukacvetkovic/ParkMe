@@ -22,6 +22,9 @@ public class ActiveTicketView extends FrameLayout {
     private TextView activeTicketLicencePlatesText;
     private TextView activeTicketRemainingTime;
 
+    private TextView doIsteka;
+    private TextView txtMin;
+
     private LinearLayout lowerTextLinearLayout;
 
     public ActiveTicketView(Context context) {
@@ -51,6 +54,9 @@ public class ActiveTicketView extends FrameLayout {
         activeTicketRemainingTime = (TextView) findViewById(R.id.txtActiveTicketRemainingTimeMinutes);
         lowerTextLinearLayout = (LinearLayout) findViewById(R.id.lowText);
 
+        doIsteka = (TextView) findViewById(R.id.txtActiveTicketRemainingTime);
+        txtMin = (TextView) findViewById(R.id.txtActiveTicketRemainingTimeMins);
+
         //lowerTextLinearLayout.setVisibility(INVISIBLE);
     }
 
@@ -73,5 +79,21 @@ public class ActiveTicketView extends FrameLayout {
         else{
             lowerTextLinearLayout.setVisibility(INVISIBLE);
         }
+    }
+
+    public void hideStuff(){
+        activeTicketCarImage.setVisibility(INVISIBLE);
+        activeTicketLicencePlatesText.setVisibility(INVISIBLE);
+        activeTicketRemainingTime.setVisibility(INVISIBLE);
+        doIsteka.setVisibility(INVISIBLE);
+        txtMin.setVisibility(INVISIBLE);
+    }
+
+    public void showStuff(){
+        activeTicketCarImage.setVisibility(VISIBLE);
+        activeTicketLicencePlatesText.setVisibility(VISIBLE);
+        activeTicketRemainingTime.setVisibility(VISIBLE);
+        doIsteka.setVisibility(VISIBLE);
+        txtMin.setVisibility(VISIBLE);
     }
 }

@@ -142,11 +142,14 @@ public class FragmentMenuActivity extends FragmentActivity {
                     }
 
                     @Override
-                    public void updateOrRemoveFavoriteCar(FavouriteCar favoriteCar) {
+                    public void updateOrRemoveFavoriteCar(FavouriteCar favoriteCar, boolean isActive) {
                         rootRelativeView = (RelativeLayout) findViewById(R.id.rootRelativeView);
                         updateorRemoveCarDialog = new UpdateOrRemoveCarDialog(context);
                         updateorRemoveCarDialog.setDialogActive(true);
                         updateorRemoveCarDialog.setFavoriteCarToUpdate(favoriteCar);
+                        if(isActive){
+                            updateorRemoveCarDialog.disableDeleteButton(true);
+                        }
                         updateorRemoveCarDialog.setDismissCallback(new UpdateOrRemoveCarDialog.UpdateOrRemoveCarCallback() {
                             @Override
                             public void dismissThisDialog() {

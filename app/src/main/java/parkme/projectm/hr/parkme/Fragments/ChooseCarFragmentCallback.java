@@ -11,6 +11,6 @@ public interface ChooseCarFragmentCallback {
 
     public void refreshActivity();
 
-    public void updateOrRemoveFavoriteCar(FavouriteCar favoriteCar);
+    public void updateOrRemoveFavoriteCar(FavouriteCar favoriteCar, boolean isActive);
 
 }

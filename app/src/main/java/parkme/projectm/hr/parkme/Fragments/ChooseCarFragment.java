@@ -74,7 +74,7 @@ public class ChooseCarFragment extends Fragment {
             public void onClick(View view) {
                 FavouriteCar favoriteCar = dbManager.getFavoriteCarFromPlates(activeCarView.getCarTablesText());
                 if(favoriteCar != null && chooseCarFragmentCallback != null) {
-                    chooseCarFragmentCallback.updateOrRemoveFavoriteCar(favoriteCar);
+                    chooseCarFragmentCallback.updateOrRemoveFavoriteCar(favoriteCar, true);
                 }
             }
         });
@@ -118,7 +118,7 @@ public class ChooseCarFragment extends Fragment {
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
                 FavouriteCar favouriteCar = (FavouriteCar) favoriteCarsArrayAdapter.getItem(i);
                 if(chooseCarFragmentCallback != null) {
-                    chooseCarFragmentCallback.updateOrRemoveFavoriteCar(favouriteCar);
+                    chooseCarFragmentCallback.updateOrRemoveFavoriteCar(favouriteCar, false);
                 }
                 return true;
             }
