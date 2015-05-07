@@ -1,7 +1,10 @@
 package parkme.projectm.hr.parkme.Activities;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -45,6 +48,7 @@ public class MainMenuActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_menu);
         DatabaseManager.init(getApplicationContext());
+        updateDb();
 
 
        /* post = (Button) findViewById(R.id.bPost);
@@ -82,59 +86,7 @@ public class MainMenuActivity extends Activity {
             }
         });
 
-        update = (Button) findViewById(R.id.bUpdate);
-        update.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
-                Thread thread = new Thread(new Runnable() {
-                    public void run() {
-                        try {
-                            //EXTRA "update" svega sa neta
-                            DatabaseManager.init(getApplicationContext());
-                            UpdateManager um = new UpdateManager(
-                                    DatabaseManager.getInstance(),
-                                    new UrlUpdateSource(new GetRestService(""))
-                            );
-
-
-                            Calendar cal = Calendar.getInstance();
-                            SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
-                            String formatted = format1.format(cal.getTime());
-
-
-                            String lastUpdate = prefsHelper.getString(PrefsHelper.LastUpdate, "NULL");
-
-                            Log.d(lastUpdate, "---> last update");
-                            if (lastUpdate == "NULL") {
-                                lastUpdate = "2010-01-01";
-                            }
-
-                            Log.d("UPDATE FROM", lastUpdate);
-                            boolean updated = true;
-
-                            try {
-                                um.updateAll(DatabaseManager.dateFormatter.parse(lastUpdate));
-                                Log.d("Update", " done");
-                            } catch (Exception e) {
-                                updated = false;
-                            }
-                            if (updated) {
-                                prefsHelper.putString(PrefsHelper.LastUpdate, formatted);
-                                Log.d("LAST UPDATE -->", " " + formatted);
-                            }
-
-                        } catch (Exception e) {
-                        }
-
-                    }
-                });
-
-                thread.start();
-            }
-
-
-        });
 
         findParkingButton = (ImageView) findViewById(R.id.imgBtnFindParking);
         findParkingButton.setOnClickListener(new View.OnClickListener() {
@@ -165,6 +117,64 @@ public class MainMenuActivity extends Activity {
             rootRelativeView.addView(addCarDialog, params);
         }
 
+    }
+
+    private void updateDb() {
+
+        if (isOnline()) {
+
+            Thread thread = new Thread(new Runnable() {
+                public void run() {
+                    try {
+                        //EXTRA "update" svega sa neta
+                        DatabaseManager.init(getApplicationContext());
+                        UpdateManager um = new UpdateManager(
+                                DatabaseManager.getInstance(),
+                                new UrlUpdateSource(new GetRestService(""))
+                        );
+
+
+                        Calendar cal = Calendar.getInstance();
+                        SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
+                        String formatted = format1.format(cal.getTime());
+
+
+                        String lastUpdate = prefsHelper.getString(PrefsHelper.LastUpdate, "NULL");
+
+                        Log.d(lastUpdate, "---> last update");
+                        if (lastUpdate == "NULL") {
+                            lastUpdate = "2010-01-01";
+                        }
+
+                        Log.d("UPDATE FROM", lastUpdate);
+                        boolean updated = true;
+
+                        try {
+                            um.updateAll(DatabaseManager.dateFormatter.parse(lastUpdate));
+                            Log.d("Update", " done");
+                        } catch (Exception e) {
+                            updated = false;
+                        }
+                        if (updated) {
+                            prefsHelper.putString(PrefsHelper.LastUpdate, formatted);
+                            Log.d("LAST UPDATE -->", " " + formatted);
+                        }
+
+                    } catch (Exception e) {
+                    }
+
+                }
+            });
+
+            thread.start();
+        }
+    }
+
+    public boolean isOnline() {
+        ConnectivityManager cm =
+                (ConnectivityManager) getBaseContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = cm.getActiveNetworkInfo();
+        return netInfo != null && netInfo.isConnectedOrConnecting();
     }
 
 
