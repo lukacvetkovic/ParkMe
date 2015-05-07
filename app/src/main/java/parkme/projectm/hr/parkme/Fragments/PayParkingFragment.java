@@ -68,6 +68,7 @@ public class PayParkingFragment extends Fragment {
 
         favoritePaymentListView = (ListView) rootView.findViewById(R.id.favoritePaymentsList);
 
+        DatabaseManager.init(context);
         dbManager = DatabaseManager.getInstance();
         favoritePaymentList = dbManager.getAllFavoritePayments();
 

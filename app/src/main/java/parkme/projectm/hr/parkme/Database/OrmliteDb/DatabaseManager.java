@@ -209,8 +209,17 @@ public class DatabaseManager implements SMSParkingApi, Updater{
     @Override
     public List<ParkingZone> getAllParkingZonesFromCity(int idCity) {
         try {
-            return helper.getRuntimeParkingZoneDao().queryBuilder()
+            List<ParkingZone> parkingZones = helper.getRuntimeParkingZoneDao().queryBuilder()
                     .where().eq("id_city", idCity).query();
+
+            Collections.sort(parkingZones, new Comparator<ParkingZone>() {
+                @Override
+                public int compare(ParkingZone parkingZone, ParkingZone anotherparkingZone) {
+                    return parkingZone.getName().compareTo(anotherparkingZone.getName());
+                }
+            });
+
+            return parkingZones;
         } catch (SQLException e) {
             return null;
         }
