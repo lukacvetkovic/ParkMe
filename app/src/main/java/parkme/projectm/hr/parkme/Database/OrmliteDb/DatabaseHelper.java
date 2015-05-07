@@ -60,6 +60,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
                 Log.d("Premjestio sam","bazu");
             } catch (IOException e) {
                 DatabaseManager.init(context);
+                updateDb(context);
             }
         }
     }
