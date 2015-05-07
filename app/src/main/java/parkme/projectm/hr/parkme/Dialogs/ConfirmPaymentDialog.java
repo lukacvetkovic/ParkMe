@@ -31,6 +31,7 @@ import parkme.projectm.hr.parkme.Helpers.Rest.ApiConstants;
 import parkme.projectm.hr.parkme.Helpers.Rest.PostRestService;
 import parkme.projectm.hr.parkme.R;
 import parkme.projectm.hr.parkme.Receivers.IncomingSmsReceiver;
+import parkme.projectm.hr.parkme.Services.ParkingServiceHelper;
 
 /**
  * Created by Mihael on 5.5.2015..
@@ -135,6 +136,9 @@ public class ConfirmPaymentDialog extends FrameLayout {
                 PaymentMode paymentMode = databaseManager.getPaymentModeFromId(paymentModeId);
 
                 String message = paymentMode.getSmsPrefix()+carPlate+paymentMode.getSmsSufix();
+
+                ParkingServiceHelper parkingServiceHelper= new ParkingServiceHelper();
+                parkingServiceHelper.startService(context);
 
                 //SMSHelper.sendSMS(parkingZoneNumber, message);
                 ParkingZone parkingZone = databaseManager.getParkingZoneFromId(parkingZoneId);
