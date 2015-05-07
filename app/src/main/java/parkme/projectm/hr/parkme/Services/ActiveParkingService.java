@@ -125,7 +125,7 @@ public class ActiveParkingService extends Service {
                 notificationIntent, 0);
         if(didTicketExpire == false) {
             notification = builder.setContentIntent(pendingIntent)
-                    .setSmallIcon(R.drawable.plus_ikona_shadow).setWhen(0)
+                    .setSmallIcon(R.drawable.white_logo_s).setWhen(0)
                     .setAutoCancel(true)
                     .setContentTitle("Your parking ticket is about to expire !")
                     .setContentText("Do you want to extend your parking ticket ?")
@@ -133,7 +133,7 @@ public class ActiveParkingService extends Service {
         }
         else{
             notification = builder.setContentIntent(pendingIntent)
-                    .setSmallIcon(R.drawable.plus_ikona_shadow).setWhen(0)
+                    .setSmallIcon(R.drawable.white_logo_s).setWhen(0)
                     .setAutoCancel(true)
                     .setContentTitle("Your parking ticket EXPIRED !")
                     //.setContentText("Do you want to extend your parking ticket ?")
@@ -165,11 +165,11 @@ public class ActiveParkingService extends Service {
                 muteNotificationIntent, 0);
 
         Bitmap icon = BitmapFactory.decodeResource(getResources(),
-                R.drawable.plati_icon_shadow);
+                R.drawable.white_logo_s);
         NotificationCompat.Builder notBuilder = new NotificationCompat.Builder(this);
         notBuilder.setContentTitle("Active parking ticket")        // todo - odhardkodat ovo tu
                 .setTicker("Parking ticket started")
-                .setSmallIcon(R.drawable.plati_icon_shadow)
+                .setSmallIcon(R.drawable.white_logo_s)
                 .setLargeIcon(
                         Bitmap.createScaledBitmap(icon, 128, 128, false))
                 .setContentIntent(pendingIntent)
