@@ -14,6 +14,9 @@ import android.os.IBinder;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 import parkme.projectm.hr.parkme.Activities.FragmentMenuActivity;
 import parkme.projectm.hr.parkme.R;
 import parkme.projectm.hr.parkme.Receivers.IncomingSmsReceiver;
@@ -42,6 +45,10 @@ public class ActiveParkingService extends Service {
 
     private boolean isRunning = false;
     private long remainingParkingMinutes = SERVICE_IS_NOT_RUNNING;
+
+    private Timer timeOutTimer;
+    private TimerTask timerTask;
+    private boolean firstTimeTask = true;
 
     private CountDownTimer remainigTimeCounter;
 
@@ -167,10 +174,10 @@ public class ActiveParkingService extends Service {
                         Bitmap.createScaledBitmap(icon, 128, 128, false))
                 .setContentIntent(pendingIntent)
                 .setOngoing(true)
-                .addAction(android.R.drawable.ic_media_next,
+                /*.addAction(android.R.drawable.ic_media_next,
                         "Extend parking", pExtendParkingIntent)
                 .addAction(android.R.drawable.ic_menu_info_details, "Mute notification",
-                        pMuteNotificationIntent)
+                        pMuteNotificationIntent)*/
                 .build();
         if(remainingParkingMinutes != SERVICE_IS_NOT_RUNNING){
             Log.w(TAG, "Should update text to -> " + remainingParkingMinutes);
@@ -202,6 +209,29 @@ public class ActiveParkingService extends Service {
             }
         });
 
+        timeOutTimer = new Timer();
+
+        timerTask = new TimerTask() {
+            @Override
+            public void run() {
+                if(firstTimeTask) {
+                    firstTimeTask = false;
+                }
+                else{
+                    if (remainingParkingMinutes > 0) {
+                        timeOutTimer.schedule(timerTask, 300000);
+                    }
+                    else{
+                        isRunning = false;
+                        didTicketExpire = true;
+                        remainingParkingMinutes = SERVICE_IS_NOT_RUNNING;
+                        buildNotification(true);
+                        stopForegroundService();
+                    }
+                }
+            }
+        };
+
         intentFilter = new IntentFilter();
         intentFilter.addAction("android.provider.Telephony.SMS_RECEIVED");
         registerReceiver(smsReceiver, intentFilter);
@@ -216,6 +246,10 @@ public class ActiveParkingService extends Service {
                 foregroundNotification = buildForegroundNotification();
                 startForeground(SERVICE_ID, foregroundNotification);
                 this.isRunning = true;
+                this.firstTimeTask = true;
+                //timeOutTimer.schedule(timerTask, 3900000);        // TODO - pravi za odkomentirat
+                timeOutTimer.schedule(timerTask, 60000);
+
             }
             else if(isRunning && SERVICE_UPDATE_FOREGROUND_NOTIFICATION_TEXT.equals(intent.getAction())){
                 Log.w(TAG, "Updating text");
@@ -225,11 +259,9 @@ public class ActiveParkingService extends Service {
             }
             else if (SERVICE_ACTION_EXTEND_PARKING.equals(intent.getAction())){
                 Log.i(TAG, "Extending parking ticket");
-                // todo extend parking here
             }
             else if (SERVICE_ACTION_MUTE_NOTIFICATION.equals(intent.getAction())){
                 Log.i(TAG, "Muting - Unmuting notification sound");
-                // todo mute - unmute notification
             }
             else if (SERVICE_ACTION_STOP.equals(intent.getAction())) {
                 Log.i(TAG, "Stopping service if it is running");
