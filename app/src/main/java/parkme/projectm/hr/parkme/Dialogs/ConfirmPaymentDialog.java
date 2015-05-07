@@ -19,6 +19,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 import parkme.projectm.hr.parkme.Database.OrmliteDb.DatabaseManager;
@@ -166,10 +167,22 @@ public class ConfirmPaymentDialog extends FrameLayout {
 
 
                 if(favs){
-                    //DatabaseManager.init(context);
-                    //DatabaseManager databaseManager = DatabaseManager.getInstance();
-                    databaseManager.addFavoritePayment(new FavoritePayment(citiyId,parkingZoneId,paymentModeId));
-                    Log.d("UPISANO U BAZU FAVS : ", "CityId :" + String.valueOf(citiyId) + " , " + " parkingZoneId :" + String.valueOf(parkingZoneId) + " paymentModeId :" + String.valueOf(paymentModeId));
+                    boolean contains = false;
+                    FavoritePayment favPaymentToAdd = new FavoritePayment(citiyId,parkingZoneId,paymentModeId);
+                    // Provjera da u favsima vec nemamo ovaj koji zelimo dodat
+                    List<FavoritePayment> favoritePayments = databaseManager.getAllFavoritePayments();
+                    for(FavoritePayment favoritePayment : favoritePayments){
+                        if(favPaymentToAdd.getGradId() == favoritePayment.getGradId() &&
+                                favPaymentToAdd.getZoneID() == favoritePayment.getZoneID()){
+                            contains = true;
+                            break;
+                        }
+                    }
+                    if(!contains){
+                        databaseManager.addFavoritePayment(favPaymentToAdd);
+                        Log.d("UPISANO U BAZU FAVS : ", "CityId :" + String.valueOf(citiyId) + " , " + " parkingZoneId :"
+                                + String.valueOf(parkingZoneId) + " paymentModeId :" + String.valueOf(paymentModeId));
+                    }
                 }
 
                 if(updateDb){
