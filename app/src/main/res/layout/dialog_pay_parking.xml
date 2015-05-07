@@ -104,20 +104,23 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:id="@+id/cbFavorites"
-                        android:layout_marginLeft="@dimen/parky_text_title_left_and_right_padding"
+                        android:layout_marginLeft="30dp"
                         android:layout_marginRight="@dimen/parky_text_title_left_and_right_padding"
                         android:paddingTop="@dimen/parky_custom_linear_layout_vertical_spacing"
-                        android:text="Dodaj u favorite" />
+                        android:text="     Dodaj u favorite"
+                        android:button="@drawable/add_to_favorites_custom_checkbox_selector"
+                        android:layout_marginTop="15dp" />
 
                     <CheckBox
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:id="@+id/cbCurrentLocation"
-                        android:layout_marginLeft="@dimen/parky_text_title_left_and_right_padding"
+                        android:layout_marginLeft="30dp"
                         android:layout_marginRight="@dimen/parky_text_title_left_and_right_padding"
                         android:paddingTop="@dimen/parky_custom_linear_layout_vertical_spacing"
                         android:text="Postavi moju lokaciju kao lokaciju auta"
-                        android:visibility="invisible" />
+                        android:visibility="invisible"
+                        android:layout_marginTop="10dp" />
 
                 </LinearLayout>
 
