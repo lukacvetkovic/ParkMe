@@ -34,7 +34,7 @@ public class FavoriteCarsArrayAdapter extends ArrayAdapter<FavouriteCar> {
         ImageView imgCarIcon = (ImageView) favoriteCarView.findViewById(R.id.imgViewFavCar);
         TextView txtCarPlates = (TextView) favoriteCarView.findViewById(R.id.txtCarTables);
 
-        imgCarIcon.setImageResource(values[position].getCarIcon());
+        imgCarIcon.setImageResource(values[position].getGreenBackgroundCarIcon());
         txtCarPlates.setText(values[position].getCarRegistration());
 
         return favoriteCarView;

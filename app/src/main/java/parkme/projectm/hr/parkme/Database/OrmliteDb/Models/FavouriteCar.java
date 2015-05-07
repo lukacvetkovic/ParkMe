@@ -4,6 +4,8 @@ import com.j256.ormlite.field.DataType;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
+import parkme.projectm.hr.parkme.R;
+
 /**
  * Created by Mihael on 5.4.2015..
  */
@@ -19,6 +21,7 @@ public class FavouriteCar {
     @DatabaseField(columnName = column_car_icon)        // holds int for a resource R.drawable.carIcon
     private int carIcon;
 
+    private Integer greenBackgroundCarIcon = null;
     /**
      *
      * @param carRegistration - String representation of a cars registration plates
@@ -46,5 +49,29 @@ public class FavouriteCar {
 
     public void setCarIcon(int carIcon) {
         this.carIcon = carIcon;
+    }
+
+    public int getGreenBackgroundCarIcon() {
+        if(greenBackgroundCarIcon == null){
+            switch(carIcon){
+                case R.drawable.car_icon_blue_s:
+                    greenBackgroundCarIcon = R.drawable.car_icon_green_background_blue_s;
+                    break;
+                case R.drawable.car_icon_green_s:
+                    greenBackgroundCarIcon = R.drawable.car_icon_green_background_green_s;
+                    break;
+                case R.drawable.car_icon_orange_s:
+                    greenBackgroundCarIcon = R.drawable.car_icon_green_background_orange_s;
+                    break;
+                case R.drawable.car_icon_red_s:
+                    greenBackgroundCarIcon = R.drawable.car_icon_green_background_red_s;
+                    break;
+            }
+        }
+        return greenBackgroundCarIcon;
+    }
+
+    public void setGreenBackgroundCarIcon(int greenBackgroundCarIcon) {
+        this.greenBackgroundCarIcon = greenBackgroundCarIcon;
     }
 }

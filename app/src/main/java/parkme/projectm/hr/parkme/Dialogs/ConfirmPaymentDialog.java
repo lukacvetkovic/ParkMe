@@ -147,8 +147,6 @@ public class ConfirmPaymentDialog extends FrameLayout {
                 Toast toast = Toast.makeText(context, text, duration);
                 toast.show();
 
-                enableReciver();
-
                 // TODO _ MOCKANJE UPISA U BAZU KOJI SE DOVIJA U RECEIVERU ZAPRAVO
 
                 DatabaseManager.init(context);
@@ -254,16 +252,6 @@ public class ConfirmPaymentDialog extends FrameLayout {
     public void setConfirmPaymentDialogCallback(ConfirmPaymentDialogCallback confirmPaymentDialogCallback) {
         this.confirmPaymentDialogCallback = confirmPaymentDialogCallback;
     }
-
-    public void enableReciver(){
-        ComponentName receiver = new ComponentName(context, IncomingSmsReceiver.class);
-        PackageManager pm = context.getPackageManager();
-
-        pm.setComponentEnabledSetting(receiver,
-                PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
-                PackageManager.DONT_KILL_APP);
-    }
-
 
     private class MyMarker
     {
