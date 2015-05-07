@@ -83,17 +83,6 @@ public class PaymentHistoryFragment extends Fragment {
 
         pastParkingListView.setAdapter(pastPaymentsArrayAdapter);
 
-        pastParkingListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                PastParkingPayment pastParkingPayment = pastPaymentsArrayAdapter.getItem(position);
-
-                Toast toast = Toast.makeText(getActivity(), "" + pastParkingPayment.getCapPlates() + " - " + pastParkingPayment.getStartOfPayment(), Toast.LENGTH_LONG);
-                toast.show();
-            }
-        });
-
         if(!hasActiveTicket){
             activeTicketView.hideStuff();
         }

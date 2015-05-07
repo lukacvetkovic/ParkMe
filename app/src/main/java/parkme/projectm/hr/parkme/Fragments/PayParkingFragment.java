@@ -121,9 +121,7 @@ public class PayParkingFragment extends Fragment {
                 });
 
                 payParkingDialog.showConfirmPaymentDialogForFavoritepayment(favoritePayment);
-
-                Toast toast = Toast.makeText(context, "" + favoritePayment.getGradId() + " - " + favoritePayment.getZoneID(), Toast.LENGTH_SHORT);
-                toast.show();
+                
             }
         });
 

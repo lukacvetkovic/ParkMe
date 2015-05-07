@@ -37,7 +37,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceLarge"
-                        android:text="(todo name)"
+                        android:text="Plaćanje Parkinga:"
                         android:id="@+id/txtWelcome"
                         android:textColor="@color/parky_green_darker"
                         android:textStyle="bold"
