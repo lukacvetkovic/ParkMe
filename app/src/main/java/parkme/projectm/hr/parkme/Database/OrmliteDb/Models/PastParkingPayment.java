@@ -3,6 +3,8 @@ package parkme.projectm.hr.parkme.Database.OrmliteDb.Models;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
+import parkme.projectm.hr.parkme.R;
+
 /**
  * Created by Mihael on 13.4.2015..
  */
@@ -43,6 +45,8 @@ public class PastParkingPayment {
 
     @DatabaseField(columnName = columnPaymentCarIcon)
     private int carIcon;
+
+    private Integer greenBackgroundCarIcon = null;
 
     public PastParkingPayment() {
     }
@@ -120,5 +124,29 @@ public class PastParkingPayment {
 
     public void setCarIcon(int carIcon) {
         this.carIcon = carIcon;
+    }
+
+    public Integer getGreenBackgroundCarIcon() {
+        if(greenBackgroundCarIcon == null){
+            switch(carIcon){
+                case R.drawable.car_icon_blue_s:
+                    greenBackgroundCarIcon = R.drawable.car_icon_green_background_blue_s;
+                    break;
+                case R.drawable.car_icon_green_s:
+                    greenBackgroundCarIcon = R.drawable.car_icon_green_background_green_s;
+                    break;
+                case R.drawable.car_icon_orange_s:
+                    greenBackgroundCarIcon = R.drawable.car_icon_green_background_orange_s;
+                    break;
+                case R.drawable.car_icon_red_s:
+                    greenBackgroundCarIcon = R.drawable.car_icon_green_background_red_s;
+                    break;
+            }
+        }
+        return greenBackgroundCarIcon;
+    }
+
+    public void setGreenBackgroundCarIcon(Integer greenBackgroundCarIcon) {
+        this.greenBackgroundCarIcon = greenBackgroundCarIcon;
     }
 }
