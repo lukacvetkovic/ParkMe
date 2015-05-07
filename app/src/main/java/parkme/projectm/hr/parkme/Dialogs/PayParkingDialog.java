@@ -391,6 +391,9 @@ public class PayParkingDialog extends FrameLayout{
         DateFormat formatter = new SimpleDateFormat("HH:mm:ss");
         String maxDurationFormated = formatter.format(maxDuration.getMaxDuration().getTime());
 
+        String duration = paymentMode.getDuration().toString();
+        duration = duration.split(" ")[3];
+
         String maxParkingDuration;
         if (maxDurationFormated.equals("00:00:00")) {
             maxParkingDuration = "Neograniceno";
@@ -398,7 +401,7 @@ public class PayParkingDialog extends FrameLayout{
             maxParkingDuration = maxDurationFormated;
         }
 
-        confirmPaymentDialog.initWithData(cityName, parkingZone.getName(), zonePrice.getPriceFloat(), paymentMode.getDuration().toString(),
+        confirmPaymentDialog.initWithData(cityName, parkingZone.getName(), zonePrice.getPriceFloat(), duration,
                 maxParkingDuration, parkingZone.getId(), paymentMode.getId(), favoritePayment.getGradId(), false, false, 0, 0);
 
         confirmPaymentDialog.setConfirmPaymentDialogCallback(new ConfirmPaymentDialog.ConfirmPaymentDialogCallback() {
