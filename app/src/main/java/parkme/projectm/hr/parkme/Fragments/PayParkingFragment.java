@@ -81,6 +81,15 @@ public class PayParkingFragment extends Fragment {
             favoritePaymentArrayAdapter = new FavoritePaymentArrayAdapter(parentActivity, new FavoritePayment[0]);
         }
 
+        favoritePaymentArrayAdapter.setCallback(new FavoritePaymentArrayAdapter.FavoritePaymentArrayAdapterCallback() {
+            @Override
+            public void refreshFragment() {
+                if(payParkingFragmentCallback != null){
+                    payParkingFragmentCallback.refreshActivity();
+                }
+            }
+        });
+
         favoritePaymentListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {

@@ -11,6 +11,7 @@ import android.widget.TextView;
 import parkme.projectm.hr.parkme.Activities.FragmentMenuActivity;
 import parkme.projectm.hr.parkme.Database.OrmliteDb.DatabaseManager;
 import parkme.projectm.hr.parkme.Database.OrmliteDb.Models.FavoritePayment;
+import parkme.projectm.hr.parkme.Fragments.PayParkingFragmentCallback;
 import parkme.projectm.hr.parkme.R;
 
 /**
@@ -20,6 +21,12 @@ public class FavoritePaymentArrayAdapter extends ArrayAdapter<FavoritePayment> {
     private final FragmentMenuActivity context;
     private final FavoritePayment[] values;
     private DatabaseManager dbManager;
+
+    private FavoritePaymentArrayAdapterCallback callback;
+
+    public interface FavoritePaymentArrayAdapterCallback{
+        public void refreshFragment();
+    }
 
     public FavoritePaymentArrayAdapter(FragmentMenuActivity context, FavoritePayment[] values) {
         super(context, R.layout.layout_favorite_payment, values);
@@ -45,9 +52,16 @@ public class FavoritePaymentArrayAdapter extends ArrayAdapter<FavoritePayment> {
             @Override
             public void onClick(View view) {
                 dbManager.removeFavoritePayment(values[position]);
+                if(callback != null){
+                    callback.refreshFragment();
+                }
             }
         });
 
         return favoritePayment;
+    }
+
+    public void setCallback(FavoritePaymentArrayAdapterCallback callback) {
+        this.callback = callback;
     }
 }
