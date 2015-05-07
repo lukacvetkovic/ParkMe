@@ -92,7 +92,7 @@
                 android:layout_gravity="top|right"
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="10dp"
-                android:src="@drawable/parky_cancel_icon" />
+                android:src="@drawable/odbaci_ikona_shadow" />
 
         </FrameLayout>
 

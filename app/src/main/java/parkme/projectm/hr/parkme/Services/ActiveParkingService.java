@@ -125,7 +125,7 @@ public class ActiveParkingService extends Service {
                 notificationIntent, 0);
         if(didTicketExpire == false) {
             notification = builder.setContentIntent(pendingIntent)
-                    .setSmallIcon(R.drawable.parky_plus_icon).setWhen(0)
+                    .setSmallIcon(R.drawable.plus_ikona_shadow).setWhen(0)
                     .setAutoCancel(true)
                     .setContentTitle("Your parking ticket is about to expire !")
                     .setContentText("Do you want to extend your parking ticket ?")
@@ -133,7 +133,7 @@ public class ActiveParkingService extends Service {
         }
         else{
             notification = builder.setContentIntent(pendingIntent)
-                    .setSmallIcon(R.drawable.parky_plus_icon).setWhen(0)
+                    .setSmallIcon(R.drawable.plus_ikona_shadow).setWhen(0)
                     .setAutoCancel(true)
                     .setContentTitle("Your parking ticket EXPIRED !")
                     //.setContentText("Do you want to extend your parking ticket ?")
@@ -165,11 +165,11 @@ public class ActiveParkingService extends Service {
                 muteNotificationIntent, 0);
 
         Bitmap icon = BitmapFactory.decodeResource(getResources(),
-                R.drawable.parky_novac_icon);
+                R.drawable.plati_icon_shadow);
         NotificationCompat.Builder notBuilder = new NotificationCompat.Builder(this);
         notBuilder.setContentTitle("Active parking ticket")        // todo - odhardkodat ovo tu
                 .setTicker("Parking ticket started")
-                .setSmallIcon(R.drawable.parky_novac_icon)
+                .setSmallIcon(R.drawable.plati_icon_shadow)
                 .setLargeIcon(
                         Bitmap.createScaledBitmap(icon, 128, 128, false))
                 .setContentIntent(pendingIntent)
@@ -214,20 +214,19 @@ public class ActiveParkingService extends Service {
         timerTask = new TimerTask() {
             @Override
             public void run() {
-                if(firstTimeTask) {
-                    firstTimeTask = false;
+                Log.w("TIMER", "run");
+                if (remainingParkingMinutes > 0) {
+                    Log.w("TIMER", "remaining > 0");
+                    //timeOutTimer.schedule(timerTask, 300000);     // TODO - odkomentirat
+                    timeOutTimer.schedule(timerTask, 6000);
                 }
                 else{
-                    if (remainingParkingMinutes > 0) {
-                        timeOutTimer.schedule(timerTask, 300000);
-                    }
-                    else{
-                        isRunning = false;
-                        didTicketExpire = true;
-                        remainingParkingMinutes = SERVICE_IS_NOT_RUNNING;
-                        buildNotification(true);
-                        stopForegroundService();
-                    }
+                    Log.w("TIMER", "gotovo");
+                    isRunning = false;
+                    didTicketExpire = true;
+                    remainingParkingMinutes = SERVICE_IS_NOT_RUNNING;
+                    buildNotification(true);
+                    stopForegroundService();
                 }
             }
         };

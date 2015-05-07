@@ -118,9 +118,10 @@
                         android:layout_marginLeft="30dp"
                         android:layout_marginRight="@dimen/parky_text_title_left_and_right_padding"
                         android:paddingTop="@dimen/parky_custom_linear_layout_vertical_spacing"
-                        android:text="Postavi moju lokaciju kao lokaciju auta"
-                        android:visibility="invisible"
-                        android:layout_marginTop="10dp" />
+                        android:text="     Postavi moju lokaciju kao lokaciju auta"
+                        android:visibility="visible"
+                        android:button="@drawable/place_my_car_checkbox_selector"
+                        android:layout_marginTop="15dp" />
 
                 </LinearLayout>
 
@@ -135,7 +136,7 @@
             android:layout_marginBottom="15dp"
             android:layout_marginRight="15dp"
             android:visibility="invisible"
-            android:background="@drawable/parky_next_icon"/>
+            android:background="@drawable/next_ikona_shadow"/>
 
     </FrameLayout>
 
