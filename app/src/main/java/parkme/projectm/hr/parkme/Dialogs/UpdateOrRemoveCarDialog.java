@@ -30,8 +30,8 @@ public class UpdateOrRemoveCarDialog extends FrameLayout {
     private EditText carPlatesEditText;
     private TextView errorTextView;
 
-    private Button updateCarButton;
-    private Button deleteCar;
+    private ImageButton updateCarButton;
+    private ImageButton deleteCar;
 
     private ImageButton blueCarImageButton;
     private ImageView selectedBlueCar;
@@ -120,7 +120,7 @@ public class UpdateOrRemoveCarDialog extends FrameLayout {
         carPlatesEditText.setFilters(new InputFilter[] {new InputFilter.AllCaps()});
         errorTextView = (TextView) findViewById(R.id.txtError);
         errorTextView.setVisibility(INVISIBLE);
-        updateCarButton = (Button) findViewById(R.id.btnUpdateCar);
+        updateCarButton = (ImageButton) findViewById(R.id.btnUpdateCar);
         updateCarButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -159,7 +159,7 @@ public class UpdateOrRemoveCarDialog extends FrameLayout {
             }
         });
 
-        deleteCar = (Button) findViewById(R.id.btnDeleteCar);
+        deleteCar = (ImageButton) findViewById(R.id.btnDeleteCar);
         deleteCar.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {

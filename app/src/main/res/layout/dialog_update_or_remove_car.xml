@@ -55,7 +55,7 @@
                         android:paddingLeft="@dimen/parky_text_left_and_right_padding"
                         android:paddingRight="@dimen/parky_text_left_and_right_padding"
                         android:paddingTop="@dimen/parky_custom_linear_layout_vertical_spacing"
-                        android:text="Here you can update your cars licence plate or pick a different image to display it ^^"
+                        android:text="Here you can update your cars licence plate or pick a different image to display your favorite car ^^"
                         android:id="@+id/txtItApperas" />
 
                     <EditText
@@ -187,20 +187,6 @@
                         android:paddingRight="@dimen/parky_text_left_and_right_padding"
                         android:gravity="center_vertical|center_horizontal">
 
-                        <Button
-                            android:layout_width="150dp"
-                            android:layout_height="wrap_content"
-                            android:text="Delete car"
-                            android:id="@+id/btnDeleteCar"
-                            android:layout_marginTop="@dimen/parky_text_left_and_right_padding"
-                            android:textColor="@color/parky_error_red" />
-
-                        <Button
-                            android:layout_width="150dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/parky_text_left_and_right_padding"
-                            android:text="Update Car"
-                            android:id="@+id/btnUpdateCar"/>
                     </LinearLayout>
 
                     <TextView
@@ -218,6 +204,32 @@
 
                 </LinearLayout>
             </ScrollView>
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end|bottom">
+
+            <ImageButton
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:id="@+id/btnDeleteCar"
+                android:layout_gravity="end|bottom"
+                android:layout_marginRight="15dp"
+                android:background="@drawable/delete_icon_shadow"
+                android:longClickable="false"
+                android:layout_marginBottom="10dp" />
+
+            <ImageButton
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:id="@+id/btnUpdateCar"
+                android:layout_gravity="end|bottom"
+                android:layout_marginBottom="15dp"
+                android:layout_marginRight="15dp"
+                android:background="@drawable/update_ikona_shadow"/>
         </LinearLayout>
 
     </FrameLayout>

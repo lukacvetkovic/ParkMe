@@ -178,16 +178,6 @@
 
                     </LinearLayout>
 
-                    <Button
-                        android:layout_width="150dp"
-                        android:layout_height="wrap_content"
-                        android:text="Save Car"
-                        android:id="@+id/btnSaveCar"
-                        android:layout_marginTop="@dimen/parky_text_left_and_right_padding"
-                        android:paddingLeft="@dimen/parky_text_left_and_right_padding"
-                        android:paddingRight="@dimen/parky_text_left_and_right_padding"
-                        android:layout_gravity="center_horizontal" />
-
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -204,6 +194,15 @@
                 </LinearLayout>
             </ScrollView>
         </LinearLayout>
+
+        <ImageButton
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:id="@+id/btnSaveCar"
+            android:layout_gravity="end|bottom"
+            android:layout_marginBottom="15dp"
+            android:layout_marginRight="15dp"
+            android:background="@drawable/kvacica_shadow"/>
 
     </FrameLayout>
 </FrameLayout>

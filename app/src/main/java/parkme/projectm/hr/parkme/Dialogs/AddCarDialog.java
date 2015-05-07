@@ -29,7 +29,7 @@ public class AddCarDialog extends FrameLayout{
     private EditText carPlatesEditText;
     private TextView errorTextView;
 
-    private Button saveCarButton;
+    private ImageButton saveCarButton;
 
     private ImageButton blueCarImageButton;
     private ImageView selectedBlueCar;
@@ -87,7 +87,7 @@ public class AddCarDialog extends FrameLayout{
         carPlatesEditText.setFilters(new InputFilter[] {new InputFilter.AllCaps()});
         errorTextView = (TextView) findViewById(R.id.txtError);
         errorTextView.setVisibility(INVISIBLE);
-        saveCarButton = (Button) findViewById(R.id.btnSaveCar);
+        saveCarButton = (ImageButton) findViewById(R.id.btnSaveCar);
         saveCarButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
