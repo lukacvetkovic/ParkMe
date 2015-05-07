@@ -45,6 +45,8 @@ public class PaymentHistoryFragment extends Fragment {
 
     private Timer activeTicketTimer;
 
+    boolean hasActiveTicket = false;
+
     private PaymentHistoryFragmentCallback paymentHistoryFragmentCallback;
 
     private ParkingServiceHelper parkingServiceHelper = new ParkingServiceHelper();
@@ -92,22 +94,33 @@ public class PaymentHistoryFragment extends Fragment {
             }
         });
 
-        // TODO - provjera dal imamo aktivnu kartu
-        boolean hasActiveTicket = false;
-        if(hasActiveTicket){
-            activeTicketTimer = new Timer();
-            activeTicketTimer.scheduleAtFixedRate(new TimerTask() {
-                @Override
-                public void run() {
-
-                }
-            }, 0, 3000);
-            activeTicketView.showStuff();
-        }
-        else{
+        if(!hasActiveTicket){
             activeTicketView.hideStuff();
         }
 
+        // TODO - provjera dal imamo aktivnu kartu
+
+        parkingServiceHelper.setServiceListener(new ParkingServiceHelper.ParkingServiceListener() {
+            @Override
+            public void serviceStatus(ParkingServiceHelper.ServiceStatus status) {
+                if(status != null && status.getActiveParkingRemainingTime() != ParkingServiceHelper.SERVICE_IS_NOT_RUNNING){
+                    PastParkingPayment activeParkingPayment = dbManager.getActiveParkingPayment();
+                    if(activeParkingPayment != null){
+                        activeTicketView.setCarTablesText(activeParkingPayment.getCapPlates());
+                        activeTicketView.getActiveCarImage().setImageResource(activeParkingPayment.getCarIcon());
+                        activeTicketView.setRemainingTime(status.getActiveParkingRemainingTime());
+                        activeTicketView.showStuff();
+                        hasActiveTicket = true;
+                    }
+                    else{
+                        activeTicketView.hideStuff();
+                        hasActiveTicket = false;
+                        Log.w("PaymentHistoryFragment", "status je null ili ne radi service");
+                    }
+                }
+            }
+        });
+        parkingServiceHelper.getServiceStatus(getActivity());
         return rootView;
     }
 

@@ -81,6 +81,10 @@ public class ActiveTicketView extends FrameLayout {
         }
     }
 
+    public void setRemainingTime(long time){
+        activeTicketRemainingTime.setText(""+time);
+    }
+
     public void hideStuff(){
         activeTicketCarImage.setVisibility(INVISIBLE);
         activeTicketLicencePlatesText.setVisibility(INVISIBLE);

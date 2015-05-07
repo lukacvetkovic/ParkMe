@@ -152,15 +152,22 @@ public class DatabaseManager implements SMSParkingApi, Updater{
 
             @Override
             public int compare(PastParkingPayment lhs, PastParkingPayment rhs) {
-                if(lhs.getPastParkingPaymentId()<rhs.getPastParkingPaymentId()){
-                    return  1;
-                }
-                else{
+                if (lhs.getPastParkingPaymentId() < rhs.getPastParkingPaymentId()) {
+                    return 1;
+                } else {
                     return -1;
                 }
             }
         });
         return allPayments;
+    }
+
+    public PastParkingPayment getActiveParkingPayment(){
+        List<PastParkingPayment> payments = getAllPastparkingPayments();
+        if(payments != null && payments.size()>0){
+            return payments.get(0);
+        }
+        return null;
     }
 
     public void addPastparkingPayment(PastParkingPayment pastParkingPayment) {
